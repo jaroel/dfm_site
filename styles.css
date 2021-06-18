@@ -1,0 +1,16 @@
+body {
+    background-image: url('img/radiobackground.jpg');
+    background-size: cover;
+    background-position-y: center;
+
+    color: #efefef;
+}
+
+#bg_wrapper {
+    background: rgba(34, 34, 34, .4);
+    height: 100%;
+}
+
+#logo {
+    width: 400px;
+}
