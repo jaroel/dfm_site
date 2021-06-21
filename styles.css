@@ -2,13 +2,14 @@ body {
     background-image: url('img/radiobackground.jpg');
     background-size: cover;
     background-position-y: center;
+    background-attachment: fixed;
 
     color: #efefef;
 }
 
 #bg_wrapper {
     background: rgba(34, 34, 34, .4);
-    height: 100%;
+    height: 1vh;
 }
 
 #logo {
