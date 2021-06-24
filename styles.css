@@ -19,3 +19,20 @@ body {
 .sponsor-card {
     width: 258px;
 }
+
+#playbutton {
+    background-color: #333;
+    color: #efefef;
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+#playbutton:hover {
+    background-color: #efefef;
+    color: #333;
+    border: 1px solid #333;
+}
+#playbutton svg {
+    margin-bottom: 4px;
+    margin-left: 7px;
+}
