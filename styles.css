@@ -9,8 +9,10 @@ body {
 
 #bg_wrapper {
     background: rgba(34, 34, 34, .4);
-    height: 1vh;
+    height: 100%;
+    overflow: auto;
 }
+
 
 #logo {
     width: 400px;
