@@ -13,6 +13,10 @@ body {
     overflow: auto;
 }
 
+#contact_header,
+#contact_header a {
+    color: #333;
+}
 
 #logo {
     width: 400px;
