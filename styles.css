@@ -7,6 +7,10 @@ body {
     color: #efefef;
 }
 
+a {
+    color: #efefef;
+}
+
 #bg_wrapper {
     background: rgba(34, 34, 34, .4);
     height: 100%;
