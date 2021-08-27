@@ -1,8 +1,8 @@
 body {
-    background-image: url('img/radiobackground.jpg');
+    background-image: url('img/dfm_studio-blurred.jpg');
     background-size: cover;
-    background-position-y: center;
-    background-attachment: fixed;
+    background-position: center;
+    backdrop-filter: blur(6px);
 
     color: #efefef;
 }
@@ -12,7 +12,7 @@ a {
 }
 
 #bg_wrapper {
-    background: rgba(34, 34, 34, .4);
+    background: rgba(0, 0, 0, .75);
     height: 100%;
     overflow: auto;
 }
