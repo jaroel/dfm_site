@@ -1,0 +1,48 @@
+/* body {
+    background-image: url('img/dfm_studio-blurred.jpg');
+    background-size: cover;
+    background-position: center;
+
+    color: #efefef;
+}
+
+a {
+    color: #efefef;
+}
+
+#bg_wrapper {
+    background: rgba(0, 0, 0, .75);
+    height: 100%;
+    overflow: auto;
+}
+
+#contact_header,
+#contact_header a {
+    color: #333;
+}
+
+#logo {
+    width: 400px;
+}
+
+.sponsor-card {
+    width: 258px;
+}
+
+#player {
+    background-color: #333;
+    color: #efefef;
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+#player:hover {
+    background-color: #efefef;
+    color: #333;
+    border: 1px solid #333;
+}
+#player svg {
+    margin-bottom: 4px;
+    margin-left: 7px;
+} */

@@ -1,0 +1,125 @@
+---
+import ButtonAudio from "../components/ButtonAudio.jsx";
+import ButtonVideo from "../components/ButtonVideo.jsx";
+import Video from "../components/Video.jsx";
+import DfmLayout from "../layouts/DfmLayout.astro";
+---
+
+<DfmLayout>
+  <div class="flex justify-evenly mt-20 mb-20">
+    <div class="max-w-sm">
+      <img src="/img/logodinxperfm.png" />
+      <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
+    </div>
+    <Video client:only="solid" />
+  </div>
+
+  <nav class="flex justify-evenly text-black bg-gray-100">
+    <ul class="flex flex-wrap list-none pl-0 mb-0">
+      <li class="mr-2">
+        <ButtonVideo
+          title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
+          label="Kijk live!"
+          client:only="solid"
+        />
+      </li>
+      <li>
+        <ButtonAudio
+          title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
+          label="Luister live!"
+          client:visible
+        />
+      </li>
+
+      <li>
+        <a
+          class="inline-block mt-2 px-4 no-underline"
+          style="margin-top: 12px"
+          href="https://uitzendinggemist.dinxperfm.nl"
+          title="">Uitzending gemist?</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div class="mt-10 text-center">
+    <img class="mx-auto" src="/programmering/2022-09-02.jpeg" />
+    <a target="blank" class="block" href="/programmering/2022-09-02.jpeg"
+      >In nieuwe pagina openen</a
+    >
+  </div>
+
+  <div class="mt-10 text-center">
+    <h2 class="text-2xl">Dinxper FM wordt mede mogelijk gemaakt door</h2>
+
+    <div class="flex flex-row flex-wrap justify-evenly">
+      <div class="p-1 mb-2">
+        <a href="https://www.facebook.com/markt.dinxperlo/"
+          ><img class="max-w-[250px]" src="/img/makt.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="http://www.naaiateliermoniqueharmsen.nl/"
+          ><img class="max-w-[250px]" src="/img/logo13.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://podesta.nl/"
+          ><img class="max-w-[250px]" src="/img/logo15.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a
+          href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
+          ><img class="max-w-[250px]" src="/img/logo16.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="http://www.groentekwekerij-smits.nl/"
+          ><img class="max-w-[250px]" src="/img/logo18.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="http://www.tegrotenhuisdinxperlo.nl/"
+          ><img class="max-w-[250px]" src="/img/logo19.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://www.tiggelovend-kok.nl/"
+          ><img class="max-w-[250px]" src="/img/logo22.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="http://www.vvnf.nl/home"
+          ><img class="max-w-[250px]" src="/img//logo23.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/"
+          ><img class="max-w-[250px]" src="/img/jumbo.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://www.olddutchdinxperlo.nl/"
+          ><img class="max-w-[250px]" src="/img/OldDutch.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://www.ma-shops.nl/?ref=dinxperfm"
+          ><img class="max-w-[250px]" src="/img/Mashops.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a
+          href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
+          ><img class="max-w-[250px]" src="/img/Expert.jpg" />
+        </a>
+      </div>
+      <div class="p-1 mb-2">
+        <a href="https://www.dinxperlo.nl"
+          ><img class="max-w-[250px]" src="/img/AlswinGr.jpg" />
+        </a>
+      </div>
+    </div>
+  </div>
+</DfmLayout>

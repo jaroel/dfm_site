@@ -1,0 +1,46 @@
+---
+import Contactbar from "../components/Contactbar.astro";
+---
+
+<style>
+  body {
+    background-image: url("/img/dfm_studio-blurred.jpg");
+    background-size: cover;
+    background-position: center;
+
+    color: #efefef;
+  }
+
+  a {
+    color: #efefef;
+  }
+
+  nav a {
+    color: #333;
+  }
+
+  #bg_wrapper {
+    background: rgba(0, 0, 0, 0.75);
+    height: 100%;
+    overflow: auto;
+  }
+</style>
+
+<title>Dinxper FM - het swingende geluid van Dinxperlo</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+<leta name="msapplication-TileColor" content="#da532c"></leta>
+<leta name="theme-color" content="#ffffff"></leta>
+
+<div id="bg_wrapper">
+  <div class="max-w-7xl mx-auto">
+    <Contactbar />
+
+    <slot />
+
+    <Contactbar />
+  </div>
+</div>
