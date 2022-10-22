@@ -5,7 +5,7 @@ interface ButtonProps {
   label: string;
 }
 
-export default function Button(props: ButtonProps) {
+export default function AudioButton(props: ButtonProps) {
   const [icon, setIcon] = createSignal<"play" | "stop" | "loading">("play");
 
   const streamSrc = "https://stream.dinxperfm.nl/1";

@@ -6,7 +6,7 @@ interface ButtonProps {
   label: string;
 }
 
-export default function Button(props: ButtonProps) {
+export default function VideoButton(props: ButtonProps) {
   return (
     <button
       class="rounded-full border border-gray-600 bg-gray-600 text-white hover:bg-gray-100 hover:text-gray-600 hover:border-gray-600  my-1 py-2 px-4"
