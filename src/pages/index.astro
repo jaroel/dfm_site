@@ -3,18 +3,98 @@ import ButtonAudio from "../components/ButtonAudio.jsx";
 import ButtonVideo from "../components/ButtonVideo.jsx";
 import Video from "../components/Video.jsx";
 import DfmLayout from "../layouts/DfmLayout.astro";
+
+import { Image } from "@astrojs/image/components";
+
+interface Sponsor {
+  href: string;
+  src: Promise<typeof import("../../assets/img/makt.jpg")>;
+  alt: string;
+}
+
+const sponsors: Sponsor[] = [
+  {
+    href: "https://www.facebook.com/markt.dinxperlo/",
+    src: import("../../assets/img/makt.jpg"),
+    alt: "De markt van Dinxperlo",
+  },
+  {
+    href: "http://www.naaiateliermoniqueharmsen.nl/",
+    src: import("../../assets/img/logo13.jpg"),
+    alt: "Naaiatelier Monique Harmsen",
+  },
+  {
+    href: "https://podesta.nl/",
+    src: import("../../assets/img/logo15.jpg"),
+    alt: "Podesta event supplies",
+  },
+  {
+    href: "https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/",
+    src: import("../../assets/img/logo16.jpg"),
+    alt: "Adviesbureau Roenhorst Dinxperlo",
+  },
+  {
+    href: "http://www.groentekwekerij-smits.nl/",
+    src: import("../../assets/img/logo18.jpg"),
+    alt: "Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit",
+  },
+  {
+    href: "http://www.tegrotenhuisdinxperlo.nl/",
+    src: import("../../assets/img/logo19.jpg"),
+    alt: "Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo",
+  },
+  {
+    href: "https://www.tiggelovend-kok.nl/",
+    src: import("../../assets/img/logo22.jpg"),
+    alt: "Tiggelovend-Kok B.V.",
+  },
+  {
+    href: "http://www.vvnf.nl/",
+    src: import("../../assets/img/logo23.jpg"),
+    alt: "VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo",
+  },
+  {
+    href: "https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/",
+    src: import("../../assets/img/jumbo.jpg"),
+    alt: "Jumbo Dinxperlo Leussink",
+  },
+  {
+    href: "https://www.olddutchdinxperlo.nl/",
+    src: import("../../assets/img/OldDutch.jpg"),
+    alt: "Old Dutch Dinxperlo",
+  },
+  {
+    href: "https://www.ma-shops.nl/?ref=dinxperfm",
+    src: import("../../assets/img/Mashops.jpg"),
+    alt: "MA-Shops",
+  },
+  {
+    href: "https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE",
+    src: import("../../assets/img/Expert.jpg"),
+    alt: "Expert Dinxperlo",
+  },
+  {
+    href: "https://www.dinxperlo.nl",
+    src: import("../../assets/img/AlswinGr.jpg"),
+    alt: "Alswin",
+  },
+];
 ---
 
 <DfmLayout>
   <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm">
-      <img src="/img/logodinxperfm.png" />
+      <Image
+        src={import("../../assets/img/logodinxperfm.png")}
+        alt="DinxperFM logo"
+        width={400}
+      />
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
     <Video client:only="solid" />
   </div>
 
-  <nav class="flex justify-evenly text-black bg-gray-100">
+  <nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none pl-0 mb-0">
       <li class="mr-2">
         <ButtonVideo
@@ -33,8 +113,7 @@ import DfmLayout from "../layouts/DfmLayout.astro";
 
       <li>
         <a
-          class="inline-block mt-2 px-4 no-underline"
-          style="margin-top: 12px"
+          class="inline-block mt-3 px-4 no-underline text-blue-700"
           href="https://uitzendinggemist.dinxperfm.nl"
           title="">Uitzending gemist?</a
         >
@@ -43,9 +122,16 @@ import DfmLayout from "../layouts/DfmLayout.astro";
   </nav>
 
   <div class="mt-10 text-center">
-    <img class="mx-auto" src="/programmering/2022-09-02.jpeg" />
-    <a target="blank" class="block" href="/programmering/2022-09-02.jpeg"
-      >In nieuwe pagina openen</a
+    <Image
+      src={import("../../public/programmering/2022-09-02.jpeg")}
+      alt="DinxperFM programmering per 2022-09-02"
+      width={1133}
+      class="mx-auto"
+    />
+    <a
+      target="blank"
+      class="text-blue-400"
+      href="/programmering/2022-09-02.jpeg">In nieuwe pagina openen</a
     >
   </div>
 
@@ -53,73 +139,15 @@ import DfmLayout from "../layouts/DfmLayout.astro";
     <h2 class="text-2xl">Dinxper FM wordt mede mogelijk gemaakt door</h2>
 
     <div class="flex flex-row flex-wrap justify-evenly">
-      <div class="p-1 mb-2">
-        <a href="https://www.facebook.com/markt.dinxperlo/"
-          ><img class="max-w-[250px]" src="/img/makt.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="http://www.naaiateliermoniqueharmsen.nl/"
-          ><img class="max-w-[250px]" src="/img/logo13.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://podesta.nl/"
-          ><img class="max-w-[250px]" src="/img/logo15.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a
-          href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
-          ><img class="max-w-[250px]" src="/img/logo16.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="http://www.groentekwekerij-smits.nl/"
-          ><img class="max-w-[250px]" src="/img/logo18.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="http://www.tegrotenhuisdinxperlo.nl/"
-          ><img class="max-w-[250px]" src="/img/logo19.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://www.tiggelovend-kok.nl/"
-          ><img class="max-w-[250px]" src="/img/logo22.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="http://www.vvnf.nl/home"
-          ><img class="max-w-[250px]" src="/img//logo23.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/"
-          ><img class="max-w-[250px]" src="/img/jumbo.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://www.olddutchdinxperlo.nl/"
-          ><img class="max-w-[250px]" src="/img/OldDutch.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://www.ma-shops.nl/?ref=dinxperfm"
-          ><img class="max-w-[250px]" src="/img/Mashops.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a
-          href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
-          ><img class="max-w-[250px]" src="/img/Expert.jpg" />
-        </a>
-      </div>
-      <div class="p-1 mb-2">
-        <a href="https://www.dinxperlo.nl"
-          ><img class="max-w-[250px]" src="/img/AlswinGr.jpg" />
-        </a>
-      </div>
+      {
+        sponsors.map((sponsor) => (
+          <div class="p-1 mb-2">
+            <a href={sponsor.href} title={sponsor.alt} target="_blank">
+              <Image src={sponsor.src} alt={sponsor.alt} width={250} />
+            </a>
+          </div>
+        ))
+      }
     </div>
   </div>
 </DfmLayout>
