@@ -36,7 +36,11 @@
 
       <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).only=t=>{(async()=>await(await t())())()},window.dispatchEvent(new Event("astro:only"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));</script><link rel="stylesheet" href="/assets/index.471ab4ff.css" /><div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm">
-      <img alt="DinxperFM logo" width="400" height="343" src="/assets/logodinxperfm.b4f666dc_3Umv7.png" class="astro-UXNKDZ4E" loading="eager" decoding="auto">
+      <picture width="384" class="mx-auto astro-EI35XRNH">
+	<source type="image/avif" srcset="/assets/logodinxperfm.b4f666dc_1qPWEc.avif 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/logodinxperfm.b4f666dc_2abLBX.webp 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/png" srcset="/assets/logodinxperfm.b4f666dc_1cQz67.png 384w" class="astro-EI35XRNH" sizes="100vw">
+	<img src="/assets/logodinxperfm.b4f666dc_1B5hRn.png" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM logo">
+</picture>
+
 
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
@@ -56,7 +60,10 @@
       </li>
     </ul>
   </nav><div class="mt-10 text-center">
-    <img alt="DinxperFM programmering per 2022-09-02" class="mx-auto astro-UXNKDZ4E" width="1133" height="667" src="/assets/2022-09-02.69967959_1xqWIv.jpg" loading="eager" decoding="auto">
+    <picture width="1280" class="mx-auto astro-EI35XRNH">
+	<source type="image/avif" srcset="/assets/2022-09-02.69967959_1dceFy.avif 1280w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/2022-09-02.69967959_1Vx3Dk.webp 1280w" class="astro-EI35XRNH" sizes="100vw"><source type="image/jpeg" srcset="/assets/2022-09-02.69967959_1votdL.jpeg 1280w" class="astro-EI35XRNH" sizes="100vw">
+	<img src="/assets/2022-09-02.69967959_8CAkC.jpeg" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM programmering per 2022-09-02">
+</picture>
 
 
     <a target="blank" class="text-blue-400" href="/programmering/2022-09-02.jpeg">In nieuwe pagina openen</a>

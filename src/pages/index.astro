@@ -4,7 +4,7 @@ import ButtonVideo from "../components/ButtonVideo.jsx";
 import Video from "../components/Video.jsx";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
-import { Image } from "@astrojs/image/components";
+import { Image, Picture } from "@astrojs/image/components";
 
 interface Sponsor {
   href: string;
@@ -84,13 +84,17 @@ const sponsors: Sponsor[] = [
 <DfmLayout>
   <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm">
-      <Image
+      <Picture
         src={import("../../assets/img/logodinxperfm.png")}
         alt="DinxperFM logo"
-        width={400}
+        width={384}
+        widths={[384]}
+        sizes="100vw"
         loading="eager"
         decoding="auto"
+        class="mx-auto"
       />
+
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
     <Video client:only="solid" />
@@ -124,10 +128,12 @@ const sponsors: Sponsor[] = [
   </nav>
 
   <div class="mt-10 text-center">
-    <Image
+    <Picture
       src={import("../../public/programmering/2022-09-02.jpeg")}
       alt="DinxperFM programmering per 2022-09-02"
-      width={1133}
+      width={1280}
+      widths={[1280]}
+      sizes={"100vw"}
       loading="eager"
       decoding="auto"
       class="mx-auto"
