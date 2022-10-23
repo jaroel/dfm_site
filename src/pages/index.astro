@@ -4,7 +4,7 @@ import ButtonVideo from "../components/ButtonVideo.jsx";
 import Video from "../components/Video.jsx";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
-import { Image, Picture } from "@astrojs/image/components";
+import { Picture } from "@astrojs/image/components";
 
 interface Sponsor {
   href: string;
@@ -102,14 +102,14 @@ const sponsors: Sponsor[] = [
 
   <nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none pl-0 mb-0">
-      <li class="mr-2" style={{ "min-width": "117px" }}>
+      <li class="mr-2" style={{ width: "122px" }}>
         <ButtonVideo
           title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
           label="Kijk live!"
           client:only="solid"
         />
       </li>
-      <li style={{ "min-width": "141px" }}>
+      <li style={{ width: "146px" }}>
         <ButtonAudio
           title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
           label="Luister live!"
@@ -155,7 +155,13 @@ const sponsors: Sponsor[] = [
         sponsors.map((sponsor) => (
           <div class="p-1 mb-2">
             <a href={sponsor.href} title={sponsor.alt} target="_blank">
-              <Image src={sponsor.src} alt={sponsor.alt} width={250} />
+              <Picture
+                src={sponsor.src}
+                alt={sponsor.alt}
+                width={250}
+                widths={[250]}
+                sizes={"250px"}
+              />
             </a>
           </div>
         ))
