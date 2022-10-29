@@ -1,0 +1,22 @@
+---
+---
+
+<div class="max-w-sm hidden" id="video_player">
+  <iframe id="video_player_iframe" allowfullscreen height="100%" width="540"
+  ></iframe>
+</div>
+
+<script>
+  import { video } from "../stores.js";
+
+  const video_player = document.getElementById("video_player")!;
+  const video_player_iframe = document.getElementById(
+    "video_player_iframe"
+  ) as HTMLIFrameElement;
+  video.subscribe((video_on) => {
+    video_player.classList.toggle("hidden", !video_on);
+    video_player_iframe.src = video_on
+      ? "https://video3.inetcast.nl/live-stream-video-widget/dinxperfm"
+      : "";
+  });
+</script>

@@ -1,7 +1,7 @@
 ---
-import ButtonAudio from "../components/ButtonAudio.jsx";
-import ButtonVideo from "../components/ButtonVideo.jsx";
-import Video from "../components/Video.jsx";
+import ButtonAudio from "../components/ButtonAudio.astro";
+import ButtonVideo from "../components/ButtonVideo.astro";
+import Video from "../components/Video.astro";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
 import { Picture } from "@astrojs/image/components";
@@ -97,23 +97,21 @@ const sponsors: Sponsor[] = [
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
-    <Video client:only="solid" />
+    <Video />
   </div>
 
   <nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none pl-0 mb-0">
-      <li class="mr-2" style={{ width: "122px" }}>
+      <li class="mr-2">
         <ButtonVideo
           title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
           label="Kijk live!"
-          client:only="solid"
         />
       </li>
-      <li style={{ width: "146px" }}>
+      <li>
         <ButtonAudio
           title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
           label="Luister live!"
-          client:visible
         />
       </li>
 

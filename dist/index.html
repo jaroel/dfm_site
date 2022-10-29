@@ -11,7 +11,8 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="/assets/index.471ab4ff.css" /></head>
+  <link rel="stylesheet" href="/assets/index.fdfe29e6.css" /><script type="module">let o=[],r=e=>{let d,n=[],t={lc:0,value:e,set(i){t.value=i,t.notify()},get(){return t.lc||t.listen(()=>{})(),t.value},notify(i){d=n;let l=!o.length;for(let s=0;s<d.length;s++)o.push(d[s],t.value,i);if(l){for(let s=0;s<o.length;s+=3)o[s](o[s+1],o[s+2]);o.length=0}},listen(i){return n===d&&(n=n.slice()),t.lc=n.push(i),()=>{n===d&&(n=n.slice());let l=n.indexOf(i);~l&&(n.splice(l,1),t.lc--)}},subscribe(i){let l=t.listen(i);return i(t.value),l},off(){}};return t};const m="https://stream.dinxperfm.nl/1",c=r("play"),u=r(""),_=document.getElementById("audio_icon_play"),p=document.getElementById("audio_icon_stop"),y=document.getElementById("audio_icon_loading");c.subscribe(e=>{_.classList.toggle("hidden",e!=="play"),p.classList.toggle("hidden",e!=="stop"),y.classList.toggle("hidden",e!=="loading")});const g=document.createElement("audio");g.autoplay=!0;g.addEventListener("playing",()=>{c.set("stop")});u.subscribe(e=>{g.src=e,e===""?c.set("play"):c.set("loading")});document.getElementById("audio_button").addEventListener("click",()=>{u.set(u.get()===""?m:"")});const a=r(!1),f=document.getElementById("video_button_icon_stop"),b=document.getElementById("video_button_icon_play");a.subscribe(e=>{b.classList.toggle("hidden",e),f.classList.toggle("hidden",!e)});document.getElementById("video_button").addEventListener("click",()=>{a.set(!a.get())});const h=document.getElementById("video_player"),v=document.getElementById("video_player_iframe");a.subscribe(e=>{h.classList.toggle("hidden",!e),v.src=e?"https://video3.inetcast.nl/live-stream-video-widget/dinxperfm":""});
+</script></head>
   <body style="background-image:url(/assets/dfm_studio-blurred.0b62a3c6.jpg);background-size:cover;background-position:center;background-color:rgb(63,62,55);height:100vh;color:#efefef">
     <div style="background:rgba(0, 0, 0, 0.75);height:100%;overflow:auto">
       <div class="max-w-7xl mx-auto">
@@ -37,7 +38,7 @@
   </ul>
 </nav>
 
-        <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).only=t=>{(async()=>await(await t())())()},window.dispatchEvent(new Event("astro:only"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));</script><div class="flex justify-evenly mt-20 mb-20">
+        <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm" style="width:384px;height:328px">
       <picture width="384" class="mx-auto astro-EI35XRNH">
 	<source type="image/avif" srcset="/assets/logodinxperfm.b4f666dc_1qPWEc.avif 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/logodinxperfm.b4f666dc_2abLBX.webp 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/png" srcset="/assets/logodinxperfm.b4f666dc_1cQz67.png 384w" class="astro-EI35XRNH" sizes="100vw">
@@ -48,14 +49,47 @@
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
-    <astro-island uid="Z190tlI" component-url="/Video.92e46496.js" component-export="default" renderer-url="/client.4fb5a45a.js" props="{}" ssr="" client="only" opts="{&quot;name&quot;:&quot;Video&quot;,&quot;value&quot;:&quot;solid&quot;}"></astro-island>
+    <div class="max-w-sm hidden" id="video_player">
+  <iframe id="video_player_iframe" allowfullscreen height="100%" width="540"></iframe>
+</div>
+
+
   </div><nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none pl-0 mb-0">
-      <li class="mr-2" style="width:122px">
-        <astro-island uid="Zi4AJG" component-url="/ButtonVideo.7a7dd6ce.js" component-export="default" renderer-url="/client.4fb5a45a.js" props="{&quot;title&quot;:[0,&quot;Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!&quot;],&quot;label&quot;:[0,&quot;Kijk live!&quot;]}" ssr="" client="only" opts="{&quot;name&quot;:&quot;ButtonVideo&quot;,&quot;value&quot;:&quot;solid&quot;}"></astro-island>
+      <li class="mr-2">
+        <button id="video_button" class="rounded-full border border-gray-600 bg-gray-600 text-white hover:bg-gray-100 hover:text-gray-600 hover:border-gray-600 my-1 py-2 px-4" title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!">
+  <span class="mr-2">Kijk live!</span>
+
+  <svg id="video_button_icon_play" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play inline" viewBox="0 0 16 16">
+    <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"></path>
+  </svg>
+
+  <svg id="video_button_icon_stop" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle inline hidden" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"></path>
+  </svg>
+</button>
+
+
       </li>
-      <li style="width:146px">
-        <astro-island uid="Z1jYCUh" data-solid-render-id="s0" component-url="/ButtonAudio.2d98a06f.js" component-export="default" renderer-url="/client.4fb5a45a.js" props="{&quot;title&quot;:[0,&quot;Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!&quot;],&quot;label&quot;:[0,&quot;Luister live!&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;ButtonAudio&quot;,&quot;value&quot;:true}" await-children=""><audio data-hk="s00-0" src="" autoplay preload="none"></audio><button data-hk="s00-1" class="rounded-full border border-gray-600 bg-gray-600 text-white hover:bg-gray-100 hover:text-gray-600 hover:border-gray-600  my-1 py-2 px-4" title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"><span class="mr-2">Luister live!</span><!--#--><svg data-hk="s00-2-0" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play inline" viewBox="0 0 16 16"><path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"></path></svg><!--/--><!--#--><!--/--><!--#--><!--/--></button></astro-island>
+      <li>
+        <button id="audio_button" class="rounded-full border border-gray-600 bg-gray-600 text-white hover:bg-gray-100 hover:text-gray-600 hover:border-gray-600 my-1 py-2 px-4" title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!">
+  <span class="mr-2">Luister live!</span>
+
+  <svg id="audio_icon_play" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play inline" viewBox="0 0 16 16">
+    <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"></path>
+  </svg>
+
+  <svg id="audio_icon_stop" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-circle inline hidden" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"></path>
+  </svg>
+
+  <svg id="audio_icon_loading" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass-split inline hidden" viewBox="0 0 16 16">
+    <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z"></path>
+  </svg>
+</button>
+
       </li>
 
       <li>
