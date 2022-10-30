@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="/assets/index.fdfe29e6.css" /><script type="module">let o=[],r=e=>{let d,n=[],t={lc:0,value:e,set(i){t.value=i,t.notify()},get(){return t.lc||t.listen(()=>{})(),t.value},notify(i){d=n;let l=!o.length;for(let s=0;s<d.length;s++)o.push(d[s],t.value,i);if(l){for(let s=0;s<o.length;s+=3)o[s](o[s+1],o[s+2]);o.length=0}},listen(i){return n===d&&(n=n.slice()),t.lc=n.push(i),()=>{n===d&&(n=n.slice());let l=n.indexOf(i);~l&&(n.splice(l,1),t.lc--)}},subscribe(i){let l=t.listen(i);return i(t.value),l},off(){}};return t};const m="https://stream.dinxperfm.nl/1",c=r("play"),u=r(""),_=document.getElementById("audio_icon_play"),p=document.getElementById("audio_icon_stop"),y=document.getElementById("audio_icon_loading");c.subscribe(e=>{_.classList.toggle("hidden",e!=="play"),p.classList.toggle("hidden",e!=="stop"),y.classList.toggle("hidden",e!=="loading")});const g=document.createElement("audio");g.autoplay=!0;g.addEventListener("playing",()=>{c.set("stop")});u.subscribe(e=>{g.src=e,e===""?c.set("play"):c.set("loading")});document.getElementById("audio_button").addEventListener("click",()=>{u.set(u.get()===""?m:"")});const a=r(!1),f=document.getElementById("video_button_icon_stop"),b=document.getElementById("video_button_icon_play");a.subscribe(e=>{b.classList.toggle("hidden",e),f.classList.toggle("hidden",!e)});document.getElementById("video_button").addEventListener("click",()=>{a.set(!a.get())});const h=document.getElementById("video_player"),v=document.getElementById("video_player_iframe");a.subscribe(e=>{h.classList.toggle("hidden",!e),v.src=e?"https://video3.inetcast.nl/live-stream-video-widget/dinxperfm":""});
 </script></head>
-  <body style="background-image:url(/assets/dfm_studio-blurred.0b62a3c6.jpg);background-size:cover;background-position:center;background-color:rgb(63,62,55);height:100vh;color:#efefef">
+  <body style="background-image:url(/assets/dfm_studio-blurred.68bb4e06.jpg);background-size:cover;background-position:center;background-color:rgb(63,62,55);height:100vh;color:#efefef">
     <div style="background:rgba(0, 0, 0, 0.75);height:100%;overflow:auto">
       <div class="max-w-7xl mx-auto">
         <nav class="text-black bg-gray-100 p-2 flex justify-center astro-SK6PN2MA">
@@ -41,8 +41,8 @@
         <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm" style="width:384px;height:328px">
       <picture width="384" class="mx-auto astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logodinxperfm.b4f666dc_1qPWEc.avif 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/logodinxperfm.b4f666dc_2abLBX.webp 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/png" srcset="/assets/logodinxperfm.b4f666dc_1cQz67.png 384w" class="astro-EI35XRNH" sizes="100vw">
-	<img src="/assets/logodinxperfm.b4f666dc_1B5hRn.png" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM logo">
+	<source type="image/avif" srcset="/assets/logodinxperfm.d5ff7087_fHJgx.avif 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/logodinxperfm.d5ff7087_Y3yej.webp 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/png" srcset="/assets/logodinxperfm.d5ff7087_2tzKLK.png 384w" class="astro-EI35XRNH" sizes="100vw">
+	<img src="/assets/logodinxperfm.d5ff7087_Z2ppgXJ.png" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM logo">
 </picture>
 
 
@@ -112,8 +112,8 @@
       <div class="p-1 mb-2">
             <a href="https://www.facebook.com/markt.dinxperlo/" title="De markt van Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/makt.0e4859b5_ZzbxnD.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/makt.0e4859b5_99gz8.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/makt.0e4859b5_tsJsA.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/makt.0e4859b5_ZPugAx.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="De markt van Dinxperlo">
+	<source type="image/avif" srcset="/assets/makt.810f67c8_Zd9rlI.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/makt.810f67c8_vbmB3.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/makt.810f67c8_Ych02.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/makt.810f67c8_2j6OmY.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="De markt van Dinxperlo">
 </picture>
 
 
@@ -121,8 +121,8 @@
           </div><div class="p-1 mb-2">
             <a href="http://www.naaiateliermoniqueharmsen.nl/" title="Naaiatelier Monique Harmsen" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo13.2f110205_19SbSt.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo13.2f110205_1Se0Qf.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo13.2f110205_Z1gaODJ.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo13.2f110205_2elKTo.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Naaiatelier Monique Harmsen">
+	<source type="image/avif" srcset="/assets/logo13.29b52cea_2BNPH.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo13.29b52cea_KWCNt.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo13.29b52cea_Z1snxX9.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo13.29b52cea_20KgbD.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Naaiatelier Monique Harmsen">
 </picture>
 
 
@@ -130,8 +130,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://podesta.nl/" title="Podesta event supplies" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo15.e4cd1025_Z1hKBDT.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo15.e4cd1025_ZypMG8.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo15.e4cd1025_W5aKF.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo15.e4cd1025_Z3vdhz.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Podesta event supplies">
+	<source type="image/avif" srcset="/assets/logo15.1c80f236_12CCN6.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo15.1c80f236_1KXrKR.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo15.1c80f236_wEcn4.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo15.1c80f236_Z26gA7X.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Podesta event supplies">
 </picture>
 
 
@@ -139,8 +139,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/" title="Adviesbureau Roenhorst Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo16.70c96163_OlF4F.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo16.70c96163_1xGu2r.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo16.70c96163_Z1KQoXW.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo16.70c96163_q7dCV.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Adviesbureau Roenhorst Dinxperlo">
+	<source type="image/avif" srcset="/assets/logo16.87d4e3df_25W8Ca.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo16.87d4e3df_Z2fTbe0.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo16.87d4e3df_Z1Sm6CP.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo16.87d4e3df_21oKQs.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Adviesbureau Roenhorst Dinxperlo">
 </picture>
 
 
@@ -148,8 +148,8 @@
           </div><div class="p-1 mb-2">
             <a href="http://www.groentekwekerij-smits.nl/" title="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo18.c70d212b_22ek4N.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo18.c70d212b_Z2jBYLm.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo18.c70d212b_yBrvt.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo18.c70d212b_ZAtGRB.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit">
+	<source type="image/avif" srcset="/assets/logo18.23c51203_ZD6Bly.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo18.23c51203_5ecBd.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo18.23c51203_Z1DJ3Bx.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo18.23c51203_r1PJT.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit">
 </picture>
 
 
@@ -157,8 +157,8 @@
           </div><div class="p-1 mb-2">
             <a href="http://www.tegrotenhuisdinxperlo.nl/" title="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo19.98c1e406_1a9eeV.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo19.98c1e406_1Su3cH.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo19.98c1e406_Z2fcEt2.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo19.98c1e406_1dC6Nm.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo">
+	<source type="image/avif" srcset="/assets/logo19.31335130_Z2bUOJs.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo19.31335130_Z1sA0LG.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo19.31335130_Z1QN2md.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo19.31335130_1wpdY1.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo">
 </picture>
 
 
@@ -166,8 +166,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.tiggelovend-kok.nl/" title="Tiggelovend-Kok B.V." target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo22.50f0d82c_2czfiX.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo22.50f0d82c_Z29h4xc.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo22.50f0d82c_1nXKu9.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo22.50f0d82c_ZukTy4.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Tiggelovend-Kok B.V.">
+	<source type="image/avif" srcset="/assets/logo22.0a1e66b0_1h85tc.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo22.0a1e66b0_20sTqX.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo22.0a1e66b0_1wa58t.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo22.0a1e66b0_1zB8eN.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Tiggelovend-Kok B.V.">
 </picture>
 
 
@@ -175,8 +175,8 @@
           </div><div class="p-1 mb-2">
             <a href="http://www.vvnf.nl/" title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo23.f5447b08_12CfV1.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo23.f5447b08_1KX4SM.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo23.f5447b08_20HHHI.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo23.f5447b08_Z1r4RMJ.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo">
+	<source type="image/avif" srcset="/assets/logo23.ae1d3e83_ZF4GcR.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo23.ae1d3e83_3g7JT.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo23.ae1d3e83_18iIlB.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/logo23.ae1d3e83_Z2cfGcx.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo">
 </picture>
 
 
@@ -184,8 +184,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/" title="Jumbo Dinxperlo Leussink" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/jumbo.3fed9707_ZoTvms.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/jumbo.3fed9707_jqiAj.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/jumbo.3fed9707_ZYfxKR.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/jumbo.3fed9707_ZOcXD0.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Jumbo Dinxperlo Leussink">
+	<source type="image/avif" srcset="/assets/jumbo.9dd9d9b5_Cg0ny.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/jumbo.9dd9d9b5_1lAOlk.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/jumbo.9dd9d9b5_Z1he1Oz.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/jumbo.9dd9d9b5_Z1CMYhh.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Jumbo Dinxperlo Leussink">
 </picture>
 
 
@@ -193,8 +193,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.olddutchdinxperlo.nl/" title="Old Dutch Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/OldDutch.13e31f1f_Z1CI3Ny.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/OldDutch.13e31f1f_ZTnePM.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/OldDutch.13e31f1f_1KqSAH.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/OldDutch.13e31f1f_Z1UjhUJ.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Old Dutch Dinxperlo">
+	<source type="image/avif" srcset="/assets/OldDutch.fa4c6993_Z10pQJf.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/OldDutch.fa4c6993_Zh52Lt.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/OldDutch.fa4c6993_17DG2Q.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/OldDutch.fa4c6993_Z1EMsmS.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Old Dutch Dinxperlo">
 </picture>
 
 
@@ -202,8 +202,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.ma-shops.nl/?ref=dinxperfm" title="MA-Shops" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/Mashops.847fad17_gyvKq.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Mashops.847fad17_YTkIc.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Mashops.847fad17_l8bQQ.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/Mashops.847fad17_NUDEN.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="MA-Shops">
+	<source type="image/avif" srcset="/assets/Mashops.25b36d69_ZDtE39.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Mashops.25b36d69_4Q9TC.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Mashops.25b36d69_Z1tJp3Q.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/Mashops.25b36d69_1UuV2a.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="MA-Shops">
 </picture>
 
 
@@ -211,8 +211,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE" title="Expert Dinxperlo" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/Expert.638a65a2_Z1UmSHQ.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Expert.638a65a2_Z1c24K5.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Expert.638a65a2_6NeGq.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/Expert.638a65a2_xdKkI.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Expert Dinxperlo">
+	<source type="image/avif" srcset="/assets/Expert.e8185835_IVPCX.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Expert.e8185835_1shEAJ.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Expert.e8185835_c2DL4.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/Expert.e8185835_Zesq90.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Expert Dinxperlo">
 </picture>
 
 
@@ -220,8 +220,8 @@
           </div><div class="p-1 mb-2">
             <a href="https://www.dinxperlo.nl" title="Alswin" target="_blank">
               <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/AlswinGr.457833e2_1MthU.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/AlswinGr.457833e2_K8ifG.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/AlswinGr.457833e2_ZNnBqf.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/AlswinGr.457833e2_Z1fp5Jz.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Alswin">
+	<source type="image/avif" srcset="/assets/AlswinGr.7fd016a5_ZEH4ha.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/AlswinGr.7fd016a5_3CJFB.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/AlswinGr.7fd016a5_Z1tLNtS.jpg 250w" class="astro-EI35XRNH" sizes="250px">
+	<img src="/assets/AlswinGr.7fd016a5_Z14nJx1.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Alswin">
 </picture>
 
 
