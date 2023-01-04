@@ -4,7 +4,7 @@ import ButtonVideo from "../components/ButtonVideo.astro";
 import Video from "../components/Video.astro";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
-import { Picture } from "@astrojs/image/components";
+import { Image } from "@astrojs/image/components";
 
 interface Sponsor {
   href: string;
@@ -84,15 +84,14 @@ const sponsors: Sponsor[] = [
 <DfmLayout>
   <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm" style={{ width: "384px", height: "328px" }}>
-      <Picture
+      <Image
         src={import("../../assets/img/logodinxperfm.png")}
         alt="DinxperFM logo"
         width={384}
-        widths={[384]}
-        sizes="100vw"
         loading="eager"
         decoding="auto"
         class="mx-auto"
+        format={"webp"}
       />
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
@@ -126,11 +125,11 @@ const sponsors: Sponsor[] = [
   </nav>
 
   <div class="mt-10 flex justify-center">
-    <Picture
+    <Image
       src={import("../../public/programmering/2022-11-12.jpeg")}
       alt="DinxperFM programmering per 2022-11-12"
-      widths={[1131]}
-      sizes={"1131px"}
+      width={1131}
+      format={"webp"}
       loading="eager"
       decoding="auto"
     />
@@ -151,13 +150,7 @@ const sponsors: Sponsor[] = [
         sponsors.map((sponsor) => (
           <div class="p-1 mb-2">
             <a href={sponsor.href} title={sponsor.alt} target="_blank">
-              <Picture
-                src={sponsor.src}
-                alt={sponsor.alt}
-                width={250}
-                widths={[250]}
-                sizes={"250px"}
-              />
+              <Image src={sponsor.src} alt={sponsor.alt} width={250} />
             </a>
           </div>
         ))

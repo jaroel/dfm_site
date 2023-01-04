@@ -11,39 +11,36 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="/assets/index.79c73985.css" /><script type="module">let o=[],r=e=>{let d,n=[],t={lc:0,value:e,set(i){t.value=i,t.notify()},get(){return t.lc||t.listen(()=>{})(),t.value},notify(i){d=n;let l=!o.length;for(let s=0;s<d.length;s++)o.push(d[s],t.value,i);if(l){for(let s=0;s<o.length;s+=3)o[s](o[s+1],o[s+2]);o.length=0}},listen(i){return n===d&&(n=n.slice()),t.lc=n.push(i),()=>{n===d&&(n=n.slice());let l=n.indexOf(i);~l&&(n.splice(l,1),t.lc--)}},subscribe(i){let l=t.listen(i);return i(t.value),l},off(){}};return t};const m="https://stream.dinxperfm.nl/1",c=r("play"),u=r(""),_=document.getElementById("audio_icon_play"),p=document.getElementById("audio_icon_stop"),y=document.getElementById("audio_icon_loading");c.subscribe(e=>{_.classList.toggle("hidden",e!=="play"),p.classList.toggle("hidden",e!=="stop"),y.classList.toggle("hidden",e!=="loading")});const g=document.createElement("audio");g.autoplay=!0;g.addEventListener("playing",()=>{c.set("stop")});u.subscribe(e=>{g.src=e,e===""?c.set("play"):c.set("loading")});document.getElementById("audio_button").addEventListener("click",()=>{u.set(u.get()===""?m:"")});const a=r(!1),f=document.getElementById("video_button_icon_stop"),b=document.getElementById("video_button_icon_play");a.subscribe(e=>{b.classList.toggle("hidden",e),f.classList.toggle("hidden",!e)});document.getElementById("video_button").addEventListener("click",()=>{a.set(!a.get())});const h=document.getElementById("video_player"),v=document.getElementById("video_player_iframe");a.subscribe(e=>{h.classList.toggle("hidden",!e),v.src=e?"https://video3.inetcast.nl/live-stream-video-widget/dinxperfm":""});
+  <link rel="stylesheet" href="/assets/index.47bf0cd2.css" /><script type="module">let o=[],r=e=>{let d,n=[],t={lc:0,value:e,set(i){t.value=i,t.notify()},get(){return t.lc||t.listen(()=>{})(),t.value},notify(i){d=n;let l=!o.length;for(let s=0;s<d.length;s++)o.push(d[s],t.value,i);if(l){for(let s=0;s<o.length;s+=3)o[s](o[s+1],o[s+2]);o.length=0}},listen(i){return n===d&&(n=n.slice()),t.lc=n.push(i),()=>{n===d&&(n=n.slice());let l=n.indexOf(i);~l&&(n.splice(l,1),t.lc--)}},subscribe(i){let l=t.listen(i);return i(t.value),l},off(){}};return t};const m="https://stream.dinxperfm.nl/1",c=r("play"),u=r(""),_=document.getElementById("audio_icon_play"),p=document.getElementById("audio_icon_stop"),y=document.getElementById("audio_icon_loading");c.subscribe(e=>{_.classList.toggle("hidden",e!=="play"),p.classList.toggle("hidden",e!=="stop"),y.classList.toggle("hidden",e!=="loading")});const g=document.createElement("audio");g.autoplay=!0;g.addEventListener("playing",()=>{c.set("stop")});u.subscribe(e=>{g.src=e,e===""?c.set("play"):c.set("loading")});document.getElementById("audio_button").addEventListener("click",()=>{u.set(u.get()===""?m:"")});const a=r(!1),f=document.getElementById("video_button_icon_stop"),b=document.getElementById("video_button_icon_play");a.subscribe(e=>{b.classList.toggle("hidden",e),f.classList.toggle("hidden",!e)});document.getElementById("video_button").addEventListener("click",()=>{a.set(!a.get())});const h=document.getElementById("video_player"),v=document.getElementById("video_player_iframe");a.subscribe(e=>{h.classList.toggle("hidden",!e),v.src=e?"https://video3.inetcast.nl/live-stream-video-widget/dinxperfm":""});
 </script></head>
   <body style="background-image:url(/assets/dfm_studio-blurred.68bb4e06.jpg);background-size:cover;background-position:center;background-color:rgb(63,62,55);height:100vh;color:#efefef">
     <div style="background:rgba(0, 0, 0, 0.75);height:100%;overflow:auto">
       <div class="max-w-7xl mx-auto">
-        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-SK6PN2MA">
-  <ul class="flex flex-wrap astro-SK6PN2MA">
-    <li class="ml-1 mr-2 astro-SK6PN2MA">
-      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-SK6PN2MA">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-SK6PN2MA" viewBox="0 0 16 16">
-          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-SK6PN2MA"></path>
+        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-RIY664JY">
+  <ul class="flex flex-wrap astro-RIY664JY">
+    <li class="ml-1 mr-2 astro-RIY664JY">
+      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-RIY664JY">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-RIY664JY" viewBox="0 0 16 16">
+          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-RIY664JY"></path>
         </svg>
         Facebook pagina
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-SK6PN2MA">
-      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-SK6PN2MA">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-SK6PN2MA" viewBox="0 0 16 16">
-          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-SK6PN2MA"></path>
+    <li class="ml-1 mr-2 astro-RIY664JY">
+      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-RIY664JY">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-RIY664JY" viewBox="0 0 16 16">
+          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-RIY664JY"></path>
         </svg>
         info@dinxperfm.nl
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-SK6PN2MA">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
+    <li class="ml-1 mr-2 astro-RIY664JY">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
   </ul>
 </nav>
 
         <div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm" style="width:384px;height:328px">
-      <picture width="384" class="mx-auto astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logodinxperfm.d5ff7087_fHJgx.avif 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/webp" srcset="/assets/logodinxperfm.d5ff7087_Y3yej.webp 384w" class="astro-EI35XRNH" sizes="100vw"><source type="image/png" srcset="/assets/logodinxperfm.d5ff7087_2tzKLK.png 384w" class="astro-EI35XRNH" sizes="100vw">
-	<img src="/assets/logodinxperfm.d5ff7087_Z2ppgXJ.png" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM logo">
-</picture>
+      <img alt="DinxperFM logo" class="mx-auto astro-ZSU7V3HK" width="384" height="329" src="/assets/logodinxperfm.d5ff7087_Z6CcpD.webp" loading="eager" decoding="auto">
 
 
 
@@ -97,10 +94,7 @@
       </li>
     </ul>
   </nav><div class="mt-10 flex justify-center">
-    <picture class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/2022-11-12.af547a57_1FynHo.avif 1131w" class="astro-EI35XRNH" sizes="1131px"><source type="image/webp" srcset="/assets/2022-11-12.af547a57_2oTcFa.webp 1131w" class="astro-EI35XRNH" sizes="1131px"><source type="image/jpeg" srcset="/assets/2022-11-12.af547a57_1XKCfB.jpeg 1131w" class="astro-EI35XRNH" sizes="1131px">
-	<img src="/assets/2022-11-12.af547a57_19ar67.jpeg" class="astro-EI35XRNH" loading="eager" decoding="auto" alt="DinxperFM programmering per 2022-11-12">
-</picture>
+    <img alt="DinxperFM programmering per 2022-11-12" width="1131" height="592" src="/assets/2022-11-12.af547a57_ZKe4hz.webp" class="astro-ZSU7V3HK" loading="eager" decoding="auto">
 
 
   </div><div class="text-center">
@@ -111,143 +105,104 @@
     <div class="flex flex-row flex-wrap justify-evenly">
       <div class="p-1 mb-2">
             <a href="https://www.facebook.com/markt.dinxperlo/" title="De markt van Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/makt.810f67c8_Zd9rlI.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/makt.810f67c8_vbmB3.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/makt.810f67c8_Ych02.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/makt.810f67c8_2j6OmY.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="De markt van Dinxperlo">
-</picture>
+              <img alt="De markt van Dinxperlo" width="250" height="100" src="/assets/makt.810f67c8_ZMcA06.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="http://www.naaiateliermoniqueharmsen.nl/" title="Naaiatelier Monique Harmsen" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo13.29b52cea_2BNPH.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo13.29b52cea_KWCNt.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo13.29b52cea_Z1snxX9.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo13.29b52cea_20KgbD.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Naaiatelier Monique Harmsen">
-</picture>
+              <img alt="Naaiatelier Monique Harmsen" width="250" height="120" src="/assets/logo13.29b52cea_23YP4v.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://podesta.nl/" title="Podesta event supplies" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo15.1c80f236_12CCN6.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo15.1c80f236_1KXrKR.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo15.1c80f236_wEcn4.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo15.1c80f236_Z26gA7X.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Podesta event supplies">
-</picture>
+              <img alt="Podesta event supplies" width="250" height="120" src="/assets/logo15.1c80f236_2mTYoC.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/" title="Adviesbureau Roenhorst Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo16.87d4e3df_25W8Ca.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo16.87d4e3df_Z2fTbe0.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo16.87d4e3df_Z1Sm6CP.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo16.87d4e3df_21oKQs.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Adviesbureau Roenhorst Dinxperlo">
-</picture>
+              <img alt="Adviesbureau Roenhorst Dinxperlo" width="250" height="120" src="/assets/logo16.87d4e3df_ZYvpUS.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="http://www.groentekwekerij-smits.nl/" title="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo18.23c51203_ZD6Bly.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo18.23c51203_5ecBd.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo18.23c51203_Z1DJ3Bx.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo18.23c51203_r1PJT.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit">
-</picture>
+              <img alt="Landwinkel Smits Groenten &#38; Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit" width="250" height="120" src="/assets/logo18.23c51203_ZYwSFi.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="http://www.tegrotenhuisdinxperlo.nl/" title="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo19.31335130_Z2bUOJs.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo19.31335130_Z1sA0LG.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo19.31335130_Z1QN2md.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo19.31335130_1wpdY1.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo">
-</picture>
+              <img alt="Te Grotenhuis - Afvalstraat - Zand &#38; grind verkoop - Dinxperlo" width="250" height="120" src="/assets/logo19.31335130_Z1xAqBu.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.tiggelovend-kok.nl/" title="Tiggelovend-Kok B.V." target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo22.0a1e66b0_1h85tc.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo22.0a1e66b0_20sTqX.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo22.0a1e66b0_1wa58t.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo22.0a1e66b0_1zB8eN.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Tiggelovend-Kok B.V.">
-</picture>
+              <img alt="Tiggelovend-Kok B.V." width="250" height="120" src="/assets/logo22.0a1e66b0_Z2dJM0W.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="http://www.vvnf.nl/" title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/logo23.ae1d3e83_ZF4GcR.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/logo23.ae1d3e83_3g7JT.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/logo23.ae1d3e83_18iIlB.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/logo23.ae1d3e83_Z2cfGcx.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo">
-</picture>
+              <img alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo" width="250" height="120" src="/assets/logo23.ae1d3e83_1LeDTC.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/" title="Jumbo Dinxperlo Leussink" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/jumbo.9dd9d9b5_Cg0ny.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/jumbo.9dd9d9b5_1lAOlk.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/jumbo.9dd9d9b5_Z1he1Oz.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/jumbo.9dd9d9b5_Z1CMYhh.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Jumbo Dinxperlo Leussink">
-</picture>
+              <img alt="Jumbo Dinxperlo Leussink" width="250" height="120" src="/assets/jumbo.9dd9d9b5_wRA0.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.olddutchdinxperlo.nl/" title="Old Dutch Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/OldDutch.fa4c6993_Z10pQJf.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/OldDutch.fa4c6993_Zh52Lt.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/OldDutch.fa4c6993_17DG2Q.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/OldDutch.fa4c6993_Z1EMsmS.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Old Dutch Dinxperlo">
-</picture>
+              <img alt="Old Dutch Dinxperlo" width="250" height="120" src="/assets/OldDutch.fa4c6993_qO4vX.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.ma-shops.nl/?ref=dinxperfm" title="MA-Shops" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/Mashops.25b36d69_ZDtE39.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Mashops.25b36d69_4Q9TC.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Mashops.25b36d69_Z1tJp3Q.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/Mashops.25b36d69_1UuV2a.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="MA-Shops">
-</picture>
+              <img alt="MA-Shops" width="250" height="120" src="/assets/Mashops.25b36d69_O7emT.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE" title="Expert Dinxperlo" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/Expert.e8185835_IVPCX.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/Expert.e8185835_1shEAJ.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/Expert.e8185835_c2DL4.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/Expert.e8185835_Zesq90.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Expert Dinxperlo">
-</picture>
+              <img alt="Expert Dinxperlo" width="250" height="74" src="/assets/Expert.e8185835_Z29fGHV.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div><div class="p-1 mb-2">
             <a href="https://www.dinxperlo.nl" title="Alswin" target="_blank">
-              <picture width="250" class="astro-EI35XRNH">
-	<source type="image/avif" srcset="/assets/AlswinGr.7fd016a5_ZEH4ha.avif 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/webp" srcset="/assets/AlswinGr.7fd016a5_3CJFB.webp 250w" class="astro-EI35XRNH" sizes="250px"><source type="image/jpeg" srcset="/assets/AlswinGr.7fd016a5_Z1tLNtS.jpg 250w" class="astro-EI35XRNH" sizes="250px">
-	<img src="/assets/AlswinGr.7fd016a5_Z14nJx1.jpg" class="astro-EI35XRNH" loading="lazy" decoding="async" alt="Alswin">
-</picture>
+              <img alt="Alswin" width="250" height="114" src="/assets/AlswinGr.7fd016a5_vITmw.jpg" class="astro-ZSU7V3HK" loading="lazy" decoding="async">
 
 
             </a>
           </div>
     </div>
   </div>
-        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-SK6PN2MA">
-  <ul class="flex flex-wrap astro-SK6PN2MA">
-    <li class="ml-1 mr-2 astro-SK6PN2MA">
-      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-SK6PN2MA">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-SK6PN2MA" viewBox="0 0 16 16">
-          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-SK6PN2MA"></path>
+        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-RIY664JY">
+  <ul class="flex flex-wrap astro-RIY664JY">
+    <li class="ml-1 mr-2 astro-RIY664JY">
+      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-RIY664JY">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-RIY664JY" viewBox="0 0 16 16">
+          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-RIY664JY"></path>
         </svg>
         Facebook pagina
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-SK6PN2MA">
-      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-SK6PN2MA">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-SK6PN2MA" viewBox="0 0 16 16">
-          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-SK6PN2MA"></path>
+    <li class="ml-1 mr-2 astro-RIY664JY">
+      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-RIY664JY">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-RIY664JY" viewBox="0 0 16 16">
+          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-RIY664JY"></path>
         </svg>
         info@dinxperfm.nl
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-SK6PN2MA">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
+    <li class="ml-1 mr-2 astro-RIY664JY">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
   </ul>
 </nav>
 
