@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+
+
+
+  
     <meta charset="UTF-8">
     <title>Dinxper FM - het swingende geluid van Dinxperlo</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -11,34 +13,37 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="/assets/index.47bf0cd2.css" /><script type="module">let o=[],r=e=>{let d,n=[],t={lc:0,value:e,set(i){t.value=i,t.notify()},get(){return t.lc||t.listen(()=>{})(),t.value},notify(i){d=n;let l=!o.length;for(let s=0;s<d.length;s++)o.push(d[s],t.value,i);if(l){for(let s=0;s<o.length;s+=3)o[s](o[s+1],o[s+2]);o.length=0}},listen(i){return n===d&&(n=n.slice()),t.lc=n.push(i),()=>{n===d&&(n=n.slice());let l=n.indexOf(i);~l&&(n.splice(l,1),t.lc--)}},subscribe(i){let l=t.listen(i);return i(t.value),l},off(){}};return t};const m="https://stream.dinxperfm.nl/1",c=r("play"),u=r(""),_=document.getElementById("audio_icon_play"),p=document.getElementById("audio_icon_stop"),y=document.getElementById("audio_icon_loading");c.subscribe(e=>{_.classList.toggle("hidden",e!=="play"),p.classList.toggle("hidden",e!=="stop"),y.classList.toggle("hidden",e!=="loading")});const g=document.createElement("audio");g.autoplay=!0;g.addEventListener("playing",()=>{c.set("stop")});u.subscribe(e=>{g.src=e,e===""?c.set("play"):c.set("loading")});document.getElementById("audio_button").addEventListener("click",()=>{u.set(u.get()===""?m:"")});const a=r(!1),f=document.getElementById("video_button_icon_stop"),b=document.getElementById("video_button_icon_play");a.subscribe(e=>{b.classList.toggle("hidden",e),f.classList.toggle("hidden",!e)});document.getElementById("video_button").addEventListener("click",()=>{a.set(!a.get())});const h=document.getElementById("video_player"),v=document.getElementById("video_player_iframe");a.subscribe(e=>{h.classList.toggle("hidden",!e),v.src=e?"https://video3.inetcast.nl/live-stream-video-widget/dinxperfm":""});
-</script></head>
-  <body style="background-image:url(/assets/dfm_studio-blurred.68bb4e06.jpg);background-size:cover;background-position:center;background-color:rgb(63,62,55);height:100vh;color:#efefef">
-    <div style="background:rgba(0, 0, 0, 0.75);height:100%;overflow:auto">
-      <div class="max-w-7xl mx-auto">
-        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-RIY664JY">
-  <ul class="flex flex-wrap astro-RIY664JY">
-    <li class="ml-1 mr-2 astro-RIY664JY">
-      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-RIY664JY">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-RIY664JY" viewBox="0 0 16 16">
-          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-RIY664JY"></path>
+  
+  <body class="text-slate-50 h-screen bg-center bg-cover bg-fixed astro-IMHRJ2JT" style="--bgUrl: url(/assets/dfm_studio-blurred.68bb4e06.jpg);">
+    <div class="h-100 overflow-auto bg-black/75 astro-IMHRJ2JT">
+      <div class="max-w-7xl mx-auto astro-IMHRJ2JT">
+        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-5OAFBUB3">
+  <ul class="flex flex-wrap astro-5OAFBUB3">
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="/" title="DinxperFM home page" class="astro-5OAFBUB3">Home page</a>
+    </li>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-5OAFBUB3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-5OAFBUB3" viewBox="0 0 16 16">
+          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-5OAFBUB3"></path>
         </svg>
         Facebook pagina
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-RIY664JY">
-      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-RIY664JY">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-RIY664JY" viewBox="0 0 16 16">
-          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-RIY664JY"></path>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-5OAFBUB3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-5OAFBUB3" viewBox="0 0 16 16">
+          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-5OAFBUB3"></path>
         </svg>
         info@dinxperfm.nl
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-RIY664JY">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
   </ul>
 </nav>
 
-        <div class="flex justify-evenly mt-20 mb-20">
+        <link rel="stylesheet" href="/assets/index.b4d10ffd.css" />
+<link rel="stylesheet" href="/assets/index.3b486592.css" /><script type="module" src="/hoisted.a7577c4b.js"></script><div class="flex justify-evenly mt-20 mb-20">
     <div class="max-w-sm" style="width:384px;height:328px">
       <img alt="DinxperFM logo" class="mx-auto astro-ZSU7V3HK" width="384" height="329" src="/assets/logodinxperfm.d5ff7087_Z6CcpD.webp" loading="eager" decoding="auto">
 
@@ -90,7 +95,7 @@
       </li>
 
       <li>
-        <a class="inline-block mt-3 px-4 no-underline text-blue-700" href="https://uitzendinggemist.dinxperfm.nl" title="">Uitzending gemist?</a>
+        <a class="inline-block mt-3 px-4 no-underline text-blue-700" href="/uzg" title="">Uitzending gemist?</a>
       </li>
     </ul>
   </nav><div class="mt-10 flex justify-center">
@@ -184,28 +189,31 @@
           </div>
     </div>
   </div>
-        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-RIY664JY">
-  <ul class="flex flex-wrap astro-RIY664JY">
-    <li class="ml-1 mr-2 astro-RIY664JY">
-      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-RIY664JY">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-RIY664JY" viewBox="0 0 16 16">
-          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-RIY664JY"></path>
+        <nav class="text-black bg-gray-100 p-2 flex justify-center astro-5OAFBUB3">
+  <ul class="flex flex-wrap astro-5OAFBUB3">
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="/" title="DinxperFM home page" class="astro-5OAFBUB3">Home page</a>
+    </li>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina" class="astro-5OAFBUB3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook inline astro-5OAFBUB3" viewBox="0 0 16 16">
+          <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" class="astro-5OAFBUB3"></path>
         </svg>
         Facebook pagina
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-RIY664JY">
-      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-RIY664JY">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-RIY664JY" viewBox="0 0 16 16">
-          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-RIY664JY"></path>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">
+      <a href="mailto:info@dinxperfm.nl" title="Stuur een email naar info@dinxperfm.nl" class="astro-5OAFBUB3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill inline astro-5OAFBUB3" viewBox="0 0 16 16">
+          <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" class="astro-5OAFBUB3"></path>
         </svg>
         info@dinxperfm.nl
       </a>
     </li>
-    <li class="ml-1 mr-2 astro-RIY664JY">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
+    <li class="ml-1 mr-2 astro-5OAFBUB3">Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
   </ul>
 </nav>
 
       </div>
     </div>
-  </body></html>
+  </body>
