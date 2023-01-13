@@ -1,9 +1,18 @@
 ---
 import Contactbar from "../components/Contactbar.astro";
-
 import bgImage from "../../assets/img/dfm_studio-blurred.jpg";
+import "@fontsource/cabin"
 ---
-
+<style define:vars={{bgUrl: `url(${bgImage.src})`}}>
+  body {
+    background-image: var(--bgUrl)
+  }
+</style>
+<style>
+  body {
+    font-family: 'Cabin', sans-serif;
+  }
+</style>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,23 +27,8 @@ import bgImage from "../../assets/img/dfm_studio-blurred.jpg";
     <meta name="theme-color" content="#ffffff" />
     <meta name="viewport" content="width=device-width" />
   </head>
-  <body
-    style={{
-      "background-image": `url(${bgImage.src})`,
-      "background-size": "cover",
-      "background-position": "center",
-      "background-color": "rgb(63,62,55)",
-      height: "100vh",
-      color: "#efefef",
-    }}
-  >
-    <div
-      style={{
-        background: "rgba(0, 0, 0, 0.75)",
-        height: "100%",
-        overflow: "auto",
-      }}
-    >
+  <body class="text-slate-50 h-screen bg-center bg-cover">
+    <div class="h-100 overflow-auto bg-black/75">
       <div class="max-w-7xl mx-auto">
         <Contactbar />
         <slot />
