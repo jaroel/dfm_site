@@ -5,10 +5,10 @@ import {UitzendingGemist} from '../components/uzg-listing'
 import {UitzendingGemistPlayer} from '../components/uzg-player'
 
 import type { FTP, IListingElement } from 'ftp-ts'
-// // hack https://github.com/vitejs/vite/issues/9061#issuecomment-1203035009
+// hack https://github.com/vitejs/vite/issues/9061#issuecomment-1203035009
 import $FTP from 'ftp-ts'
 const FTPClient: FTP = $FTP.default || $FTP
-// // end hack
+// end hack
 
 const ftpConnection = await FTPClient.connect({
   host: '86.81.98.192',
@@ -19,6 +19,20 @@ const ftpListing = (await ftpConnection.list()).filter(
   (value): value is IListingElement => typeof value !== 'string'
 )
 ftpConnection.destroy()
+
+function getWeekNumber(d: Date) {
+    // Copy date so don't modify original
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    // Return array of year and week number
+    return weekNo
+}
 
 const monthNamesUC = [
   'Januari',
@@ -34,37 +48,20 @@ const monthNamesUC = [
   'November',
   'December',
 ]
-
-const monthNamesLC = [
-  'januari',
-  'februari',
-  'maart',
-  'april',
-  'mei',
-  'juni',
-  'juli',
-  'augustus',
-  'september',
-  'oktober',
-  'november',
-  'december',
-]
+const monthNamesLC = monthNamesUC.map(month => month.toLowerCase())
 
 const weekdayDisplayUC = [
+  'Zondag',
   'Maandag',
   'Dinsdag',
   'Woensdag',
   'Donderdag',
   'Vrijdag',
   'Zaterdag',
-  'Zondag',
 ]
+const weekdayDisplayLC = weekdayDisplayUC.map(day => day.toLowerCase())
 
 const nameToDate = /(\d\d)-(\d\d)-(\d\d\d\d)-(\d\d)-(\d\d).mp3/
-
-function only<T>(values: (T | undefined)[]): T[] {
-  return values.filter((value) => typeof value !== 'undefined') as T[]
-}
 
 const listing = ftpListing.map((value) => {
   const parsedName = nameToDate
@@ -85,6 +82,10 @@ const listing = ftpListing.map((value) => {
   }
 })
 
+function only<T>(values: (T | undefined)[]): T[] {
+  return values.filter((value) => value) as T[]
+}
+
 const recordings: Recording[] = only(listing)
   .map((value) => {
     const date = new Date(
@@ -95,32 +96,32 @@ const recordings: Recording[] = only(listing)
       value.minute
     )
     const weekday = date.getDay()
-    return {
+    let recording =  {
       ...value,
+      title: '',
       date: date,
       monthDisplayUC: monthNamesUC[value.monthIndex] ?? '',
       monthDisplayLC: monthNamesLC[value.monthIndex] ?? '',
       weekday: weekday,
-      weekdayDisplayUC: weekdayDisplayUC[weekday - 1] ?? '',
+      weekdayDisplayUC: weekdayDisplayUC[weekday] ?? '',
+      weekdayDisplayLC: weekdayDisplayLC[weekday] ?? '',
       url: `https://uitzendinggemist.dinxperfm.nl/fetch/${value.filename}`,
+      weekNumber: getWeekNumber(date)
     }
+    recording.title = `Uitzending Dinxper FM van ${recording.weekdayDisplayLC} ${recording.day} ${recording.monthDisplayLC} ${recording.year}`
+    return recording;
   })
   .sort((a, b) => ((a.date || 0) >= (b.date || 0) ? -1 : 1))
 ---
-
 <DfmLayout>
   <div class="bg-gray-100 text-black p-9">
-    <div class="mx-auto">
-      <div class="prose">
-        <h1>Uitzending gemist</h1>
-        <p>
-          Dit zijn opnames van de Dinxper FM stream. Gebruik de speler om de
-          uitzending terug te luisteren of klik de link om de uitzending op te
-          slaan.
-        </p>
-        <UitzendingGemistPlayer client:only></UitzendingGemistPlayer>
-        <UitzendingGemist client:visible recordings={recordings} />
-      </div>
+    <div class="max-w-7xl py-16 px-6 text-center">
+      <h1 class="text-4xl font-bold text-gray-600 sm:text-5xl lg:text-6xl">Uitzending gemist</h1>
+      <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">Dit zijn opnames van de Dinxper FM stream. Gebruik de speler om de
+        uitzending terug te luisteren of klik de link om de uitzending op te
+        slaan.</p>
     </div>
+    <UitzendingGemistPlayer client:only></UitzendingGemistPlayer>
+    <UitzendingGemist client:visible recordings={recordings} />
   </div>
 </DfmLayout>

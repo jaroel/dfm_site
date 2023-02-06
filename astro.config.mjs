@@ -15,5 +15,4 @@ export default defineConfig({
     }),
     solidJs(),
   ],
-  // Vite: {ssr: {external: ['ftp-ts']}},
 })

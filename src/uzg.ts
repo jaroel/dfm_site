@@ -1,4 +1,5 @@
 export type Recording = {
+  title: string;
   filename: string;
   url: string;
   date: Date;
@@ -12,4 +13,6 @@ export type Recording = {
   monthDisplayLC: string;
   weekday: number;
   weekdayDisplayUC: string;
+  weekdayDisplayLC: string;
+  weekNumber: number;
 }
