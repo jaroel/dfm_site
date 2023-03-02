@@ -6,6 +6,8 @@ import DfmLayout from "../layouts/DfmLayout.astro";
 
 import { Image } from "@astrojs/image/components";
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 interface Sponsor {
   href: string;
   src: Promise<typeof import("../../assets/img/makt.jpg")>;
@@ -117,7 +119,7 @@ const sponsors: Sponsor[] = [
       <li>
         <a
           class="inline-block mt-3 px-4 no-underline text-blue-700"
-          href="/uzg"
+          href={`${BASE_URL}uzg`}
           title="">Uitzending gemist?</a
         >
       </li>
