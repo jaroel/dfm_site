@@ -1,0 +1,55 @@
+name: Build and deploy to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "latest"
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build with Astro
+        run: pnpm run build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

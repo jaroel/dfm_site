@@ -1,3 +1,5 @@
+import '@total-typescript/ts-reset' // eslint-disable-line import/no-unassigned-import
+
 export type Recording = {
   title: string;
   filename: string;

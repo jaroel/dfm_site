@@ -69,7 +69,8 @@ const Controls: Component<Recording> = (recording: Recording) => {
   } as const
 
   createEffect(() => {
-    setIcon(playerUrl() === recording.url ? 'play' : icons[audioStreamState()])
+    const state = audioStreamState()
+    setIcon(playerUrl() === recording.url ? icons[state] : 'play')
   })
 
   return <button
