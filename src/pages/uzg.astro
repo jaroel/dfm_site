@@ -84,7 +84,7 @@ const listing = ftpListing.map((value) => {
 });
 
 function only<T>(values: (T | undefined)[]): T[] {
-  return values.filter((value) => value) as T[];
+  return values.filter(Boolean);
 }
 
 const recordings: Recording[] = only(listing)
