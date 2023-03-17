@@ -4,96 +4,110 @@ import ButtonVideo from "../components/ButtonVideo.astro";
 import Video from "../components/Video.astro";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
-import { Image } from "@astrojs/image/components";
+import { Image } from "astro:assets";
 
-const BASE_URL = import.meta.env.BASE_URL;
+import programmering from "~/assets/programmering.jpg";
+
+import logoDFM from "~/assets/img/logodinxperfm.png";
+import makt from "~/assets/img/makt.jpg";
+import logo13 from "~/assets/img/logo13.jpg";
+import logo15 from "~/assets/img/logo15.jpg";
+import logo16 from "~/assets/img/logo16.jpg";
+import logo18 from "~/assets/img/logo18.jpg";
+import logo19 from "~/assets/img/logo19.jpg";
+import logo22 from "~/assets/img/logo22.jpg";
+import logo23 from "~/assets/img/logo23.jpg";
+import jumbo from "~/assets/img/jumbo.jpg";
+import oldDutch from "~/assets/img/OldDutch.jpg";
+import mashops from "~/assets/img/Mashops.jpg";
+import expert from "~/assets/img/Expert.jpg";
+import alswin from "~/assets/img/AlswinGr.jpg";
 
 interface Sponsor {
   href: string;
-  src: Promise<typeof import("../../assets/img/makt.jpg")>;
+  src: ImageMetadata;
   alt: string;
 }
 
 const sponsors: Sponsor[] = [
   {
     href: "https://www.facebook.com/markt.dinxperlo/",
-    src: import("../../assets/img/makt.jpg"),
+    src: makt,
     alt: "De markt van Dinxperlo",
   },
   {
     href: "http://www.naaiateliermoniqueharmsen.nl/",
-    src: import("../../assets/img/logo13.jpg"),
+    src: logo13,
     alt: "Naaiatelier Monique Harmsen",
   },
   {
     href: "https://podesta.nl/",
-    src: import("../../assets/img/logo15.jpg"),
+    src: logo15,
     alt: "Podesta event supplies",
   },
   {
     href: "https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/",
-    src: import("../../assets/img/logo16.jpg"),
+    src: logo16,
     alt: "Adviesbureau Roenhorst Dinxperlo",
   },
   {
     href: "http://www.groentekwekerij-smits.nl/",
-    src: import("../../assets/img/logo18.jpg"),
+    src: logo18,
     alt: "Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit",
   },
   {
     href: "http://www.tegrotenhuisdinxperlo.nl/",
-    src: import("../../assets/img/logo19.jpg"),
+    src: logo19,
     alt: "Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo",
   },
   {
     href: "https://www.tiggelovend-kok.nl/",
-    src: import("../../assets/img/logo22.jpg"),
+    src: logo22,
     alt: "Tiggelovend-Kok B.V.",
   },
   {
     href: "http://www.vvnf.nl/",
-    src: import("../../assets/img/logo23.jpg"),
+    src: logo23,
     alt: "VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo",
   },
   {
     href: "https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/",
-    src: import("../../assets/img/jumbo.jpg"),
+    src: jumbo,
     alt: "Jumbo Dinxperlo Leussink",
   },
   {
     href: "https://www.olddutchdinxperlo.nl/",
-    src: import("../../assets/img/OldDutch.jpg"),
+    src: oldDutch,
     alt: "Old Dutch Dinxperlo",
   },
   {
     href: "https://www.ma-shops.nl/?ref=dinxperfm",
-    src: import("../../assets/img/Mashops.jpg"),
+    src: mashops,
     alt: "MA-Shops",
   },
   {
     href: "https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE",
-    src: import("../../assets/img/Expert.jpg"),
+    src: expert,
     alt: "Expert Dinxperlo",
   },
   {
     href: "https://www.dinxperlo.nl",
-    src: import("../../assets/img/AlswinGr.jpg"),
+    src: alswin,
     alt: "Alswin",
   },
 ];
 ---
 
 <DfmLayout>
-  <div class="flex justify-evenly mt-20 mb-20">
-    <div class="max-w-sm" style={{ width: "384px", height: "328px" }}>
+  <div class="flex justify-evenly mt-10 mb-20">
+    <div class="max-w-sm">
       <Image
-        src={import("../../assets/img/logodinxperfm.png")}
+        src={logoDFM}
         alt="DinxperFM logo"
         width={384}
         loading="eager"
-        decoding="auto"
         class="mx-auto"
-        format={"webp"}
+        quality="max"
       />
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
@@ -119,7 +133,7 @@ const sponsors: Sponsor[] = [
       <li>
         <a
           class="inline-block mt-3 px-4 no-underline text-blue-700"
-          href={BASE_URL + "uzg"}
+          href="/uzg"
           title="">Uitzending gemist?</a
         >
       </li>
@@ -128,12 +142,10 @@ const sponsors: Sponsor[] = [
 
   <div class="mt-10 flex justify-center">
     <Image
-      src={import("../../public/programmering/2022-11-12.jpeg")}
-      alt="DinxperFM programmering per 2022-11-12"
-      width={1131}
-      format={"webp"}
+      src={programmering}
+      alt="DinxperFM programmering"
       loading="eager"
-      decoding="auto"
+      quality="max"
     />
   </div>
   <div class="text-center">
@@ -152,7 +164,12 @@ const sponsors: Sponsor[] = [
         sponsors.map((sponsor) => (
           <div class="p-1 mb-2">
             <a href={sponsor.href} title={sponsor.alt} target="_blank">
-              <Image src={sponsor.src} alt={sponsor.alt} width={250} />
+              <Image
+                src={sponsor.src}
+                alt={sponsor.alt}
+                width={250}
+                quality="high"
+              />
             </a>
           </div>
         ))
