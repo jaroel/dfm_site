@@ -15,7 +15,7 @@ export const UitzendingGemist: Component<UitzendingGemistProps> = props => (
       <li class='hover:text-black'>
         <div class='flex flex-start items-center pt-3'>
           <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-          <p class='text-gray-600 text-sm'>{byYear.head.year}</p>
+          <p class='text-gray-600 text-xl'>{byYear.head.year}</p>
         </div>
         <div class='mt-0.5 ml-4 mb-6'>
 
@@ -24,7 +24,7 @@ export const UitzendingGemist: Component<UitzendingGemistProps> = props => (
               <li>
                 <div class='flex flex-start items-center pt-3'>
                   <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                  <p class='text-gray-600 text-sm'>{byMonth.head.monthDisplayUC}</p>
+                  <p class='text-gray-600 text-lg'>{byMonth.head.monthDisplayUC}</p>
                 </div>
                 <div class='mt-0.5 ml-4 mb-6'>
 
