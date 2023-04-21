@@ -15,14 +15,14 @@ export function groupBy<K, T>(
   const results: Array<Group<K, T>> = []
   let group: Group<K, T> | undefined
   for (const item of list) {
-    const groupName = func(item)
+    const key = func(item)
     if (group === undefined) {
-      group = new Group<K, T>(groupName, item)
+      group = new Group(key, item)
     }
 
-    if (groupName !== group.key) {
+    if (key !== group.key) {
       results.push(group)
-      group = new Group<K, T>(groupName, item)
+      group = new Group(key, item)
     }
 
     group.members.push(item)
