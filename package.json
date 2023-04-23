@@ -8,7 +8,7 @@
     "check": "astro check",
     "dev": "astro dev",
     "start": "xo && astro check && astro dev",
-    "build": "xo && astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "xo && astro check"
