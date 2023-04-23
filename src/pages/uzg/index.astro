@@ -1,25 +1,8 @@
 ---
-import type { Recording } from "../uzg";
-import DfmLayout from "../layouts/DfmLayout.astro";
-import { UitzendingGemist } from "../components/uzg-listing";
-import { UitzendingGemistPlayer } from "../components/uzg-player";
-
-import type { FTP, IListingElement } from "ftp-ts";
-// hack https://github.com/vitejs/vite/issues/9061#issuecomment-1203035009
-import $FTP from "ftp-ts";
-// @ts-ignore: .default is a hack.
-const FTPClient: FTP = $FTP.default || $FTP;
-// end hack
-
-const ftpConnection = await FTPClient.connect({
-  host: "86.81.98.192",
-  user: "UZG",
-  password: "4862KpZ2",
-});
-const ftpListing = (await ftpConnection.list()).filter(
-  (value): value is IListingElement => typeof value !== "string"
-);
-ftpConnection.destroy();
+import { Recording, getFtpListing } from "../../uzg";
+import DfmLayout from "../../layouts/DfmLayout.astro";
+import { UitzendingGemist } from "../../components/uzg-listing";
+import { UitzendingGemistPlayer } from "../../components/uzg-player";
 
 function getWeekNumber(d: Date) {
   // Copy date so don't modify original
@@ -64,30 +47,30 @@ const weekdayDisplayLC = weekdayDisplayUC.map((day) => day.toLowerCase());
 
 const nameToDate = /(\d\d)-(\d\d)-(\d\d\d\d)-(\d\d)-(\d\d).mp3/;
 
-const listing = ftpListing.map((value) => {
-  const parsedName = nameToDate
-    .exec(value.name)
-    ?.slice(1, 6)
-    .map((value) => parseInt(value));
+const ftpListing = await getFtpListing();
 
-  if (!parsedName) return;
+const listing = ftpListing
+  .map((value) => {
+    const parsedName = nameToDate
+      .exec(value.name)
+      ?.slice(1, 6)
+      .map((value) => parseInt(value));
 
-  return {
-    filename: value.name,
-    day: parsedName[0] as number,
-    month: parsedName[1] as number,
-    monthIndex: (parsedName[1] as number) - 1,
-    year: parsedName[2] as number,
-    hour: parsedName[3] as number,
-    minute: parsedName[4] as number,
-  };
-});
+    if (!parsedName) return;
 
-function only<T>(values: (T | undefined)[]): T[] {
-  return values.filter(Boolean);
-}
+    return {
+      filename: value.name,
+      day: parsedName[0] as number,
+      month: parsedName[1] as number,
+      monthIndex: (parsedName[1] as number) - 1,
+      year: parsedName[2] as number,
+      hour: parsedName[3] as number,
+      minute: parsedName[4] as number,
+    };
+  })
+  .filter(Boolean);
 
-const recordings: Recording[] = only(listing)
+const recordings: Recording[] = listing
   .map((value) => {
     const date = new Date(
       value.year,
@@ -106,7 +89,7 @@ const recordings: Recording[] = only(listing)
       weekday: weekday,
       weekdayDisplayUC: weekdayDisplayUC[weekday] ?? "",
       weekdayDisplayLC: weekdayDisplayLC[weekday] ?? "",
-      url: `https://uitzendinggemist.dinxperfm.nl/fetch/${value.filename}`,
+      url: `/uzg/${value.filename}`,
       weekNumber: getWeekNumber(date),
     };
     recording.title = `Uitzending Dinxper FM van ${recording.weekdayDisplayLC} ${recording.day} ${recording.monthDisplayLC} ${recording.year}`;
