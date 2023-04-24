@@ -1,4 +1,3 @@
-import '@total-typescript/ts-reset' // eslint-disable-line import/no-unassigned-import
 import type {FTP, IListingElement} from 'ftp-ts'
 // Hack https://github.com/vitejs/vite/issues/9061#issuecomment-1203035009
 import $FTP from 'ftp-ts'
