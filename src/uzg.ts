@@ -31,10 +31,10 @@ export type Recording = {
   hour: number;
   minute: number;
   monthIndex: number;
-  monthDisplayUC: string;
-  monthDisplayLC: string;
+  monthDisplayUpperCase: string;
+  monthDisplayLowerCase: string;
   weekday: number;
-  weekdayDisplayUC: string;
-  weekdayDisplayLC: string;
+  weekdayDisplayUpperCase: string;
+  weekdayDisplayLowerCase: string;
   weekNumber: number;
 }

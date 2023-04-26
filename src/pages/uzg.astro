@@ -1,0 +1,23 @@
+---
+export const prerender = true;
+import DfmLayout from "../layouts/DfmLayout.astro";
+import { UitzendingGemist } from "../components/uzg-listing";
+import { UitzendingGemistPlayer } from "../components/uzg-player";
+---
+
+<DfmLayout>
+  <div class="bg-gray-100 text-black p-9">
+    <div class="max-w-7xl py-16 px-6 text-center">
+      <h1 class="text-4xl font-bold text-gray-600 sm:text-5xl lg:text-6xl">
+        Uitzending gemist
+      </h1>
+      <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
+        Dit zijn opnames van uitzendingen op de Dinxper FM stream. Gebruik de
+        speler om de uitzending terug te luisteren of klik de link om de
+        uitzending op te slaan.
+      </p>
+    </div>
+    <UitzendingGemistPlayer client:only />
+    <UitzendingGemist client:only />
+  </div>
+</DfmLayout>

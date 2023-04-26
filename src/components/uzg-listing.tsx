@@ -1,64 +1,69 @@
 /* eslint-disable max-nested-callbacks */
 
-import {type Component, createSignal, createEffect} from 'solid-js'
+import {type Component, createSignal, createEffect, createResource, Show} from 'solid-js'
 import {groupBy} from '../groupby'
 import {playerUrl, setPlayerUrl, audioStreamState} from '../stores'
 import type {Recording} from '../uzg'
+import type {Recordings} from '../pages/uzg/recordings.json'
 
-type UitzendingGemistProps = {
-  recordings: Recording[];
+const fetchRecordings = async () => {
+  const response = await fetch('/uzg/recordings.json')
+  return response.json() as Promise<Recordings>
 }
 
-export const UitzendingGemist: Component<UitzendingGemistProps> = props => (
-  <ol class='border-l border-gray-300'>
-    {groupBy(props.recordings, item => item.year).map(byYear => (
-      <li class='hover:text-black'>
-        <div class='flex flex-start items-center pt-3'>
-          <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-          <p class='text-gray-600 text-xl'>{byYear.head.year}</p>
-        </div>
-        <div class='mt-0.5 ml-4 mb-6'>
+export const UitzendingGemist: Component = () => {
+  const [recordings] = createResource(fetchRecordings)
+  return <Show when={recordings()}>
+    <ol class='border-l border-gray-300'>
+      {groupBy(recordings()!, item => item.year).map(byYear => (
+        <li class='hover:text-black'>
+          <div class='flex flex-start items-center pt-3'>
+            <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+            <p class='text-gray-600 text-xl'>{byYear.head.year}</p>
+          </div>
+          <div class='mt-0.5 ml-4 mb-6'>
 
-          <ol class='border-l border-gray-300'>
-            {groupBy(byYear.members, item => item.monthDisplayLC).map(byMonth => (
-              <li>
-                <div class='flex flex-start items-center pt-3'>
-                  <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                  <p class='text-gray-600 text-lg'>{byMonth.head.monthDisplayUC}</p>
-                </div>
-                <div class='mt-0.5 ml-4 mb-6'>
+            <ol class='border-l border-gray-300'>
+              {groupBy(byYear.members, item => item.monthDisplayLowerCase).map(byMonth => (
+                <li>
+                  <div class='flex flex-start items-center pt-3'>
+                    <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+                    <p class='text-gray-600 text-lg'>{byMonth.head.monthDisplayUpperCase}</p>
+                  </div>
+                  <div class='mt-0.5 ml-4 mb-6'>
 
-                  {groupBy(byMonth.members, item => item.weekNumber).map(byWeek => (
-                    <div class='mb-6'>
-                      {groupBy(byWeek.members, item => item.day).map(byDay => (
-                        <ol class='border-l border-gray-300'>
-                          <li>
-                            <div class='flex flex-start items-center pt-3'>
-                              <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                              <p class='text-gray-600 text-sm'>{byDay.head.weekdayDisplayUC} {byDay.head.day} {byDay.head.monthDisplayLC}</p>
-                            </div>
-                            <div class='mt-0.5 ml-4'>
-                              {byDay.members.map(recording => <div class='inline-block'>
-                                <Controls {...recording} />
-                                <a class='block ml-4 text-gray-500' href={recording.url} title={`${recording.title} downloaden`} download>Opslaan</a>
-                              </div>)}
-                            </div>
-                          </li>
-                        </ol>
-                      ))}
-                    </div>
-                  ))}
+                    {groupBy(byMonth.members, item => item.weekNumber).map(byWeek => (
+                      <div class='mb-6'>
+                        {groupBy(byWeek.members, item => item.day).map(byDay => (
+                          <ol class='border-l border-gray-300'>
+                            <li>
+                              <div class='flex flex-start items-center pt-3'>
+                                <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+                                <p class='text-gray-600 text-sm'>{byDay.head.weekdayDisplayUpperCase} {byDay.head.day} {byDay.head.monthDisplayLowerCase}</p>
+                              </div>
+                              <div class='mt-0.5 ml-4'>
+                                {byDay.members.map(recording => <div class='inline-block'>
+                                  <Controls {...recording} />
+                                  <a class='block ml-4 text-gray-500' href={recording.url} title={`${recording.title} downloaden`} download>Opslaan</a>
+                                </div>)}
+                              </div>
+                            </li>
+                          </ol>
+                        ))}
+                      </div>
+                    ))}
 
-                </div>
-              </li>
-            ))}
-          </ol>
+                  </div>
+                </li>
+              ))}
+            </ol>
 
-        </div>
-      </li>
-    ))}
-  </ol>
-)
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Show>
+}
 
 const Controls: Component<Recording> = (recording: Recording) => {
   const [icon, setIcon] = createSignal<'stop' | 'loader' | 'play'>('play')
