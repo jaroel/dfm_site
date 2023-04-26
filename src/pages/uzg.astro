@@ -3,20 +3,43 @@ export const prerender = true;
 import DfmLayout from "../layouts/DfmLayout.astro";
 import { UitzendingGemist } from "../components/uzg-listing";
 import { UitzendingGemistPlayer } from "../components/uzg-player";
+import { Image } from "astro:assets";
+import logoDFM from "~/assets/img/logodinxperfm.png";
 ---
 
 <DfmLayout>
-  <div class="bg-gray-100 text-black p-9">
-    <div class="max-w-7xl py-16 px-6 text-center">
-      <h1 class="text-4xl font-bold text-gray-600 sm:text-5xl lg:text-6xl">
+  <div class="flex justify-evenly">
+    <div class="flex flex-auto items-center">
+      <div class="mx-12 my-8">
+        <a href="/" title="Ga naar: DinxperFM home page"
+          ><Image
+            src={logoDFM}
+            alt="DinxperFM logo"
+            width={384}
+            loading="eager"
+            decoding="auto"
+            class="mx-auto w-32 h-32"
+            quality="max"
+            format="webp"
+          /></a
+        >
+        <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
+      </div>
+
+      <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">
         Uitzending gemist
       </h1>
+    </div>
+  </div>
+  <div class="bg-gray-100 text-black p-9">
+    <div class="max-w-7xl px-6 text-center">
       <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
         Dit zijn opnames van uitzendingen op de Dinxper FM stream. Gebruik de
         speler om de uitzending terug te luisteren of klik de link om de
         uitzending op te slaan.
       </p>
     </div>
+    <hr class="my-8" />
     <UitzendingGemistPlayer client:only />
     <UitzendingGemist client:only />
   </div>
