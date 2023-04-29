@@ -1,8 +1,6 @@
 ---
 export const prerender = true;
 import ButtonAudio from "../components/ButtonAudio.astro";
-import ButtonVideo from "../components/ButtonVideo.astro";
-import Video from "../components/Video.astro";
 import DfmLayout from "../layouts/DfmLayout.astro";
 
 import { Image } from "astro:assets";
@@ -97,8 +95,6 @@ const sponsors: Sponsor[] = [
     alt: "Alswin",
   },
 ];
-
-const videoEnabled = false;
 ---
 
 <DfmLayout>
@@ -117,21 +113,10 @@ const videoEnabled = false;
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
-    {videoEnabled && <Video />}
   </div>
 
   <nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none my-1">
-      {
-        videoEnabled && (
-          <li class="mr-2">
-            <ButtonVideo
-              title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
-              label="Kijk live!"
-            />
-          </li>
-        )
-      }
       <li>
         <ButtonAudio
           title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
