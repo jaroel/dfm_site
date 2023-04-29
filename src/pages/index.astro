@@ -97,6 +97,8 @@ const sponsors: Sponsor[] = [
     alt: "Alswin",
   },
 ];
+
+const videoEnabled = false;
 ---
 
 <DfmLayout>
@@ -115,17 +117,21 @@ const sponsors: Sponsor[] = [
 
       <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
     </div>
-    <Video />
+    {videoEnabled && <Video />}
   </div>
 
   <nav class="flex justify-evenly bg-gray-100">
     <ul class="flex flex-wrap list-none pl-0 mb-0">
-      <li class="mr-2">
-        <ButtonVideo
-          title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
-          label="Kijk live!"
-        />
-      </li>
+      {
+        videoEnabled && (
+          <li class="mr-2">
+            <ButtonVideo
+              title="Kijk naar Dinxper FM - Het swingende geluid van Dinxperlo!"
+              label="Kijk live!"
+            />
+          </li>
+        )
+      }
       <li>
         <ButtonAudio
           title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"

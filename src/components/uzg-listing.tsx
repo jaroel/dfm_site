@@ -14,32 +14,32 @@ const fetchRecordings = async () => {
 export const UitzendingGemist: Component = () => {
   const [recordings] = createResource(fetchRecordings)
   return <Show when={recordings()}>
-    <ol class='border-l border-gray-300'>
+    <ol class='border-l border-gray-400'>
       {groupBy(recordings()!, item => item.year).map(byYear => (
         <li class='hover:text-black'>
           <div class='flex flex-start items-center pt-3'>
-            <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-            <p class='text-gray-600 text-xl'>{byYear.head.year}</p>
+            <div class='bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+            <p class='text-gray-800 text-xl'>{byYear.head.year}</p>
           </div>
           <div class='mt-0.5 ml-4 mb-6'>
 
-            <ol class='border-l border-gray-300'>
+            <ol class='border-l border-gray-400'>
               {groupBy(byYear.members, item => item.monthDisplayLowerCase).map(byMonth => (
                 <li>
                   <div class='flex flex-start items-center pt-3'>
-                    <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                    <p class='text-gray-600 text-lg'>{byMonth.head.monthDisplayUpperCase}</p>
+                    <div class='bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+                    <p class='text-gray-800 text-lg'>{byMonth.head.monthDisplayUpperCase}</p>
                   </div>
                   <div class='mt-0.5 ml-4 mb-6'>
 
                     {groupBy(byMonth.members, item => item.weekNumber).map(byWeek => (
                       <div class='mb-6'>
                         {groupBy(byWeek.members, item => item.day).map(byDay => (
-                          <ol class='border-l border-gray-300'>
+                          <ol class='border-l border-gray-400'>
                             <li>
                               <div class='flex flex-start items-center pt-3'>
-                                <div class='bg-gray-300 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                                <p class='text-gray-600 text-sm'>{byDay.head.weekdayDisplayUpperCase} {byDay.head.day} {byDay.head.monthDisplayLowerCase}</p>
+                                <div class='bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3'></div>
+                                <p class='text-gray-800 text-sm'>{byDay.head.weekdayDisplayUpperCase} {byDay.head.day} {byDay.head.monthDisplayLowerCase}</p>
                               </div>
                               <div class='mt-0.5 ml-4'>
                                 {byDay.members.map(recording => <div class='inline-block'>
@@ -79,7 +79,7 @@ const Controls: Component<Recording> = (recording: Recording) => {
   })
 
   return <button
-    class='mr-4 rounded-full border border-gray-600 bg-gray-600 text-white hover:bg-gray-100 hover:text-gray-600 hover:border-gray-600 my-1 py-2 px-4'
+    class='mr-4 rounded-full border border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800 my-1 py-2 px-4'
     title={recording.title}
     onClick={() => {
       setPlayerUrl(playerUrl() === recording.url ? undefined : recording.url)
