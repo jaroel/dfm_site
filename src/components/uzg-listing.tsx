@@ -39,7 +39,7 @@ export const UitzendingGemist: Component = () => {
                             <li>
                               <div class='flex flex-start items-center pt-3'>
                                 <div class='bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3'></div>
-                                <p class='text-gray-800 text-sm'>{byDay.head.weekdayDisplayUpperCase} {byDay.head.day} {byDay.head.monthDisplayLowerCase}</p>
+                                <p class='text-gray-800 text-l'>{byDay.head.weekdayDisplayUpperCase} {byDay.head.day} {byDay.head.monthDisplayLowerCase}</p>
                               </div>
                               <div class='mt-0.5 ml-4'>
                                 {byDay.members.map(recording => <div class='inline-block'>
@@ -79,7 +79,7 @@ const Controls: Component<Recording> = (recording: Recording) => {
   })
 
   return <button
-    class='mr-4 rounded-full border border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800 my-1 py-2 px-4'
+    class='mr-4 rounded-full border border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800 my-1 py-2 px-4 flex items-center'
     title={recording.title}
     onClick={() => {
       setPlayerUrl(playerUrl() === recording.url ? undefined : recording.url)
