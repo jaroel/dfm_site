@@ -1,4 +1,5 @@
 import {defineConfig} from 'astro/config'
+import {sharpImageService} from 'astro/assets'
 import tailwind from '@astrojs/tailwind'
 import solidJs from '@astrojs/solid-js'
 import node from '@astrojs/node'
@@ -11,7 +12,7 @@ export default defineConfig({
     assets: true,
   },
   image: {
-    service: 'astro/assets/services/sharp',
+    service: sharpImageService(),
   },
   adapter: node({
     mode: 'standalone',

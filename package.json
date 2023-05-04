@@ -14,16 +14,16 @@
     "lint": "xo && astro check"
   },
   "dependencies": {
-    "@astrojs/node": "^5.1.1",
-    "@astrojs/solid-js": "^2.1.0",
-    "@astrojs/tailwind": "^3.1.1",
+    "@astrojs/node": "^5.1.2",
+    "@astrojs/solid-js": "^2.1.1",
+    "@astrojs/tailwind": "^3.1.2",
     "@fontsource/cabin": "^4.5.10",
     "@nanostores/solid": "^0.3.2",
-    "astro": "^2.3.2",
+    "astro": "^2.3.4",
     "ftp-ts": "^1.1.0",
     "nanostores": "^0.8.1",
     "sharp": "^0.32.1",
-    "solid-js": "^1.7.3",
+    "solid-js": "^1.7.4",
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {

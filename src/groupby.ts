@@ -2,6 +2,7 @@ export class Group<K, T> {
   'key': K
   'head': T
   members: T[] = []
+
   constructor(key: K, head: T) {
     this.key = key
     this.head = head
