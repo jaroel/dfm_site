@@ -11,8 +11,9 @@ export const setPlayerUrl = action(_playerUrl, 'setPlaying', (_store, value: str
 })
 export const playerUrl = useStore(_playerUrl)
 
-const _audioStreamState = atom<'stopped' | 'loading' | 'playing'>('stopped')
-export const setAudioStreamState = action(_audioStreamState, 'setAudioStreamState', (_store, value: 'stopped' | 'loading' | 'playing') => {
+export type StreamState = 'stopped' | 'loading' | 'playing'
+const _audioStreamState = atom<StreamState>('stopped')
+export const setAudioStreamState = action(_audioStreamState, 'setAudioStreamState', (_store, value: StreamState) => {
   _audioStreamState.set(value)
 })
 export const audioStreamState = useStore(_audioStreamState)

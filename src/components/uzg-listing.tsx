@@ -2,13 +2,12 @@
 
 import {type Component, createSignal, createEffect, createResource, Show} from 'solid-js'
 import {groupBy} from '../groupby'
-import {playerUrl, setPlayerUrl, audioStreamState} from '../stores'
+import {playerUrl, setPlayerUrl, audioStreamState, type StreamState} from '../stores'
 import type {Recording} from '../uzg'
-import type {Recordings} from '../pages/uzg/recordings.json'
 
 const fetchRecordings = async () => {
   const response = await fetch('/uzg/recordings.json')
-  return response.json() as Promise<Recordings>
+  return response.json() as Promise<Recording[]>
 }
 
 export const UitzendingGemist: Component = () => {
@@ -65,17 +64,18 @@ export const UitzendingGemist: Component = () => {
   </Show>
 }
 
+type Icon = 'stop' | 'loader' | 'play'
+const stateIcons: Record<StreamState, Icon> = {
+  loading: 'loader',
+  stopped: 'play',
+  playing: 'stop',
+} as const
+
 const Controls: Component<Recording> = (recording: Recording) => {
-  const [icon, setIcon] = createSignal<'stop' | 'loader' | 'play'>('play')
-  const icons = {
-    loading: 'loader',
-    stopped: 'play',
-    playing: 'stop',
-  } as const
+  const [icon, setIcon] = createSignal<Icon>('play')
 
   createEffect(() => {
-    const state = audioStreamState()
-    setIcon(playerUrl() === recording.url ? icons[state] : 'play')
+    setIcon(playerUrl() === recording.url ? stateIcons[audioStreamState()] : 'play')
   })
 
   return <button
