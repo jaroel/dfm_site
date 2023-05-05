@@ -3,11 +3,11 @@
 import {type Component, createSignal, createEffect, createResource, Show} from 'solid-js'
 import {groupBy} from '../groupby'
 import {playerUrl, setPlayerUrl, audioStreamState, type StreamState} from '../stores'
-import type {Recording} from '../uzg'
+import type {Recording, getRecordings} from '../pages/uzg/recordings.json'
 
 const fetchRecordings = async () => {
   const response = await fetch('/uzg/recordings.json')
-  return response.json() as Promise<Recording[]>
+  return response.json() as ReturnType<typeof getRecordings>
 }
 
 export const UitzendingGemist: Component = () => {
