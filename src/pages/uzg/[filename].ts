@@ -1,5 +1,5 @@
 import type {APIRoute} from 'astro'
-import {connectToFtp} from '../../uzg'
+import {FTP} from 'ftp-ts'
 
 export const getFileStream = async (filename: string) => {
   filename = filename.trim()
@@ -7,7 +7,11 @@ export const getFileStream = async (filename: string) => {
     return undefined
   }
 
-  const connection = await connectToFtp()
+  const connection = await FTP.connect({
+    host: '86.81.98.192',
+    user: 'UZG',
+    password: '4862KpZ2',
+  })
   const stream = await connection.get(filename)
   stream.addListener('close', () => {
     connection.destroy()

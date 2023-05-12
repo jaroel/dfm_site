@@ -1,9 +1,13 @@
 import type {APIRoute} from 'astro'
 import type {IListingElement} from 'ftp-ts'
-import {connectToFtp} from '../../uzg'
+import {FTP} from 'ftp-ts'
 
 export async function getFtpListing() {
-  const connection = await connectToFtp()
+  const connection = await FTP.connect({
+    host: '86.81.98.192',
+    user: 'UZG',
+    password: '4862KpZ2',
+  })
   const listing = await connection.list()
   connection.destroy()
   return listing.filter((value): value is IListingElement => typeof value !== 'string')
