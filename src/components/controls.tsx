@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import {
   component$,
   useComputed$,
@@ -6,8 +5,7 @@ import {
   useVisibleTask$,
 } from "@builder.io/qwik";
 import type { Signal } from "@builder.io/qwik";
-
-import type { StreamState } from "~/uzg";
+import type { StreamState } from "~/stream";
 
 type Icon = "stop" | "loader" | "play";
 

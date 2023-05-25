@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import { component$, useSignal } from "@builder.io/qwik";
 import { groupBy } from "../groupby";
 
