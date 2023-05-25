@@ -5,19 +5,13 @@ import {
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
 import { RouterHead } from "./components/router-head/router-head";
-
 import "./global.css";
-import "@fontsource/cabin";
 
 import bgImage from "~/assets/dfm_studio-blurred.jpg";
 const bodyStyles = `background-image: url('${bgImage}')`;
-// ---
 
-// <style define:vars={{ bgUrl: `url(${bgImage.src})` }}>
-//   body {
-//     background-image: var(--bgUrl);
-//   }
-// </style>
+import cabin400woff from "@fontsource/cabin/files/cabin-latin-400-normal.woff";
+import cabin400woff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2";
 
 export default component$(() => {
   /**
@@ -32,6 +26,20 @@ export default component$(() => {
       <head>
         <meta charSet="UTF-8" />
         <title>Dinxper FM - het swingende geluid van Dinxperlo</title>
+        <link
+          rel="preload"
+          as="font"
+          crossOrigin="anonymous"
+          href={cabin400woff}
+          type="font/woff"
+        />
+        <link
+          rel="preload"
+          as="font"
+          crossOrigin="anonymous"
+          href={cabin400woff2}
+          type="font/woff2"
+        />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
