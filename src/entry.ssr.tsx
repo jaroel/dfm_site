@@ -10,17 +10,23 @@
  * - npm run build
  *
  */
-import { renderToStream, type RenderToStreamOptions } from '@builder.io/qwik/server';
-import { manifest } from '@qwik-client-manifest';
-import Root from './root';
+import { renderToStream } from "@builder.io/qwik/server";
+import {
+  type RenderToStreamOptions,
+  type RenderToStreamResult,
+} from "@builder.io/qwik/server";
+import { manifest } from "@qwik-client-manifest";
+import Root from "./root";
 
-export default function (opts: RenderToStreamOptions) {
-  return renderToStream(<Root />, {
+export default async function (
+  opts: RenderToStreamOptions
+): Promise<RenderToStreamResult> {
+  return await renderToStream(<Root />, {
     manifest,
     ...opts,
     // Use container attributes to set attributes on the html tag.
     containerAttributes: {
-      lang: 'en-us',
+      lang: "en-us",
       ...opts.containerAttributes,
     },
   });
