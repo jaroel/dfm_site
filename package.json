@@ -1,8 +1,8 @@
 {
-  "name": "my-qwik-empty-starter",
+  "name": "dfm-site-qwik",
   "description": "App with Routing built-in ready to create your app",
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=20.2.0"
   },
   "private": true,
   "scripts": {
