@@ -1,17 +1,9 @@
 FROM node:20-buster-slim as builder
 WORKDIR /app
-COPY .eslintignore /app/
-COPY .eslintrc.cjs /app/
-COPY .prettierignore /app/
+COPY .eslintignore .eslintrc.cjs .prettierignore package.json pnpm-lock.yaml postcss.config.js tailwind.config.js tsconfig.json vite.config.ts /app/
 COPY adapters /app/adapters
-COPY package.json /app/
-COPY pnpm-lock.yaml /app/
-COPY postcss.config.js /app/
 COPY public /app/public
 COPY src /app/src
-COPY tailwind.config.js /app/
-COPY tsconfig.json /app/
-COPY vite.config.ts /app/
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 RUN pnpm run qwik build
