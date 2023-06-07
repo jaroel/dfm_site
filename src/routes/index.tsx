@@ -173,12 +173,7 @@ export default component$(() => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <img
-                  src={sponsor.src}
-                  alt={sponsor.alt}
-                  width="250"
-                  height="auto"
-                />
+                <img src={sponsor.src} alt={sponsor.alt} width="250" />
               </a>
             </div>
           ))}
