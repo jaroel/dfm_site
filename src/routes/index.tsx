@@ -2,24 +2,25 @@ import { component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Link } from "@builder.io/qwik-city";
 import type { StreamState } from "~/stream";
-
-import programmering from "~/assets/programmering.jpg";
-
-import logoDFM from "~/assets/logos/logodinxperfm.png";
-import makt from "~/assets/logos/makt.jpg";
-import logo13 from "~/assets/logos/logo13.jpg";
-import logo15 from "~/assets/logos/logo15.jpg";
-import logo16 from "~/assets/logos/logo16.jpg";
-import logo18 from "~/assets/logos/logo18.jpg";
-import logo19 from "~/assets/logos/logo19.jpg";
-import logo22 from "~/assets/logos/logo22.jpg";
-import logo23 from "~/assets/logos/logo23.jpg";
-import jumbo from "~/assets/logos/jumbo.jpg";
-import oldDutch from "~/assets/logos/OldDutch.jpg";
-import mashops from "~/assets/logos/Mashops.jpg";
-import expert from "~/assets/logos/Expert.jpg";
-import alswin from "~/assets/logos/AlswinGr.jpg";
 import Controls from "~/components/controls";
+import Picture from "~/components/picture";
+
+import programmering from "../assets/programmering.jpg?w=1085&format=avif;webp;png&as=picture";
+
+import logoDFM from "~/assets/logos/logodinxperfm.png?w=768;384&format=avif;webp;png&as=picture";
+import makt from "~/assets/logos/makt.jpg?w=250&format=avif;webp;png&as=picture";
+import logo13 from "~/assets/logos/logo13.jpg?w=250&format=avif;webp;png&as=picture";
+import logo15 from "~/assets/logos/logo15.jpg?w=250&format=avif;webp;png&as=picture";
+import logo16 from "~/assets/logos/logo16.jpg?w=250&format=avif;webp;png&as=picture";
+import logo18 from "~/assets/logos/logo18.jpg?w=250&format=avif;webp;png&as=picture";
+import logo19 from "~/assets/logos/logo19.jpg?w=250&format=avif;webp;png&as=picture";
+import logo22 from "~/assets/logos/logo22.jpg?w=250&format=avif;webp;png&as=picture";
+import logo23 from "~/assets/logos/logo23.jpg?w=250&format=avif;webp;png&as=picture";
+import jumbo from "~/assets/logos/jumbo.jpg?w=250&format=avif;webp;png&as=picture";
+import oldDutch from "~/assets/logos/OldDutch.jpg?w=250&format=avif;webp;png&as=picture";
+import mashops from "~/assets/logos/Mashops.jpg?w=250&format=avif;webp;png&as=picture";
+import expert from "~/assets/logos/Expert.jpg?w=250&format=avif;webp;png&as=picture";
+import alswin from "~/assets/logos/AlswinGr.jpg?w=250&format=avif;webp;png&as=picture";
 
 const sponsors = [
   {
@@ -103,16 +104,7 @@ export default component$(() => {
       />
       <div class="flex justify-evenly mt-10 mb-10">
         <div class="max-w-sm">
-          <img
-            src={logoDFM}
-            alt="DinxperFM logo"
-            width="384"
-            height="328"
-            loading="eager"
-            decoding="auto"
-            class="mx-auto"
-          />
-
+          <Picture {...logoDFM} alt="Logo Dinxper FM" />
           <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
         </div>
       </div>
@@ -146,17 +138,10 @@ export default component$(() => {
       </nav>
 
       <div class="mt-10 flex justify-center">
-        <img
-          src={programmering}
-          alt="DinxperFM programmering"
-          loading="eager"
-          decoding="auto"
-          width="1085"
-          height="656"
-        />
+        <Picture {...programmering} alt="DinxperFM programmering" />
       </div>
       <div class="text-center">
-        <a target="blank" class="text-blue-400" href={programmering}>
+        <a target="blank" class="text-blue-400" href={programmering.img.src}>
           In nieuwe pagina openen
         </a>
       </div>
@@ -173,7 +158,7 @@ export default component$(() => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <img src={sponsor.src} alt={sponsor.alt} width="250" />
+                <Picture {...sponsor.src} alt={sponsor.alt} />
               </a>
             </div>
           ))}

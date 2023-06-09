@@ -1,5 +1,6 @@
 {
   "name": "dfm-site-qwik",
+  "type": "module",
   "description": "App with Routing built-in ready to create your app",
   "engines": {
     "node": ">=20.2.0"
@@ -37,12 +38,14 @@
     "eslint": "8.42.0",
     "eslint-plugin-qwik": "^1.1.5",
     "express": "4.18.2",
+    "imagetools-core": "^4.0.3",
     "postcss": "^8.4.23",
     "prettier": "2.8.8",
     "tailwindcss": "^3.3.2",
     "typescript": "5.1.3",
     "undici": "5.22.1",
     "vite": "4.3.9",
+    "vite-imagetools": "^5.0.4",
     "vite-tsconfig-paths": "4.2.0"
   },
   "dependencies": {

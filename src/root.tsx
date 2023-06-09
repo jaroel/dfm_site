@@ -7,8 +7,7 @@ import {
 import { RouterHead } from "./components/router-head/router-head";
 import "./global.css";
 
-import bgImage from "~/assets/dfm_studio-blurred.jpg";
-const bodyStyles = `background-image: url('${bgImage}')`;
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&as=url";
 
 export default component$(() => {
   /**
@@ -47,8 +46,10 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body
-        class="text-slate-50 h-screen bg-center bg-cover bg-fixed font-[Cabin]"
-        style={bodyStyles}
+        class="text-slate-50 h-screen bg-gray-600 bg-center bg-cover bg-fixed font-[Cabin]"
+        style={{
+          "background-image": `url('${bgImage}')`,
+        }}
       >
         <div class="h-100 overflow-auto bg-black/75">
           <div class="max-w-7xl mx-auto">

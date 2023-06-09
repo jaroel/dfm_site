@@ -4,7 +4,6 @@ import Contactbar from "~/components/contactbar";
 export default component$(() => {
   return (
     <>
-      <Contactbar />
       <Slot />
       <Contactbar />
     </>
