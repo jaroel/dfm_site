@@ -9,6 +9,7 @@ node_modules
 *.local
 
 # Cache
+.pnpm-store
 .cache
 .mf
 .rollup.cache
