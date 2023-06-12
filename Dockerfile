@@ -1,4 +1,4 @@
-FROM node:20-buster-slim as builder
+FROM node:20-buster as builder
 WORKDIR /app
 COPY . /app/
 RUN npm install -g pnpm
