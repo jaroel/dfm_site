@@ -1,6 +1,6 @@
 FROM node:20-buster-slim as builder
 WORKDIR /app
-COPY .eslintignore .eslintrc.cjs .prettierignore package.json pnpm-lock.yaml postcss.config.js tailwind.config.js tsconfig.json vite.config.ts /app/
+COPY .eslintignore .eslintrc.cjs .prettierignore package.json pnpm-lock.yaml postcss.config.cjs tailwind.config.js tsconfig.json vite.config.ts globals.d.ts /app/
 COPY adapters /app/adapters
 COPY public /app/public
 COPY src /app/src

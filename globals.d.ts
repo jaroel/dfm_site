@@ -1,5 +1,3 @@
-// import { type Picture } from "imagetools-core/dist/types";
-
 declare module "*&as=picture" {
   /**
    * actual types
