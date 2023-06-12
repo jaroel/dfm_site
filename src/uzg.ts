@@ -83,7 +83,7 @@ const weekdayDisplayLowerCase = weekdayDisplayUpperCase.map((day) =>
 const nameToDate = /(\d\d)-(\d\d)-(\d\d\d\d)-(\d\d)-(\d\d).mp3/;
 
 export const getRecordings = async (): Promise<Recording[]> => {
-  const now = new Date();
+  const now = new Date().getTime();
   const listing = await getFtpListing();
   return listing
     .map((value) => {
@@ -132,7 +132,5 @@ export const getRecordings = async (): Promise<Recording[]> => {
       return recording;
     })
     .sort((a, b) => ((a.date ?? 0) >= (b.date ?? 0) ? -1 : 1))
-    .filter((recording) =>
-      Math.floor(Math.abs(recording.date.getTime() - now.getTime()) / 3600000)
-    ); // At least one hour old.
+    .filter((recording) => now - recording.date.getTime() >= 3600000); // At least one hour old.
 };
