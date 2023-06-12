@@ -1,6 +1,7 @@
 **/*.log
 **/.DS_Store
 *.
+.pnpm-store
 .vscode/settings.json
 .history
 .yarn
