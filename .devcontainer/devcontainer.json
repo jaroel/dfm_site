@@ -1,19 +1,16 @@
 {
-  "name": "Node.js & TypeScript",
+  "name": "DinxperFM Site",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "features": {
     "ghcr.io/devcontainers-contrib/features/pnpm:2": {}
   },
-  "forwardPorts": [
-    5173
-  ],
+  "forwardPorts": [5173],
   "postCreateCommand": "pnpm install",
   "customizations": {
     "vscode": {
       "extensions": [
         "bradlc.vscode-tailwindcss",
         "yoavbls.pretty-ts-errors",
-        "rvest.vs-code-prettier-eslint",
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint"
       ]
