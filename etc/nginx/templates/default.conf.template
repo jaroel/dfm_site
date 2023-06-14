@@ -1,0 +1,23 @@
+proxy_cache_path /var/lib/nginx/cache keys_zone=the_cache:20m;
+proxy_cache_key "$scheme$request_method$host$request_uri";
+
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  frontend;
+    root /app/dist/;
+    proxy_cache the_cache;
+    add_header X-Cache-Status $upstream_cache_status;
+
+    location = / {
+        proxy_pass http://backend:3000;
+    }
+
+    location / {
+        try_files $uri $uri/ @proxybackend;
+    }
+
+    location @proxybackend {
+        proxy_pass http://backend:3000;
+    }
+}
