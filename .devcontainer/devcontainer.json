@@ -1,6 +1,6 @@
 {
   "name": "DinxperFM Site",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
   "features": {
     "ghcr.io/devcontainers-contrib/features/pnpm:2": {}
   },
