@@ -6,7 +6,6 @@ services:
     image: nginx:alpine-slim
     volumes:
       - ./etc/nginx/templates:/etc/nginx/templates:ro
-      - shared_app:/app:ro
     tmpfs:
       - /var/lib/nginx/cache:rw
     ports:
@@ -18,12 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    volumes:
-      - shared_app:/app:ro
     environment:
       NODE_ENV: production
     ports:
       - 3000:3000
-
-volumes:
-  shared_app:
