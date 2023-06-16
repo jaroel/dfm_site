@@ -1,12 +1,21 @@
+import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
-import { type DocumentHead } from "@builder.io/qwik-city";
-
 import { routeLoader$ } from "@builder.io/qwik-city";
+
 import Uitzendinggemist from "~/components/uitzendinggemist";
 import { getRecordings } from "~/uzg";
 
 import logoDFM from "~/assets/logos/logodinxperfm.png";
+
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+  cacheControl({
+    // Always serve a cached response by default, up to a day stale
+    staleWhileRevalidate: 60 * 60 * 24,
+    // Max once every hour, revalidate on the server to get a fresh version of this page
+    maxAge: 60 * 60,
+  });
+};
 
 export const useRecordings = routeLoader$(async () => {
   return await getRecordings();

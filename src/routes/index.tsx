@@ -1,5 +1,5 @@
 import { component$, useSignal } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link } from "@builder.io/qwik-city";
 import type { StreamState } from "~/stream";
 import Controls from "~/components/controls";
@@ -21,6 +21,15 @@ import oldDutch from "~/assets/logos/OldDutch.jpg?w=250&format=avif;webp;png&as=
 import mashops from "~/assets/logos/Mashops.jpg?w=250&format=avif;webp;png&as=picture";
 import expert from "~/assets/logos/Expert.jpg?w=250&format=avif;webp;png&as=picture";
 import alswin from "~/assets/logos/AlswinGr.jpg?w=250&format=avif;webp;png&as=picture";
+
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+  cacheControl({
+    // Always serve a cached response by default, up to a day stale
+    staleWhileRevalidate: 60 * 60 * 24,
+    // Max once every hour, revalidate on the server to get a fresh version of this page
+    maxAge: 60 * 60,
+  });
+};
 
 const sponsors = [
   {
