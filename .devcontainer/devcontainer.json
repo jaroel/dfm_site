@@ -15,5 +15,8 @@
         "dbaeumer.vscode-eslint"
       ]
     }
+  },
+  "containerEnv": {
+    "LAUNCH_EDITOR": "code"
   }
 }

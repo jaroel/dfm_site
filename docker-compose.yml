@@ -2,7 +2,6 @@ version: '3.4'
 
 services:
   frontend:
-    read_only: true
     image: nginx:alpine-slim
     volumes:
       - ./etc/nginx/templates:/etc/nginx/templates:ro
