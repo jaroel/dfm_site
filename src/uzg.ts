@@ -3,7 +3,7 @@ import { FTP } from "ftp-ts";
 
 export const getConnection = async (): Promise<FTP> => {
   return await FTP.connect({
-    host: "86.81.98.192",
+    host: "dinxperfm.freeddns.org",
     user: "UZG",
     password: "4862KpZ2",
   });
