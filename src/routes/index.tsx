@@ -1,26 +1,26 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { Slot, component$, useSignal } from "@builder.io/qwik";
 import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link } from "@builder.io/qwik-city";
 import type { StreamState } from "~/stream";
 import Controls from "~/components/controls";
-import Picture from "~/components/picture";
 
-import programmering from "../assets/programmering.jpg?w=1085&format=avif;webp;png&as=picture";
+import Programmering from "~/assets/programmering.jpg?jsx";
+import programmeringRaw from "~/assets/programmering.jpg";
 
-import logoDFM from "~/assets/logos/logodinxperfm.png?w=768;384&format=avif;webp;png&as=picture";
-import makt from "~/assets/logos/makt.jpg?w=250&format=avif;webp;png&as=picture";
-import logo13 from "~/assets/logos/logo13.jpg?w=250&format=avif;webp;png&as=picture";
-import logo15 from "~/assets/logos/logo15.jpg?w=250&format=avif;webp;png&as=picture";
-import logo16 from "~/assets/logos/logo16.jpg?w=250&format=avif;webp;png&as=picture";
-import logo18 from "~/assets/logos/logo18.jpg?w=250&format=avif;webp;png&as=picture";
-import logo19 from "~/assets/logos/logo19.jpg?w=250&format=avif;webp;png&as=picture";
-import logo22 from "~/assets/logos/logo22.jpg?w=250&format=avif;webp;png&as=picture";
-import logo23 from "~/assets/logos/logo23.jpg?w=250&format=avif;webp;png&as=picture";
-import jumbo from "~/assets/logos/jumbo.jpg?w=250&format=avif;webp;png&as=picture";
-import oldDutch from "~/assets/logos/OldDutch.jpg?w=250&format=avif;webp;png&as=picture";
-import mashops from "~/assets/logos/Mashops.jpg?w=250&format=avif;webp;png&as=picture";
-import expert from "~/assets/logos/Expert.jpg?w=250&format=avif;webp;png&as=picture";
-import alswin from "~/assets/logos/AlswinGr.jpg?w=250&format=avif;webp;png&as=picture";
+import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx";
+import Makt from "~/assets/logos/makt.jpg?jsx";
+import Logo13 from "~/assets/logos/Logo13.jpg?jsx";
+import Logo15 from "~/assets/logos/Logo15.jpg?jsx";
+import Logo16 from "~/assets/logos/Logo16.jpg?jsx";
+import Logo18 from "~/assets/logos/Logo18.jpg?jsx";
+import Logo19 from "~/assets/logos/Logo19.jpg?jsx";
+import Logo22 from "~/assets/logos/Logo22.jpg?jsx";
+import Logo23 from "~/assets/logos/Logo23.jpg?jsx";
+import Jumbo from "~/assets/logos/jumbo.jpg?jsx";
+import OldDutch from "~/assets/logos/OldDutch.jpg?jsx";
+import Mashops from "~/assets/logos/Mashops.jpg?jsx";
+import Expert from "~/assets/logos/Expert.jpg?jsx";
+import Alswin from "~/assets/logos/AlswinGr.jpg?jsx";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({
@@ -30,74 +30,6 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
     maxAge: 60 * 60,
   });
 };
-
-const sponsors = [
-  {
-    href: "https://www.facebook.com/markt.dinxperlo/",
-    src: makt,
-    alt: "De markt van Dinxperlo",
-  },
-  {
-    href: "http://www.naaiateliermoniqueharmsen.nl/",
-    src: logo13,
-    alt: "Naaiatelier Monique Harmsen",
-  },
-  {
-    href: "https://podesta.nl/",
-    src: logo15,
-    alt: "Podesta event supplies",
-  },
-  {
-    href: "https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/",
-    src: logo16,
-    alt: "Adviesbureau Roenhorst Dinxperlo",
-  },
-  {
-    href: "http://www.groentekwekerij-smits.nl/",
-    src: logo18,
-    alt: "Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit",
-  },
-  {
-    href: "http://www.tegrotenhuisdinxperlo.nl/",
-    src: logo19,
-    alt: "Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo",
-  },
-  {
-    href: "https://www.tiggelovend-kok.nl/",
-    src: logo22,
-    alt: "Tiggelovend-Kok B.V.",
-  },
-  {
-    href: "http://www.vvnf.nl/",
-    src: logo23,
-    alt: "VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo",
-  },
-  {
-    href: "https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/",
-    src: jumbo,
-    alt: "Jumbo Dinxperlo Leussink",
-  },
-  {
-    href: "https://www.olddutchdinxperlo.nl/",
-    src: oldDutch,
-    alt: "Old Dutch Dinxperlo",
-  },
-  {
-    href: "https://www.ma-shops.nl/?ref=dinxperfm",
-    src: mashops,
-    alt: "MA-Shops",
-  },
-  {
-    href: "https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE",
-    src: expert,
-    alt: "Expert Dinxperlo",
-  },
-  {
-    href: "https://www.dinxperlo.nl",
-    src: alswin,
-    alt: "Alswin",
-  },
-];
 
 export default component$(() => {
   const playerUrl = useSignal<string>("");
@@ -113,7 +45,7 @@ export default component$(() => {
       />
       <div class="flex justify-evenly mt-10 mb-10">
         <div class="max-w-sm">
-          <Picture {...logoDFM} alt="Logo Dinxper FM" />
+          <LogoDFM alt="Logo Dinxper FM" />
           <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
         </div>
       </div>
@@ -147,10 +79,10 @@ export default component$(() => {
       </nav>
 
       <div class="mt-10 flex justify-center">
-        <Picture {...programmering} alt="DinxperFM programmering" />
+        <Programmering title="DinxperFM programmering"></Programmering>
       </div>
       <div class="text-center">
-        <a target="blank" class="text-blue-400" href={programmering.img.src}>
+        <a target="blank" class="text-blue-400" href={programmeringRaw}>
           In nieuwe pagina openen
         </a>
       </div>
@@ -159,21 +91,97 @@ export default component$(() => {
         <h2 class="text-2xl">Dinxper FM wordt mede mogelijk gemaakt door</h2>
 
         <div class="flex flex-row flex-wrap justify-evenly">
-          {sponsors.map((sponsor) => (
-            <div class="p-1 mb-2" key={sponsor.href}>
-              <a
-                href={sponsor.href}
-                title={sponsor.alt}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Picture {...sponsor.src} alt={sponsor.alt} />
-              </a>
-            </div>
-          ))}
+          <Sponsor
+            href="https://www.facebook.com/markt.dinxperlo/"
+            title="De markt van Dinxperlo"
+          >
+            <Makt />
+          </Sponsor>
+
+          <Sponsor
+            href="http://www.naaiateliermoniqueharmsen.nl/"
+            title="Naaiatelier Monique Harmsen"
+          >
+            <Logo13 />
+          </Sponsor>
+          <Sponsor href="https://podesta.nl/" title="Podesta event supplies">
+            <Logo15 />
+          </Sponsor>
+          <Sponsor
+            href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
+            title="Adviesbureau Roenhorst Dinxperlo"
+          >
+            <Logo16 />
+          </Sponsor>
+          <Sponsor
+            href="http://www.groentekwekerij-smits.nl/"
+            title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit"
+          >
+            <Logo18 />
+          </Sponsor>
+          <Sponsor
+            href="http://www.tegrotenhuisdinxperlo.nl/"
+            title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo"
+          >
+            <Logo19 />
+          </Sponsor>
+          <Sponsor
+            href="https://www.tiggelovend-kok.nl/"
+            title="Tiggelovend-Kok B.V."
+          >
+            <Logo22 />
+          </Sponsor>
+          <Sponsor
+            href="http://www.vvnf.nl/"
+            title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo"
+          >
+            <Logo23 />
+          </Sponsor>
+          <Sponsor
+            href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/"
+            title="Jumbo Dinxperlo Leussink"
+          >
+            <Jumbo></Jumbo>
+          </Sponsor>
+          <Sponsor
+            href="https://www.olddutchdinxperlo.nl/"
+            title="Old Dutch Dinxperlo"
+          >
+            <OldDutch></OldDutch>
+          </Sponsor>
+          <Sponsor
+            href="https://www.ma-shops.nl/?ref=dinxperfm"
+            title="MA-Shops"
+          >
+            <Mashops></Mashops>
+          </Sponsor>
+          <Sponsor
+            href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
+            title="Expert Dinxperlo"
+          >
+            <Expert></Expert>
+          </Sponsor>
+          <Sponsor href="https://www.dinxperlo.nl" title="Alswin">
+            <Alswin></Alswin>
+          </Sponsor>
         </div>
       </div>
     </>
+  );
+});
+
+const Sponsor = component$((sponsor: { href: string; title: string }) => {
+  return (
+    <div class="p-1 mb-2 w-[250]">
+      <a
+        href={sponsor.href}
+        title={sponsor.title}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Slot></Slot>
+      </a>
+    </div>
   );
 });
 

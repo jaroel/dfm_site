@@ -6,7 +6,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import Uitzendinggemist from "~/components/uitzendinggemist";
 import { getRecordings } from "~/uzg";
 
-import logoDFM from "~/assets/logos/logodinxperfm.png";
+import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({
@@ -29,15 +29,7 @@ export default component$(() => {
         <div class="flex flex-auto items-center">
           <div class="mx-12 my-8">
             <Link href="/" title="Ga naar: DinxperFM home page">
-              <img
-                src={logoDFM}
-                alt="DinxperFM logo"
-                loading="eager"
-                decoding="auto"
-                width="128"
-                height="128"
-                class="mx-auto"
-              />
+              <LogoDFM />
             </Link>
             <p class="text-center mt-4">Het swingende geluid van Dinxperlo!</p>
           </div>

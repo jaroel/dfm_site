@@ -7,7 +7,7 @@ import {
 import { RouterHead } from "./components/router-head/router-head";
 import "./global.css";
 
-import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&as=url";
+import bgImage from "~/assets/dfm_studio-blurred.jpg";
 
 export default component$(() => {
   /**
