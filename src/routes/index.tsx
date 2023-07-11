@@ -4,23 +4,39 @@ import { Link } from "@builder.io/qwik-city";
 import type { StreamState } from "~/stream";
 import Controls from "~/components/controls";
 
-import Programmering from "~/assets/programmering.jpg?jsx";
-import programmeringRaw from "~/assets/programmering.jpg";
-
-import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx";
-import Makt from "~/assets/logos/makt.jpg?jsx";
-import Logo13 from "~/assets/logos/Logo13.jpg?jsx";
-import Logo15 from "~/assets/logos/Logo15.jpg?jsx";
-import Logo16 from "~/assets/logos/Logo16.jpg?jsx";
-import Logo18 from "~/assets/logos/Logo18.jpg?jsx";
-import Logo19 from "~/assets/logos/Logo19.jpg?jsx";
-import Logo22 from "~/assets/logos/Logo22.jpg?jsx";
-import Logo23 from "~/assets/logos/Logo23.jpg?jsx";
-import Jumbo from "~/assets/logos/jumbo.jpg?jsx";
-import OldDutch from "~/assets/logos/OldDutch.jpg?jsx";
-import Mashops from "~/assets/logos/Mashops.jpg?jsx";
-import Expert from "~/assets/logos/Expert.jpg?jsx";
-import Alswin from "~/assets/logos/AlswinGr.jpg?jsx";
+// Can't ts-ignore the whole block.
+// @ts-ignore
+import Programmering from "~/assets/programmering.jpg?jsx&w=1085";
+// @ts-ignore
+import programmeringRaw from "~/assets/programmering.jpg?w=1085";
+// @ts-ignore
+import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx&w=768;384";
+// @ts-ignore
+import Makt from "~/assets/logos/makt.jpg?jsx&w=250";
+// @ts-ignore
+import Logo13 from "~/assets/logos/Logo13.jpg?jsx&w=250";
+// @ts-ignore
+import Logo15 from "~/assets/logos/Logo15.jpg?jsx&w=250";
+// @ts-ignore
+import Logo16 from "~/assets/logos/Logo16.jpg?jsx&w=250";
+// @ts-ignore
+import Logo18 from "~/assets/logos/Logo18.jpg?jsx&w=250";
+// @ts-ignore
+import Logo19 from "~/assets/logos/Logo19.jpg?jsx&w=250";
+// @ts-ignore
+import Logo22 from "~/assets/logos/Logo22.jpg?jsx&w=250";
+// @ts-ignore
+import Logo23 from "~/assets/logos/Logo23.jpg?jsx&w=250";
+// @ts-ignore
+import Jumbo from "~/assets/logos/jumbo.jpg?jsx&w=250";
+// @ts-ignore
+import OldDutch from "~/assets/logos/OldDutch.jpg?jsx&w=250";
+// @ts-ignore
+import Mashops from "~/assets/logos/Mashops.jpg?jsx&w=250";
+// @ts-ignore
+import Expert from "~/assets/logos/Expert.jpg?jsx&w=250";
+// @ts-ignore
+import Alswin from "~/assets/logos/AlswinGr.jpg?jsx&w=250";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({

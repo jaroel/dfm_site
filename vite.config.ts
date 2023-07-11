@@ -6,14 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig(() => {
   return {
     plugins: [
-      qwikCity({
-        imageOptimization: {
-          jsxDirectives: {
-            quality: '100',
-            w: '128;250;384;1084',
-          }
-        }
-      }),
+      qwikCity(),
       qwikVite(),
       tsconfigPaths(),
     ],

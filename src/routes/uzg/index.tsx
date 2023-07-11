@@ -6,7 +6,8 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import Uitzendinggemist from "~/components/uitzendinggemist";
 import { getRecordings } from "~/uzg";
 
-import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx";
+// @ts-ignore
+import LogoDFM from "~/assets/logos/logodinxperfm.png?jsx&w=128";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   cacheControl({
