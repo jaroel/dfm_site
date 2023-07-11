@@ -95,7 +95,7 @@ export default component$(() => {
       </nav>
 
       <div class="mt-10 flex justify-center">
-        <Programmering title="DinxperFM programmering"></Programmering>
+        <Programmering alt="DinxperFM programmering"></Programmering>
       </div>
       <div class="text-center">
         <a target="blank" class="text-blue-400" href={programmeringRaw}>
@@ -111,74 +111,74 @@ export default component$(() => {
             href="https://www.facebook.com/markt.dinxperlo/"
             title="De markt van Dinxperlo"
           >
-            <Makt />
+            <Makt alt="De markt van Dinxperlo" />
           </Sponsor>
 
           <Sponsor
             href="http://www.naaiateliermoniqueharmsen.nl/"
             title="Naaiatelier Monique Harmsen"
           >
-            <Logo13 />
+            <Logo13 alt="Naaiatelier Monique Harmsen" />
           </Sponsor>
           <Sponsor href="https://podesta.nl/" title="Podesta event supplies">
-            <Logo15 />
+            <Logo15 alt="Podesta event supplies" />
           </Sponsor>
           <Sponsor
             href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
             title="Adviesbureau Roenhorst Dinxperlo"
           >
-            <Logo16 />
+            <Logo16 alt="Adviesbureau Roenhorst Dinxperlo" />
           </Sponsor>
           <Sponsor
             href="http://www.groentekwekerij-smits.nl/"
             title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit"
           >
-            <Logo18 />
+            <Logo18 alt="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit" />
           </Sponsor>
           <Sponsor
             href="http://www.tegrotenhuisdinxperlo.nl/"
             title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo"
           >
-            <Logo19 />
+            <Logo19 alt="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo" />
           </Sponsor>
           <Sponsor
             href="https://www.tiggelovend-kok.nl/"
             title="Tiggelovend-Kok B.V."
           >
-            <Logo22 />
+            <Logo22 alt="Tiggelovend-Kok B.V." />
           </Sponsor>
           <Sponsor
             href="http://www.vvnf.nl/"
             title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo"
           >
-            <Logo23 />
+            <Logo23 alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo" />
           </Sponsor>
           <Sponsor
             href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/"
             title="Jumbo Dinxperlo Leussink"
           >
-            <Jumbo></Jumbo>
+            <Jumbo alt="Jumbo Dinxperlo Leussink"></Jumbo>
           </Sponsor>
           <Sponsor
             href="https://www.olddutchdinxperlo.nl/"
             title="Old Dutch Dinxperlo"
           >
-            <OldDutch></OldDutch>
+            <OldDutch alt="Old Dutch Dinxperlo"></OldDutch>
           </Sponsor>
           <Sponsor
             href="https://www.ma-shops.nl/?ref=dinxperfm"
             title="MA-Shops"
           >
-            <Mashops></Mashops>
+            <Mashops alt="MA-Shops"></Mashops>
           </Sponsor>
           <Sponsor
             href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
             title="Expert Dinxperlo"
           >
-            <Expert></Expert>
+            <Expert alt="Expert Dinxperlo"></Expert>
           </Sponsor>
           <Sponsor href="https://www.dinxperlo.nl" title="Alswin">
-            <Alswin></Alswin>
+            <Alswin alt="Alswin"></Alswin>
           </Sponsor>
         </div>
       </div>
