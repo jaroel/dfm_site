@@ -16,7 +16,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     provide_meta_context(cx);
     view! {
         cx,
-        <Stylesheet id="leptos" href="/pkg/start-axum.css"/>
+        <Stylesheet id="leptos" href="/pkg/dfm_site.css"/>
         <Title text="Dinxper FM - het swingende geluid van Dinxperlo"/>
         <Body class="text-slate-50 h-screen bg-gray-600 bg-center bg-cover bg-fixed font-[Cabin]" />
 
@@ -32,6 +32,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             <div class="max-w-7xl mx-auto">
                 <Routes>
                     <Route path="" view=|cx| view! { cx, <HomePage /> } />
+                    <Route path="/uzg" view=|cx| view! { cx, <UitzendingGemist /> } />
                 </Routes>
 
                 <nav class="text-black bg-gray-100 p-2 flex justify-center">
@@ -128,7 +129,7 @@ fn Controls(
         };
     };
 
-    let on_click = move || {
+    let on_click = move |_| {
         if current_stream_src.get() == local_src.get() {
             set_player_src.set("".to_string());
             set_player_state.set(PlayerState::Stopped)
@@ -139,7 +140,7 @@ fn Controls(
     };
 
     view! {cx,
-      <button title=title on:click=move |_| on_click() class=classes>
+      <button title=title on:click=on_click class=classes>
         <span class="mr-2">{label}</span>
         {move || match player_state() {
           PlayerState::Stopped | PlayerState::Error => {
@@ -244,11 +245,10 @@ fn HomePage(cx: Scope) -> impl IntoView {
             />
           </li>
           <li>
-            <a
+            <A
               class="inline-block mt-3 px-4 no-underline text-blue-700"
               href="/uzg"
-              title=""
-            >"Uitzending gemist?"</a>
+            >"Uitzending gemist?"</A>
           </li>
         </ul>
       </nav>
@@ -279,5 +279,56 @@ fn HomePage(cx: Scope) -> impl IntoView {
           <Sponsor title="Alswin".into() href="https://www.dinxperlo.nl".into() logo="/sponsors/AlswinGr.jpg".into() />
         </div>
       </div>
+    }
+}
+
+#[server(FetchFTPEntries, "/api")]
+pub async fn fetch_ftp_entries() -> Result<(), ServerFnError> {
+    Ok(())
+}
+
+#[component]
+fn UitzendingGemist(cx: Scope) -> impl IntoView {
+    let once = create_resource(cx, || (), |_| async move { fetch_ftp_entries().await });
+
+    view! {cx,
+      <div class="flex justify-evenly">
+      <div class="flex flex-auto items-center">
+        <div class="mx-12 my-8">
+          <A href="/">
+            <img
+              src="/logodinxperfm.png"
+              alt="DinxperFM logo"
+              loading="eager"
+              decoding="auto"
+              width="128"
+              height="128"
+              class="mx-auto"
+            />
+          </A>
+          <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
+        </div>
+
+        <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">
+          "Uitzending gemist"
+        </h1>
+      </div>
+    </div>
+    <div class="bg-gray-100 text-black p-9">
+      <div class="max-w-7xl px-6 text-center">
+        <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
+          "Dit zijn opnames van uitzendingen op de Dinxper FM stream. Gebruik
+          de speler om de uitzending terug te luisteren of klik de link om de
+          uitzending op te slaan."
+        </p>
+      </div>
+      <hr class="my-8" />
+      <Suspense fallback=move || view! { cx, <p>"Loading (Suspense Fallback)..."</p> }>
+      {move || match once.read(cx) {
+          None => view! { cx, <p>"Loading..."</p> }.into_view(cx),
+          Some(_data) => view! { cx, <p>"Got some data"</p> }.into_view(cx)
+      }}
+      </Suspense>
+    </div>
     }
 }

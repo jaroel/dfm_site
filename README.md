@@ -77,14 +77,14 @@ After running a `cargo leptos build --release` the minimum files needed are:
 Copy these files to your remote server. The directory structure should be:
 
 ```text
-start-axum
+dfm_site
 site/
 ```
 
 Set the following environment variables (updating for your project as needed):
 
 ```text
-LEPTOS_OUTPUT_NAME="start-axum"
+LEPTOS_OUTPUT_NAME="dfm_site"
 LEPTOS_SITE_ROOT="site"
 LEPTOS_SITE_PKG_DIR="pkg"
 LEPTOS_SITE_ADDR="127.0.0.1:3000"
