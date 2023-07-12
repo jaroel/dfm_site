@@ -283,19 +283,14 @@ fn HomePage(cx: Scope) -> impl IntoView {
 }
 
 #[server(FetchFTPEntries, "/api")]
-pub async fn fetch_ftp_entries() -> Result<(), ServerFnError> {
+pub async fn fetch_ftp_entries() -> Result<Vec<String>, ServerFnError> {
     use async_ftp::FtpStream;
 
     let mut ftp_stream = FtpStream::connect("dinxperfm.freeddns.org:21").await?;
     let _ = ftp_stream.login("UZG", "4862KpZ2").await?;
-
-    // Get the current directory that the client will be reading from and writing to.
-    println!("Current directory: {}", ftp_stream.pwd().await?);
-
-    // Terminate the connection to the server.
+    let items = ftp_stream.nlst(None).await?;
     let _ = ftp_stream.quit();
-
-    Ok(())
+    Ok(items)
 }
 
 #[component]
