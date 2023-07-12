@@ -11,6 +11,12 @@ enum PlayerState {
   Error,
 }
 
+enum Icon {
+  Play,
+  Stop,
+  Hourglass,
+}
+
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
   provide_meta_context(cx);
@@ -129,6 +135,18 @@ fn Controls(
     };
   };
 
+  let icon = move || {
+    if player_src.get() != local_src.get() {
+      return Icon::Play;
+    }
+    return match player_state.get() {
+      PlayerState::Error => Icon::Hourglass,
+      PlayerState::Playing => Icon::Stop,
+      PlayerState::Loading => Icon::Hourglass,
+      PlayerState::Stopped => Icon::Play,
+    };
+  };
+
   let on_click = move |_| {
     if current_stream_src.get() == local_src.get() {
       set_player_src.set("".to_string());
@@ -142,8 +160,8 @@ fn Controls(
   view! {cx,
     <button title=title on:click=on_click class=classes>
       <span class="mr-2">{label}</span>
-      {move || match player_state() {
-        PlayerState::Stopped | PlayerState::Error => {
+      {move || match icon() {
+        Icon::Play => {
           view! {cx,
             <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +175,7 @@ fn Controls(
           </svg>
           }
         },
-        PlayerState::Playing => {
+        Icon::Stop => {
           view! {cx,
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +190,7 @@ fn Controls(
             </svg>
           }
         },
-        PlayerState::Loading => {
+        Icon::Hourglass => {
           view! {cx,
             <svg
               xmlns="http://www.w3.org/2000/svg"
