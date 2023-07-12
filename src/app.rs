@@ -294,6 +294,60 @@ pub async fn fetch_ftp_entries() -> Result<Vec<String>, ServerFnError> {
 }
 
 #[component]
+fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
+    let (player_src, set_player_src) = create_signal(cx, "".to_string());
+    let (current_stream_src, set_current_stream_src) = create_signal(cx, "".to_string());
+    let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
+
+    let audio_ref = create_node_ref::<Audio>(cx);
+
+    view! { cx,
+      <audio autoplay _ref=audio_ref src=player_src
+        on:load=move |_| {
+          set_player_state.set(PlayerState::Loading)
+        }
+        on:play=move |_| {
+          let node = audio_ref.get().expect("audio element missing on page.");
+          set_current_stream_src.set(node.src());
+          set_player_state.set(PlayerState::Playing)
+        }
+        on:error=move |_| {
+          set_current_stream_src.set("".into());
+          if !player_src.get().is_empty() {
+            set_player_state.set(PlayerState::Error)
+          }
+        }
+        on:ended=move |_| {
+          set_current_stream_src.set("".into());
+          set_player_state.set(PlayerState::Stopped)
+        }
+        on:pause=move |_| {
+          set_current_stream_src.set("".into());
+          set_player_state.set(PlayerState::Stopped)
+        }
+        />
+        <ul class="flex flex-wrap list-none my-1">
+          {items.into_iter()
+            .map(|n| view! { cx,
+              <li>
+                      <Controls
+                        title=n.clone()
+                        label=n.clone()
+                        src=format!("https://uitzendinggemist.dinxperfm.nl/fetch/{}", n.clone())
+                        player_src=player_src
+                        set_player_src=set_player_src
+                        player_state=player_state
+                        set_player_state=set_player_state
+                        current_stream_src=current_stream_src
+                      />
+              </li>
+            })
+            .collect_view(cx)}
+        </ul>
+    }
+}
+
+#[component]
 fn UitzendingGemist(cx: Scope) -> impl IntoView {
     let once = create_resource(cx, || (), |_| async move { fetch_ftp_entries().await });
 
@@ -332,7 +386,10 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
       <Suspense fallback=move || view! { cx, <p>"Loading (Suspense Fallback)..."</p> }>
       {move || match once.read(cx) {
           None => view! { cx, <p>"Loading..."</p> }.into_view(cx),
-          Some(_data) => view! { cx, <p>"Got some data"</p> }.into_view(cx)
+          Some(result) => match result {
+              Ok(items) => view! { cx, <UzgListing items=items></UzgListing> },
+              Err(_) => todo!(),
+          }
       }}
       </Suspense>
     </div>
