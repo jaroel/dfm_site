@@ -302,12 +302,13 @@ fn HomePage(cx: Scope) -> impl IntoView {
 
 #[server(FetchFTPEntries, "/api")]
 pub async fn fetch_ftp_entries() -> Result<Vec<String>, ServerFnError> {
-  use async_ftp::FtpStream;
-
-  let mut ftp_stream = FtpStream::connect("dinxperfm.freeddns.org:21").await?;
-  let _ = ftp_stream.login("UZG", "4862KpZ2").await?;
+  use suppaftp::AsyncFtpStream;
+  let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21")
+    .await
+    .unwrap();
+  ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
   let items = ftp_stream.nlst(None).await?;
-  let _ = ftp_stream.quit();
+  let _ = ftp_stream.quit().await;
   Ok(items)
 }
 
@@ -351,7 +352,7 @@ fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
                     <Controls
                       title=n.clone()
                       label=n.clone()
-                      src=format!("https://uitzendinggemist.dinxperfm.nl/fetch/{}", n.clone())
+                      src=format!("/uzg/{}", n.clone())
                       player_src=player_src
                       set_player_src=set_player_src
                       player_state=player_state
