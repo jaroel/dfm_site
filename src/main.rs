@@ -4,6 +4,9 @@ async fn main() {
   use axum::{
     body::{Bytes, StreamBody},
     extract::Path,
+    http::header::{CONTENT_LENGTH, CONTENT_TYPE},
+    http::HeaderValue,
+    response::Response,
     routing::get,
     routing::post,
     Router,
@@ -16,7 +19,6 @@ async fn main() {
 
   use futures_util::stream::Stream;
 
-  // use futures::stream::Stream;
   use suppaftp::{types::FileType, AsyncFtpStream};
   use tokio_util::{compat::FuturesAsyncReadCompatExt, io::ReaderStream};
 
@@ -34,15 +36,22 @@ async fn main() {
 
   async fn stream_ftp_file(
     Path(filename): Path<String>,
-  ) -> StreamBody<impl Stream<Item = std::io::Result<Bytes>>> {
+  ) -> Response<StreamBody<impl Stream<Item = std::io::Result<Bytes>>>> {
     let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21")
       .await
       .unwrap();
     ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
     ftp_stream.transfer_type(FileType::Binary).await.unwrap();
 
-    let data_stream = ftp_stream.retr_as_stream(filename).await.unwrap();
-    StreamBody::new(ReaderStream::new(data_stream.compat()))
+    let size = ftp_stream.size(&filename).await.unwrap();
+    let data_stream = ftp_stream.retr_as_stream(&filename).await.unwrap();
+    let stream_body = StreamBody::new(ReaderStream::new(data_stream.compat()));
+
+    Response::builder()
+      .header(CONTENT_TYPE, HeaderValue::from_static("audio/mp3"))
+      .header(CONTENT_LENGTH, size)
+      .body(stream_body)
+      .unwrap()
   }
 
   // build our application with a route
