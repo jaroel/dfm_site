@@ -25,11 +25,6 @@ thiserror = "1.0.38"
 tracing = { version = "0.1.37", optional = true }
 http = "0.2.8"
 serde = { version = "1.0.171", features = ["derive"] }
-futures-util = { version = "0.3.28", optional = true }
-async-stream = { version = "0.3.5", optional = true }
-suppaftp = { version = "^5.1.2", features = ["async"], optional = true }
-bytes = "1.4.0"
-tokio-util = { version = "0.7.8", features = ["io", "compat"] }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
@@ -43,9 +38,6 @@ ssr = [
     "leptos_meta/ssr",
     "leptos_router/ssr",
     "dep:tracing",
-    "dep:futures-util",
-    "dep:async-stream",
-    "dep:suppaftp",
 ]
 
 [package.metadata.cargo-all-features]

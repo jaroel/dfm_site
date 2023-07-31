@@ -1,26 +1,13 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-  use axum::{
-    body::{Bytes, StreamBody},
-    extract::Path,
-    http::header::{CONTENT_LENGTH, CONTENT_TYPE},
-    http::HeaderValue,
-    response::Response,
-    routing::get,
-    routing::post,
-    Router,
-  };
+  use axum::routing::post;
+  use axum::Router;
   use dfm_site::app::*;
   use dfm_site::fileserv::file_and_error_handler;
-
   use leptos::*;
   use leptos_axum::{generate_route_list, LeptosRoutes};
-
-  use futures_util::stream::Stream;
-
-  use suppaftp::{types::FileType, AsyncFtpStream};
-  use tokio_util::{compat::FuturesAsyncReadCompatExt, io::ReaderStream};
+  use tower_http::services::ServeDir;
 
   simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
 
@@ -34,29 +21,9 @@ async fn main() {
   let addr = leptos_options.site_addr;
   let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
 
-  async fn stream_ftp_file(
-    Path(filename): Path<String>,
-  ) -> Response<StreamBody<impl Stream<Item = std::io::Result<Bytes>>>> {
-    let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21")
-      .await
-      .unwrap();
-    ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
-    ftp_stream.transfer_type(FileType::Binary).await.unwrap();
-
-    let size = ftp_stream.size(&filename).await.unwrap();
-    let data_stream = ftp_stream.retr_as_stream(&filename).await.unwrap();
-    let stream_body = StreamBody::new(ReaderStream::new(data_stream.compat()));
-
-    Response::builder()
-      .header(CONTENT_TYPE, HeaderValue::from_static("audio/mp3"))
-      .header(CONTENT_LENGTH, size)
-      .body(stream_body)
-      .unwrap()
-  }
-
   // build our application with a route
   let app = Router::new()
-    .route("/uzg/fetch/:filename", get(stream_ftp_file))
+    .nest_service("/uzg_data", ServeDir::new("./uzg_data"))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, |cx| view! { cx, <App/> })
     .fallback(file_and_error_handler)

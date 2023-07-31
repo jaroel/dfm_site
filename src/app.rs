@@ -364,16 +364,16 @@ fn HomePage(cx: Scope) -> impl IntoView {
   }
 }
 
-#[server(FetchFTPEntries, "/api")]
+#[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<String>, ServerFnError> {
-  use suppaftp::AsyncFtpStream;
-  let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21")
-    .await
-    .unwrap();
-  ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
-  let items = ftp_stream.nlst(None).await?;
-  let _ = ftp_stream.quit().await;
-  Ok(items)
+  let paths = std::fs::read_dir("./uzg_data").unwrap();
+  let names = paths
+    .filter_map(|res| res.ok())
+    .map(|entry| entry.path())
+    .filter(|path| path.extension().is_some_and(|ext| ext == "mp3"))
+    .map(|path| String::from(path.file_name().unwrap().to_str().unwrap()))
+    .collect::<Vec<String>>();
+  Ok(names)
 }
 
 #[component]
@@ -395,19 +395,16 @@ fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
           set_current_stream_src.set(node.src());
           set_player_state.set(PlayerState::Playing)
       }
-
       on:error=move |_| {
           set_current_stream_src.set("".into());
           if !player_src.get().is_empty() {
               set_player_state.set(PlayerState::Error)
           }
       }
-
       on:ended=move |_| {
           set_current_stream_src.set("".into());
           set_player_state.set(PlayerState::Stopped)
       }
-
       on:pause=move |_| {
           set_current_stream_src.set("".into());
           set_player_state.set(PlayerState::Stopped)
@@ -423,7 +420,7 @@ fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
                   <Controls
                     title=n.clone()
                     label=n.clone()
-                    src=format!("/uzg/fetch/{}", n.clone())
+                    src=format!("http://localhost:3000/uzg_data/{}", n.clone())
                     player_src=player_src
                     set_player_src=set_player_src
                     player_state=player_state
