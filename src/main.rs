@@ -56,7 +56,7 @@ async fn main() {
 
   // build our application with a route
   let app = Router::new()
-    .route("/uzg/:filename", get(stream_ftp_file))
+    .route("/uzg/fetch/:filename", get(stream_ftp_file))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, |cx| view! { cx, <App/> })
     .fallback(file_and_error_handler)
