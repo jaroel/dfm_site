@@ -15,3 +15,5 @@ playwright/.cache/
 
 tailwindcss
 .DS_Store
+uzg_data/*
+!uzg_data/.gitkeep
