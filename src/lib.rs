@@ -1,3 +1,4 @@
+#![feature(slice_group_by)]
 use cfg_if::cfg_if;
 pub mod app;
 pub mod error_template;

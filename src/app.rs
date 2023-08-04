@@ -1,7 +1,10 @@
 use crate::error_template::{AppError, ErrorTemplate};
+use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::{html::Audio, *};
 use leptos_meta::*;
 use leptos_router::*;
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 
 #[derive(Clone)]
 enum PlayerState {
@@ -119,7 +122,8 @@ fn Controls(
   let (local_src, _set_local_src) = create_signal(cx, src); // work around moveing src.
 
   let classes_red = "mr-4 rounded-full border my-1 py-2 px-4 flex items-center bg-red-100 text-red-800 border-red-800";
-  let classes_blue = "mr-4 rounded-full border my-1 py-2 px-4 flex items-center bg-blue-100 text-blue-800 border-blue-800";
+  let classes_blue =
+    "mr-4 rounded-full border my-1 py-2 px-4 flex items-center bg-blue-100 text-blue-800 border-blue-800";
   let classes_gray = "mr-4 rounded-full border my-1 py-2 px-4 flex items-center border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800";
   let classes = move || {
     if player_src.get() != local_src.get() {
@@ -313,8 +317,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
           logo="/sponsors/logo16.jpg".into()
         />
         <Sponsor
-          title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit"
-              .into()
+          title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit".into()
           href="http://www.groentekwekerij-smits.nl/".into()
           logo="/sponsors/logo18.jpg".into()
         />
@@ -354,30 +357,125 @@ fn HomePage(cx: Scope) -> impl IntoView {
               .into()
           logo="/sponsors/expert.jpg".into()
         />
-        <Sponsor
-          title="Alswin".into()
-          href="https://www.dinxperlo.nl".into()
-          logo="/sponsors/AlswinGr.jpg".into()
-        />
+        <Sponsor title="Alswin".into() href="https://www.dinxperlo.nl".into() logo="/sponsors/AlswinGr.jpg".into()/>
       </div>
     </div>
   }
 }
 
+impl From<PathBuf> for Recording {
+  fn from(path: PathBuf) -> Self {
+    let file_name = path.file_name().unwrap().to_str().unwrap();
+    Recording::from(file_name)
+  }
+}
+
+impl From<&str> for Recording {
+  fn from(file_name: &str) -> Self {
+    // '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
+    let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
+    let date = datetime.date();
+
+    Recording {
+      day: date.day(),
+      month: date.month(),
+      year: date.year(),
+      weekday: date.weekday().number_from_monday(),
+      hour: datetime.time().hour(),
+      file_name: file_name.to_string(),
+      key: datetime.format("%Y%m%d%H").to_string().parse::<u32>().unwrap(),
+    }
+  }
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct Recording {
+  day: u32,
+  month: u32,
+  year: i32,
+  weekday: u32,
+  hour: u32,
+  file_name: String,
+  key: u32,
+}
+
+impl Recording {
+  fn label(&self) -> String {
+    format!("{}:00", self.hour)
+  }
+
+  fn title(&self) -> String {
+    format!(
+      "Uitzending Dinxper FM van {} {} {} {} om {} uur",
+      self.weekday_long_c().to_lowercase(),
+      self.day,
+      self.month_long_c().to_lowercase(),
+      self.year,
+      self.hour
+    )
+  }
+
+  fn weekday_long_c(&self) -> String {
+    match self.weekday {
+      1 => "Maandag",
+      2 => "Dinsdag",
+      3 => "Woensdag",
+      4 => "Donderdag",
+      5 => "Vrijdag",
+      6 => "Zaterdag",
+      7 => "Zondag",
+      _ => "",
+    }
+    .to_string()
+  }
+
+  fn month_long_c(&self) -> String {
+    match self.month {
+      1 => "Januari",
+      2 => "Februari",
+      3 => "Maart",
+      4 => "April",
+      5 => "Mei",
+      6 => "Juni",
+      7 => "Juli",
+      8 => "Augustus",
+      9 => "September",
+      10 => "Oktober",
+      11 => "November",
+      12 => "December",
+      _ => "",
+    }
+    .to_string()
+  }
+
+  fn listing_title(&self) -> String {
+    format!(
+      "{} {} {}",
+      self.weekday_long_c(),
+      self.day,
+      self.month_long_c().to_lowercase()
+    )
+  }
+}
+
 #[server(FetchUZGEntries, "/api")]
-pub async fn fetch_uzg_entries() -> Result<Vec<String>, ServerFnError> {
+pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
   let paths = std::fs::read_dir("./uzg_data").unwrap();
-  let names = paths
+  let mut names = paths
     .filter_map(|res| res.ok())
     .map(|entry| entry.path())
     .filter(|path| path.extension().is_some_and(|ext| ext == "mp3"))
-    .map(|path| String::from(path.file_name().unwrap().to_str().unwrap()))
-    .collect::<Vec<String>>();
+    // .filter(|path| path.file_name().is_some_and(|name| name == "04-08-2023-11-00.mp3"))
+    .map(|path| Recording::from(path))
+    .collect::<Vec<Recording>>();
+  names.sort_by_key(|k| k.key);
+  names.reverse();
+  // print!("{:#?}", names);
   Ok(names)
 }
 
 #[component]
-fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
+fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
   let (player_src, set_player_src) = create_signal(cx, "".to_string());
   let (current_stream_src, set_current_stream_src) = create_signal(cx, "".to_string());
   let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
@@ -414,27 +512,65 @@ fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
       }
     >
     </audio>
-    <ul class="flex flex-wrap list-none my-1">
-      {items
-          .into_iter()
-          .map(|n| {
-              view! { cx,
-                <li>
-                  <Controls
-                    title=n.clone()
-                    label=n.clone()
-                    src=format!("http://localhost:3000/uzg_data/{}", n.clone())
-                    player_src=player_src
-                    set_player_src=set_player_src
-                    player_state=player_state
-                    set_player_state=set_player_state
-                    current_stream_src=current_stream_src
-                  />
-                </li>
-              }
-          })
-          .collect_view(cx)}
-    </ul>
+
+    {items
+        .group_by(|a, b| a.year == b.year)
+        .map(|by_year| {
+            view! { cx,
+              <h2 class="text-gray-800 text-xl">{by_year[0].year}</h2>
+              <div class="mt-0.5 ml-4 mb-6">
+                {by_year
+                    .group_by(|a, b| a.month == b.month)
+                    .map(|by_month| {
+                        view! { cx,
+                          <h3 class="text-gray-800 text-lg">{by_month[0].month_long_c()}</h3>
+
+                          <ol class="mt-0.5 ml-4 mb-6">
+                            {by_month
+                                .group_by(|a, b| a.day == b.day)
+                                .map(|by_day| {
+
+                                    view! { cx,
+                                      <li>
+                                        <div class="flex flex-start items-center pt-3">
+                                          <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+                                          <p class="text-gray-800 text-l">{by_day[0].listing_title()}</p>
+                                        </div>
+                                        <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
+                                          {by_day
+                                              .iter()
+                                              .map(|recording| {
+
+                                                  view! { cx,
+                                                    <Controls
+                                                      title=recording.title()
+                                                      label=recording.label()
+                                                      src=format!(
+                                                          "http://localhost:3000/uzg_data/{}", recording.file_name
+                                                      )
+
+                                                      player_src=player_src
+                                                      set_player_src=set_player_src
+                                                      player_state=player_state
+                                                      set_player_state=set_player_state
+                                                      current_stream_src=current_stream_src
+                                                    />
+                                                  }
+                                              })
+                                              .collect_view(cx)}
+                                        </div>
+                                      </li>
+                                    }
+                                })
+                                .collect_view(cx)}
+                          </ol>
+                        }
+                    })
+                    .collect_view(cx)}
+              </div>
+            }
+        })
+        .collect_view(cx)}
   }
 }
 
@@ -459,9 +595,7 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
           </A>
           <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
         </div>
-        <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">
-          "Uitzending gemist"
-        </h1>
+        <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">"Uitzending gemist"</h1>
       </div>
     </div>
     <div class="bg-gray-100 text-black p-9">
@@ -478,15 +612,8 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
       }>
         {move || match entries.read(cx) {
             None => view! { cx, <p>"Loading..."</p> }.into_view(cx),
-            Some(result) => {
-                match result {
-                    Ok(items) => {
-
-                        view! { cx, <UzgListing items=items/> }
-                    }
-                    Err(_) => todo!(),
-                }
-            }
+            Some(Ok(items)) => view! { cx, <UzgListing items=items/> },
+            Some(Err(_)) => todo!(),
         }}
 
       </Suspense>

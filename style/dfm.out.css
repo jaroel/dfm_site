@@ -3,7 +3,7 @@
  * View the full documentation at https://tailwindcss.com
  */
 
-/*! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
+/*! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
  */
 
 /*
@@ -195,6 +195,10 @@ select,
 textarea {
   font-family: inherit;
   /* 1 */
+  font-feature-settings: inherit;
+  /* 1 */
+  font-variation-settings: inherit;
+  /* 1 */
   font-size: 100%;
   /* 1 */
   font-weight: inherit;
@@ -342,6 +346,14 @@ ul,
 menu {
   list-style: none;
   margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+
+dialog {
   padding: 0;
 }
 
@@ -558,8 +570,16 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .ml-1 {
   margin-left: 0.25rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .mr-2 {
@@ -568,6 +588,14 @@ video {
 
 .mr-4 {
   margin-right: 1rem;
+}
+
+.mt-0 {
+  margin-top: 0px;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
 }
 
 .mt-10 {
@@ -586,6 +614,14 @@ video {
   margin-top: 1.25rem;
 }
 
+.-ml-1 {
+  margin-left: -0.25rem;
+}
+
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -600,6 +636,14 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.w-2 {
+  width: 0.5rem;
 }
 
 .max-w-5xl {
@@ -640,6 +684,10 @@ video {
 
 .justify-evenly {
   justify-content: space-evenly;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .overflow-auto {
@@ -698,6 +746,11 @@ video {
   background-color: rgb(254 226 226 / var(--tw-bg-opacity));
 }
 
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
+
 .bg-cover {
   background-size: cover;
 }
@@ -737,6 +790,10 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -753,6 +810,11 @@ video {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-xl {
@@ -794,6 +856,11 @@ video {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .text-red-800 {
   --tw-text-opacity: 1;
   color: rgb(153 27 27 / var(--tw-text-opacity));
@@ -811,6 +878,10 @@ video {
 
 .no-underline {
   text-decoration-line: none;
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 body {
