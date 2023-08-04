@@ -395,16 +395,19 @@ fn UzgListing(cx: Scope, items: Vec<String>) -> impl IntoView {
           set_current_stream_src.set(node.src());
           set_player_state.set(PlayerState::Playing)
       }
+
       on:error=move |_| {
           set_current_stream_src.set("".into());
           if !player_src.get().is_empty() {
               set_player_state.set(PlayerState::Error)
           }
       }
+
       on:ended=move |_| {
           set_current_stream_src.set("".into());
           set_player_state.set(PlayerState::Stopped)
       }
+
       on:pause=move |_| {
           set_current_stream_src.set("".into());
           set_player_state.set(PlayerState::Stopped)

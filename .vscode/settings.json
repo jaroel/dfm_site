@@ -20,7 +20,16 @@
     "editor.tabSize": 2,
     "editor.detectIndentation": false,
     "editor.renderWhitespace": "trailing",
-    "files.trimTrailingWhitespace": true,
+    "files.trimTrailingWhitespace": true
   },
   "rust-analyzer.cargo.features": ["ssr"],
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".rs",
+        "isAsync": true,
+        "cmd": "leptosfmt -c ${workspaceFolder}/leptosfmt.toml ${file}"
+      }
+    ]
+  }
 }
