@@ -383,7 +383,7 @@ impl From<&str> for Recording {
       weekday: date.weekday().number_from_monday(),
       hour: datetime.time().hour(),
       file_name: file_name.to_string(),
-      key: datetime.format("%Y%m%d%H").to_string().parse::<u32>().unwrap(),
+      key: datetime.timestamp(),
     }
   }
 }
@@ -396,7 +396,7 @@ pub struct Recording {
   weekday: u32,
   hour: u32,
   file_name: String,
-  key: u32,
+  key: i64,
 }
 
 impl Recording {
