@@ -129,24 +129,24 @@ fn Controls(
     if player_src.get() != local_src.get() {
       return classes_gray;
     }
-    return match player_state.get() {
+    match player_state.get() {
       PlayerState::Error => classes_red,
       PlayerState::Playing => classes_blue,
       PlayerState::Loading => classes_gray,
       PlayerState::Stopped => classes_gray,
-    };
+    }
   };
 
   let icon = move || {
     if player_src.get() != local_src.get() {
       return Icon::Play;
     }
-    return match player_state.get() {
+    match player_state.get() {
       PlayerState::Error => Icon::Hourglass,
       PlayerState::Playing => Icon::Stop,
       PlayerState::Loading => Icon::Hourglass,
       PlayerState::Stopped => Icon::Play,
-    };
+    }
   };
 
   let on_click = move |_| {
