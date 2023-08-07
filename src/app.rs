@@ -1,6 +1,7 @@
 use crate::error_template::{AppError, ErrorTemplate};
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::{html::Audio, *};
+use leptos_image::{provide_image_context, Image};
 use leptos_meta::*;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
@@ -22,6 +23,7 @@ enum Icon {
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
+  provide_image_context(cx);
   provide_meta_context(cx);
   view! { cx,
     <Stylesheet id="leptos" href="/pkg/dfm_site.css"/>
@@ -97,11 +99,11 @@ pub fn App(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-fn Sponsor(cx: Scope, href: String, title: String, logo: String) -> impl IntoView {
+fn Sponsor(cx: Scope, href: String, title: String, children: Children) -> impl IntoView {
   view! { cx,
     <div class="p-1 mb-2">
       <a href=href title=title target="_blank">
-        <img width="250" src=logo/>
+        {children(cx)}
       </a>
     </div>
   }
@@ -254,7 +256,18 @@ fn HomePage(cx: Scope) -> impl IntoView {
     </audio>
     <div class="flex justify-evenly mt-10 mb-10">
       <div class="max-w-sm">
-        <img src="/logodinxperfm.png" width="384" height="329"/>
+        <div style="width: 384; height: 329">
+          <Image
+            src="/logodinxperfm.png"
+            alt="De markt van Dinxperlo"
+            width=384
+            height=329
+            quality=100
+            lazy=false
+            priority=true
+            class="w-[384] h-auto"
+          />
+        </div>
         <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
       </div>
     </div>
@@ -280,84 +293,104 @@ fn HomePage(cx: Scope) -> impl IntoView {
       </ul>
     </nav>
     <div class="mt-10 flex justify-center">
-      <img src="/programmering.jpg"/>
+      <div style="width: 1085; height: 656">
+        <Image
+          src="/programmering/WeekprogrammaDFM-20230304.jpg"
+          alt="Programmering vanaf 4 maart 2023 van Dinxperlo FM "
+          width=1085
+          height=656
+          quality=100
+          lazy=false
+          priority=true
+        />
+      </div>
     </div>
     <div class="text-center">
-      <a target="blank" class="text-blue-400" href="programmering.jpg">
+      <a target="blank" class="text-blue-400" href="/programmering/WeekprogrammaDFM-20230304.jpg">
         "In nieuwe pagina openen"
       </a>
     </div>
     <div class="mt-10 text-center">
       <h2 class="text-2xl">"Dinxper FM wordt mede mogelijk gemaakt door"</h2>
       <div class="flex flex-row flex-wrap justify-evenly">
-        <Sponsor
-          title="Expert Dinxperlo".into()
-          href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
-              .into()
-          logo="/sponsors/Expert.jpg".into()
-        />
-        <Sponsor
-          title="De markt van Dinxperlo".into()
-          href="https://www.facebook.com/markt.dinxperlo/".into()
-          logo="/sponsors/makt.jpg".into()
-        />
-        <Sponsor
-          title="Naaiatelier Monique Harmsen".into()
-          href="http://www.naaiateliermoniqueharmsen.nl/".into()
-          logo="/sponsors/logo13.jpg".into()
-        />
-        <Sponsor
-          title="Podesta event supplies".into()
-          href="https://podesta.nl/".into()
-          logo="/sponsors/logo15.jpg".into()
-        />
+        <Sponsor title="De markt van Dinxperlo".into() href="https://www.facebook.com/markt.dinxperlo/".into()>
+          <Image src="/sponsors/makt.jpg" alt="De markt van Dinxperlo" width=250 height=250 quality=100/>
+        </Sponsor>
+        <Sponsor title="Naaiatelier Monique Harmsen".into() href="http://www.naaiateliermoniqueharmsen.nl/".into()>
+          <Image src="/sponsors/logo13.jpg" alt="Naaiatelier Monique Harmsen" width=250 height=250 quality=100/>
+
+        </Sponsor>
+        <Sponsor title="Podesta event supplies".into() href="https://podesta.nl/".into()>
+          <Image src="/sponsors/logo15.jpg" alt="Podesta event supplies" width=250 height=250 quality=100/>
+
+        </Sponsor>
         <Sponsor
           title="Adviesbureau Roenhorst Dinxperlo".into()
           href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/".into()
-          logo="/sponsors/logo16.jpg".into()
-        />
+        >
+          <Image src="/sponsors/logo16.jpg" alt="Adviesbureau Roenhorst Dinxperlo" width=250 height=250 quality=100/>
+        </Sponsor>
         <Sponsor
           title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit".into()
           href="http://www.groentekwekerij-smits.nl/".into()
-          logo="/sponsors/logo18.jpg".into()
-        />
+        >
+          <Image
+            src="/sponsors/logo18.jpg"
+            alt="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit"
+            width=250
+            height=250
+            quality=100
+          />
+        </Sponsor>
         <Sponsor
           title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo".into()
           href="http://www.tegrotenhuisdinxperlo.nl/".into()
-          logo="/sponsors/logo19.jpg".into()
-        />
-        <Sponsor
-          title="Tiggelovend-Kok B.V.".into()
-          href="https://www.tiggelovend-kok.nl/".into()
-          logo="/sponsors/logo22.jpg".into()
-        />
+        >
+          <Image
+            src="/sponsors/logo19.jpg"
+            alt="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo"
+            width=250
+            height=250
+            quality=100
+          />
+        </Sponsor>
+        <Sponsor title="Tiggelovend-Kok B.V.".into() href="https://www.tiggelovend-kok.nl/".into()>
+          <Image src="/sponsors/logo22.jpg" alt="Tiggelovend-Kok B.V." width=250 height=250 quality=100/>
+        </Sponsor>
         <Sponsor
           title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo".into()
           href="http://www.vvnf.nl/".into()
-          logo="/sponsors/logo23.jpg".into()
-        />
+        >
+          <Image
+            src="/sponsors/logo23.jpg"
+            alt="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo"
+            width=250
+            height=250
+            quality=100
+          />
+        </Sponsor>
         <Sponsor
           title="Jumbo Dinxperlo Leussink".into()
           href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/".into()
-          logo="/sponsors/jumbo.jpg".into()
-        />
-        <Sponsor
-          title="Old Dutch Dinxperlo".into()
-          href="https://www.olddutchdinxperlo.nl/".into()
-          logo="/sponsors/oldDutch.jpg".into()
-        />
-        <Sponsor
-          title="MA-Shops".into()
-          href="https://www.ma-shops.nl/?ref=dinxperfm".into()
-          logo="/sponsors/mashops.jpg".into()
-        />
+        >
+          <Image src="/sponsors/jumbo.jpg" alt="Jumbo Dinxperlo Leussink" width=250 height=250 quality=100/>
+        </Sponsor>
+        <Sponsor title="Old Dutch Dinxperlo".into() href="https://www.olddutchdinxperlo.nl/".into()>
+          <Image src="/sponsors/oldDutch.jpg" alt="Old Dutch Dinxperlo" width=250 height=250 quality=100/>
+        </Sponsor>
+        <Sponsor title="MA-Shops".into() href="https://www.ma-shops.nl/?ref=dinxperfm".into()>
+          <Image src="/sponsors/mashops.jpg" alt="MA-Shops" width=250 height=250 quality=100/>
+        </Sponsor>
         <Sponsor
           title="Expert Dinxperlo".into()
           href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
               .into()
-          logo="/sponsors/expert.jpg".into()
-        />
-        <Sponsor title="Alswin".into() href="https://www.dinxperlo.nl".into() logo="/sponsors/AlswinGr.jpg".into()/>
+        >
+          <Image src="/sponsors/expert.jpg" alt="Expert Dinxperlo" width=250 height=250 quality=100/>
+        </Sponsor>
+        <Sponsor title="Alswin".into() href="https://www.dinxperlo.nl".into()>
+          <Image src="/sponsors/AlswinGr.jpg" alt="Alswin" width=250 height=250 quality=100/>
+        </Sponsor>
       </div>
     </div>
   }
@@ -583,13 +616,14 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
       <div class="flex flex-auto items-center">
         <div class="mx-12 my-8">
           <A href="/">
-            <img
+            <Image
               src="/logodinxperfm.png"
               alt="DinxperFM logo"
-              loading="eager"
-              decoding="auto"
-              width="128"
-              height="128"
+              width=128
+              height=128
+              quality=100
+              lazy=false
+              priority=true
               class="mx-auto"
             />
           </A>

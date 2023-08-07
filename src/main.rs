@@ -1,12 +1,13 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-  use axum::routing::post;
+  use axum::routing::{get, post};
   use axum::Router;
   use dfm_site::app::*;
   use dfm_site::fileserv::file_and_error_handler;
   use leptos::*;
   use leptos_axum::{generate_route_list, LeptosRoutes};
+  use leptos_image::cache_app_images;
   use tower_http::services::ServeDir;
 
   simple_logger::init_with_level(log::Level::Error).expect("couldn't initialize logging");
@@ -19,6 +20,11 @@ async fn main() {
   let conf = get_configuration(None).await.unwrap();
   let leptos_options = conf.leptos_options;
   let addr = leptos_options.site_addr;
+  let root = leptos_options.site_root.clone();
+  cache_app_images(root, |cx: Scope| view! { cx, <App/> }, 2, || (), || ())
+    .await
+    .expect("Failed to cache images");
+
   let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
 
   // build our application with a route
@@ -26,6 +32,7 @@ async fn main() {
     .nest_service("/uzg_data", ServeDir::new("./uzg_data"))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, |cx| view! { cx, <App/> })
+    .route("/cache/image", get(leptos_image::image_cache_handler))
     .fallback(file_and_error_handler)
     .with_state(leptos_options);
 
