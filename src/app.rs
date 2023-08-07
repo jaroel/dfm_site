@@ -466,7 +466,7 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
     .map(|entry| entry.path())
     .filter(|path| path.extension().is_some_and(|ext| ext == "mp3"))
     // .filter(|path| path.file_name().is_some_and(|name| name == "04-08-2023-11-00.mp3"))
-    .map(|path| Recording::from(path))
+    .map(Recording::from)
     .collect::<Vec<Recording>>();
   names.sort_by_key(|k| k.key);
   names.reverse();
