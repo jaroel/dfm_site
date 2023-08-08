@@ -94,3 +94,7 @@ LEPTOS_RELOAD_PORT="3001"
 Finally, run the server binary.
 
 You can also run `cargo leptos serve --release` instead.
+
+During development, in two terminals:
+./tailwindcss -i ./style/dfm.in.css -o ./style/dfm.out.css --watch
+cargo leptos watch
