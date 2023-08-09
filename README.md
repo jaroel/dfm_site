@@ -121,7 +121,6 @@ rustup target add i686-unknown-linux-gnu
 Build:
 ```bash
 #RUSTC_WRAPPER= LEPTOS_BIN_TARGET_TRIPLE=x86_64-unknown-linux-gnu CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-linux-gnu-gcc cargo leptos build --release
-
 #❯ file target/server/x86_64-unknown-linux-gnu/release/dfm_site
 #target/server/x86_64-unknown-linux-gnu/release/dfm_site: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.16, with debug_info, not stripped
 
@@ -146,8 +145,14 @@ total 1256
 
 Deploy:
 ```bash
-scp -C -r target/site jaroel.nl:/home/leptos/target/
+scp -C -r target/site jaroel.nl:/home/leptos/
 scp -C target/server/i686-unknown-linux-gnu/release/dfm_site jaroel.nl:/home/leptos/
+```
+
+Run:
+```bash
+su leptos
+PUBLIC_URL="https://dfmsite6.jaroel.nl" LEPTOS_SITE_ADDR="[2a03:b0c0:0:1010::1b:7001]:3000" LEPTOS_SITE_ROOT=./site ./dfm_site
 ```
 
 
@@ -173,4 +178,14 @@ Unmount:
 ```bash
 fusermount -u /home/leptos/uzg_data
 
+```
+
+
+Sysop:
+```ufw
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 80 -j REDIRECT --to-port 3000
+-A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 443 -j REDIRECT --to-port 3000
+COMMIT
 ```
