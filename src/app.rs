@@ -509,7 +509,7 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  let paths = std::fs::read_dir("./uzg_data").unwrap();
+  let paths = std::fs::read_dir("./uzg_data")?;
   let mut names = paths
     .filter_map(|res| res.ok())
     .map(|entry| entry.path())
@@ -655,7 +655,7 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
       </div>
       <hr class="my-8"/>
       <Suspense fallback=move || {
-          view! { cx, <p>"Loading (Suspense Fallback)..."</p> }
+          view! { cx, <p>"..."</p> }
       }>
         {move || match entries.read(cx) {
             None => {
@@ -665,7 +665,10 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
 
                 view! { cx, <UzgListing items=items/> }
             }
-            Some(Err(_)) => todo!(),
+            Some(Err(error)) => view! { cx,
+              <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p>
+              <p>{format!("{}", error)}</p>
+            }.into_view(cx),
         }}
 
       </Suspense>
