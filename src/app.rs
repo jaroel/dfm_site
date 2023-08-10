@@ -662,13 +662,24 @@ fn UitzendingGemist(cx: Scope) -> impl IntoView {
                 view! { cx, <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view(cx)
             }
             Some(Ok(items)) => {
+                if items.is_empty() {
 
-                view! { cx, <UzgListing items=items/> }
+                    view! { cx, <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }
+                        .into_view(cx)
+                } else {
+
+                    view! { cx, <UzgListing items=items/> }
+                        .into_view(cx)
+                }
             }
-            Some(Err(error)) => view! { cx,
-              <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p>
-              <p>{format!("{}", error)}</p>
-            }.into_view(cx),
+            Some(Err(error)) => {
+
+                view! { cx,
+                  <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p>
+                  <p>{format!("{}", error)}</p>
+                }
+                    .into_view(cx)
+            }
         }}
 
       </Suspense>
