@@ -175,25 +175,39 @@ Add to ~leptos/.netrc
 machine ftp.example.com login your-user-name password your-password
 ```
 
-Mount:
+/etc/mtab:
 ```bash
-su leptos
-curlftpfs -o uid=$(id -u leptos) ftp://ftp.example.com /home/leptos/uzg_data
-
+curlftpfs#ftp.example.com /home/leptos/uzg_data fuse ro,auto,user,uid=1004,allow_other,_netdev 0 0
 ```
 
-Unmount:
-```bash
-fusermount -u /home/leptos/uzg_data
-
-```
-
-
-Sysop:
+add to /etc/ufw/before6.rules
 ```ufw
 *nat
 :PREROUTING ACCEPT [0:0]
 -A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 80 -j REDIRECT --to-port 3000
 -A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 443 -j REDIRECT --to-port 3000
 COMMIT
+```
+
+In hoster controlpanel close firewall. Using ufw deny 3000 will kill the app.
+
+
+## Running
+/etc/systemd/user/leptos-dfmsite.service
+```systemd
+[Unit]
+Description=Leptos DFMSite Service
+After=network.target
+
+[Service]
+Type=simple
+User=leptos
+WorkingDirectory=/home/leptos
+Environment="PUBLIC_URL=http://dfmsite6.jaroel.nl"
+Environment="LEPTOS_SITE_ADDR=[2a03:b0c0:0:1010::1b:7001]:3000"
+Environment="LEPTOS_SITE_ROOT=./site"
+ExecStart=/home/leptos/dfm_site
+
+[Install]
+WantedBy=default.target
 ```
