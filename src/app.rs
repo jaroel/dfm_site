@@ -423,10 +423,7 @@ impl From<&str> for Recording {
     let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
     let date = datetime.date();
 
-    let public_url = match std::env::var("PUBLIC_URL") {
-      Ok(val) => val,
-      Err(er) => format!("{}", er.to_string()),
-    };
+    let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
 
     Recording {
       day: date.day(),
