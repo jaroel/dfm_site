@@ -37,20 +37,8 @@ pub fn App(cx: Scope) -> impl IntoView {
       <div class="h-100 overflow-auto bg-black/75">
         <div class="max-w-7xl mx-auto">
           <Routes>
-            <Route
-              path=""
-              view=|cx| {
-                  view! { cx, <HomePage/> }
-              }
-            />
-
-            <Route
-              path="/uzg"
-              view=|cx| {
-                  view! { cx, <UitzendingGemist/> }
-              }
-            />
-
+            <Route path="" view=HomePage/>
+            <Route path="/uzg" view=UitzendingGemist/>
           </Routes>
           <nav class="text-black bg-gray-100 p-2 flex justify-center">
             <ul class="flex flex-wrap">
