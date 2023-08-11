@@ -175,9 +175,8 @@ Add to ~leptos/.netrc
 machine ftp.example.com login your-user-name password your-password
 ```
 
-/etc/mtab:
 ```bash
-curlftpfs#ftp.example.com /home/leptos/uzg_data fuse ro,auto,user,uid=1004,allow_other,_netdev 0 0
+sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_other,tcp_nodelay,connect_timeout=3 ftp://ftp.example.com /home/leptos/uzg_data
 ```
 
 add to /etc/ufw/before6.rules
