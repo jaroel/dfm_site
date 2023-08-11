@@ -3,11 +3,14 @@
 async fn main() {
   use axum::routing::{get, post};
   use axum::Router;
+  use axum_server;
+  use axum_server::tls_rustls::RustlsConfig;
   use dfm_site::app::*;
   use dfm_site::fileserv::file_and_error_handler;
   use leptos::*;
   use leptos_axum::{generate_route_list, LeptosRoutes};
   use leptos_image::cache_app_images;
+  use std::path::PathBuf;
   use tower_http::services::ServeDir;
 
   simple_logger::init_with_level(log::Level::Error).expect("couldn't initialize logging");
@@ -36,10 +39,24 @@ async fn main() {
     .fallback(file_and_error_handler)
     .with_state(leptos_options);
 
+  // configure certificate and private key used by https
+  let cert_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("certs");
+  let cert_file = cert_dir.join("cert.pem");
+  let key_file = cert_dir.join("key.pem");
+  eprintln!("cert_file = {:#?}", cert_file);
+  eprintln!("key_file = {:#?}", key_file);
+  let config = RustlsConfig::from_pem_file(cert_file, key_file)
+    .await
+    .expect("Couldn't load certs.");
+
   // run our app with hyper
   // `axum::Server` is a re-export of `hyper::Server`
-  log!("listening on http://{}", &addr);
-  axum::Server::bind(&addr).serve(app.into_make_service()).await.unwrap();
+  log!("listening on https://{}", &addr);
+
+  axum_server::bind_rustls(addr, config)
+    .serve(app.into_make_service())
+    .await
+    .unwrap();
 }
 
 #[cfg(not(feature = "ssr"))]
