@@ -40,6 +40,7 @@ cargo leptos watch
 ```
 
 With tracebacks:
+
 ```bash
 RUST_BACKTRACE=full RUSTFLAGS="-Z macro-backtrace" cargo leptos watch
 ```
@@ -100,7 +101,6 @@ LEPTOS_RELOAD_PORT="3001"
 
 Finally, run the server binary.
 
-
 ## Development
 
 During development, in two terminals:
@@ -110,94 +110,112 @@ During development, in two terminals:
 cargo leptos watch
 ```
 
-
-## Generate binaries for Linux:
-i686 on Digital Ocean
-
-Setup:
-
+## Build binaries:
+# Build aarch64-unknown-linux-gnu:
 ```bash
 brew tap messense/macos-cross-toolchains
-#brew install x86_64-unknown-linux-gnu
-#rustup target add x86_64-unknown-linux-gnu
-
-brew install i686-unknown-linux-gnu
-rustup target add i686-unknown-linux-gnu
+brew install aarch64-unknown-linux-gnu
+rustup target add aarch64-unknown-linux-gnu
+CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-unknown-linux-gnu-gcc CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu LEPTOS_BIN_TARGET_TRIPLE=aarch64-unknown-linux-gnu cargo leptos build  --release
 ```
 
-Build:
+# Build x86_64-unknown-linux-musl
 ```bash
-#RUSTC_WRAPPER= LEPTOS_BIN_TARGET_TRIPLE=x86_64-unknown-linux-gnu CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-linux-gnu-gcc cargo leptos build --release
-#❯ file target/server/x86_64-unknown-linux-gnu/release/dfm_site
-#target/server/x86_64-unknown-linux-gnu/release/dfm_site: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.16, with debug_info, not stripped
-
-
-RUSTC_WRAPPER= LEPTOS_BIN_TARGET_TRIPLE=i686-unknown-linux-gnu CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER=i686-unknown-linux-gnu-gcc cargo leptos build --release
+brew install x86_64-unknown-linux-musl
+rustup target add x86_64-unknown-linux-musl
+RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc TARGET=x86_64-unknown-linux-musl LEPTOS_BIN_TARGET_TRIPLE=x86_64-unknown-linux-musl cargo leptos build  --release
 ```
 
-Artifects:
+# Build i686-unknown-linux-musl
 ```bash
-❯ file target/server/i686-unknown-linux-gnu/release/dfm_site
-target/server/i686-unknown-linux-gnu/release/dfm_site: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 3.2.101, with debug_info, not stripped
+brew install i686-unknown-linux-musl
+rustup target add i686-unknown-linux-musl
+CARGO_TARGET_I686_UNKNOWN_LINUX_MUSL_LINKER=i686-linux-musl-gcc TARGET=i686-unknown-linux-musl LEPTOS_BIN_TARGET_TRIPLE=i686-unknown-linux-musl cargo leptos build  --release
+```
 
-❯ ls -l target/server/i686-unknown-linux-gnu/release/dfm_site
--rwxr-xr-x@ 1 roel  staff  20297768 Aug  9 00:39 target/server/i686-unknown-linux-gnu/release/dfm_site*
+# Artifects:
+
+```bash
+❯ file target/server/i686-unknown-linux-musl/release/dfm_site
+target/server/i686-unknown-linux-musl/release/dfm_site: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 3.2.101, with debug_info, not stripped
+
+> ls -l target/server/i686-unknown-linux-musl/release/dfm_site
+-rwxr-xr-x@ 1 roel  staff  21400224 Aug 20 17:51 target/server/i686-unknown-linux-musl/release/dfm_site*
 
 ❯ ls -l target/site/pkg/
 total 1256
--rw-r--r--@ 1 roel  staff    7437 Aug  9 00:39 dfm_site.css
--rw-r--r--@ 1 roel  staff   45396 Aug  9 00:39 dfm_site.js
--rw-r--r--@ 1 roel  staff  583728 Aug  9 00:39 dfm_site.wasm
+-rw-r--r--@ 1 roel  staff    7437 Aug 20 17:50 dfm_site.css
+-rw-r--r--@ 1 roel  staff   45396 Aug 20 17:50 dfm_site.js
+-rw-r--r--@ 1 roel  staff  584777 Aug 20 17:50 dfm_site.wasm
 ```
 
-Deploy:
+# Deploy:
 Locally:
+
 ```bash
 scp -C -r target/site jaroel.nl:/home/leptos/
-scp -C target/server/i686-unknown-linux-gnu/release/dfm_site jaroel.nl:/home/leptos/
+scp -C target/server/i686-unknown-linux-musl/release/dfm_site jaroel.nl:/home/leptos/
 ```
 
 On server:
+
 ```bash
 sudo chown -R leptos:leptos /home/leptos
 ```
 
-Run:
+# Run:
+
 ```bash
 su leptos
-PUBLIC_URL="http://dfmsite6.jaroel.nl" LEPTOS_SITE_ADDR="[2a03:b0c0:0:1010::1b:7001]:3000" LEPTOS_SITE_ROOT=./site ./dfm_site
+PUBLIC_URL="http://dfmsite6.jaroel.nl" LEPTOS_SITE_ADDR="[2a03:b0c0:0:1010::1b:7001]:3000" HTTP_ADDR="[2a03:b0c0:0:1010::1b:7001]:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
 ```
 
+## Certbot
+On server:
+```bash
+mkdir -p /home/leptos/well-known/acme-challenge
+```
 
 ## FTP Mount
+
 The UZG listing data...
 Setup:
+
 ```bash
 sudo apt-get install curlftpfs
 ```
+
 Add to ~leptos/.netrc
+
 ```text
 machine ftp.example.com login your-user-name password your-password
 ```
 
 ```bash
-sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_other,tcp_nodelay,connect_timeout=3 ftp://ftp.example.com /home/leptos/uzg_data
+sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_other,connect_timeout=3 ftp://dinxperfm.freeddns.org/ /home/leptos/uzg_data
 ```
 
+```bash
+sudo ufw route allow proto tcp from any to 2a03:b0c0:0:1010::1b:7001 port 80 to 2a03:b0c0:0:1010::1b:7001 port 3002
+sudo ufw route allow proto tcp from any to 2a03:b0c0:0:1010::1b:7001 port 443 to 2a03:b0c0:0:1010::1b:7001 port 3000
+````
+
 add to /etc/ufw/before6.rules
+
 ```ufw
 *nat
 :PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 80 -j REDIRECT --to-port 3000
+-A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 80 -j REDIRECT --to-port 3002
 -A PREROUTING -p tcp -d 2a03:b0c0:0:1010::1b:7001 --dport 443 -j REDIRECT --to-port 3000
 COMMIT
 ```
 
 In hoster controlpanel close firewall. Using ufw deny 3000 will kill the app.
 
-
 ## Running
+
 /etc/systemd/user/leptos-dfmsite.service
+
 ```systemd
 [Unit]
 Description=Leptos DFMSite Service
@@ -209,9 +227,16 @@ User=leptos
 WorkingDirectory=/home/leptos
 Environment="PUBLIC_URL=http://dfmsite6.jaroel.nl"
 Environment="LEPTOS_SITE_ADDR=[2a03:b0c0:0:1010::1b:7001]:3000"
+Environment="HTTP_ADDR=[2a03:b0c0:0:1010::1b:7001]:3002"
 Environment="LEPTOS_SITE_ROOT=./site"
 ExecStart=/home/leptos/dfm_site
 
 [Install]
 WantedBy=default.target
+```
+
+# Using Docker:
+
+```bash
+docker run -p 3000 -e LEPTOS_SITE_ADDR=0.0.0.0:3000 --name=dfmsite --rm -d --entrypoint=/app/dfm_site dfmsite
 ```

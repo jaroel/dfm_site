@@ -283,7 +283,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
     <div class="mt-10 flex justify-center">
       <div style="width: 1085; height: 656">
         <Image
-          src="/programmering/weekprogrammaDFM-20230304.jpg"
+          src="/programmering/WeekprogrammaDFM-20230304.jpg"
           alt="Programmering vanaf 4 maart 2023 van Dinxperlo FM "
           width=1085
           height=656
@@ -411,7 +411,7 @@ impl From<&str> for Recording {
     let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
     let date = datetime.date();
 
-    let public_url = std::env::var("PUBLIC_URL").unwrap_or("https://dfmsite.test".to_string());
+    let public_url = std::env::var("PUBLIC_URL").unwrap_or("https://dfmsite.test:3000".to_string());
 
     Recording {
       day: date.day(),
