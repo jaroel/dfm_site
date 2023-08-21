@@ -7,20 +7,6 @@ use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-#[derive(Clone)]
-enum PlayerState {
-  Stopped,
-  Loading,
-  Playing,
-  Error,
-}
-
-enum Icon {
-  Play,
-  Stop,
-  Hourglass,
-}
-
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
   provide_image_context(cx);
@@ -97,63 +83,87 @@ fn Sponsor(cx: Scope, href: String, title: String, children: Children) -> impl I
   }
 }
 
+#[derive(Clone, PartialEq)]
+enum PlayerState {
+  // The state of the audio element.
+  Stopped,
+  Loading(String),
+  Playing(String),
+  Error(String),
+}
+
+#[derive(PartialEq)]
+enum ControlsState {
+  // The state of the specific controls component
+  Stopped,
+  Loading,
+  Playing,
+  Error,
+}
+
 #[component]
 fn Controls(
   cx: Scope,
   title: String,
   label: String,
   src: String,
-  player_src: ReadSignal<String>,
-  set_player_src: WriteSignal<String>,
+  set_player_src: WriteSignal<Option<String>>,
   player_state: ReadSignal<PlayerState>,
-  set_player_state: WriteSignal<PlayerState>,
-  current_stream_src: ReadSignal<String>,
 ) -> impl IntoView {
-  let (local_src, _set_local_src) = create_signal(cx, src); // work around moveing src.
-
-  let classes_red = "mr-4 rounded-full border my-1 py-2 px-4 flex items-center bg-red-100 text-red-800 border-red-800";
-  let classes_blue =
-    "mr-4 rounded-full border my-1 py-2 px-4 flex items-center bg-blue-100 text-blue-800 border-blue-800";
-  let classes_gray = "mr-4 rounded-full border my-1 py-2 px-4 flex items-center border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800";
-  let classes = move || {
-    if player_src.get() != local_src.get() {
-      return classes_gray;
-    }
+  let (local_src, _) = create_signal(cx, src);
+  let controls_state = move || {
+    let controls_src = local_src();
     match player_state.get() {
-      PlayerState::Error => classes_red,
-      PlayerState::Playing => classes_blue,
-      PlayerState::Loading => classes_gray,
-      PlayerState::Stopped => classes_gray,
-    }
-  };
-
-  let icon = move || {
-    if player_src.get() != local_src.get() {
-      return Icon::Play;
-    }
-    match player_state.get() {
-      PlayerState::Error => Icon::Hourglass,
-      PlayerState::Playing => Icon::Stop,
-      PlayerState::Loading => Icon::Hourglass,
-      PlayerState::Stopped => Icon::Play,
-    }
-  };
-
-  let on_click = move |_| {
-    if current_stream_src.get() == local_src.get() {
-      set_player_src.set("".to_string());
-      set_player_state.set(PlayerState::Stopped)
-    } else {
-      set_player_src.set(local_src.get());
-      set_player_state.set(PlayerState::Loading)
+      PlayerState::Stopped => ControlsState::Stopped,
+      PlayerState::Loading(url) => {
+        if url == controls_src {
+          ControlsState::Loading
+        } else {
+          ControlsState::Stopped
+        }
+      }
+      PlayerState::Playing(url) => {
+        if url == controls_src {
+          ControlsState::Playing
+        } else {
+          ControlsState::Stopped
+        }
+      }
+      PlayerState::Error(url) => {
+        if url == controls_src {
+          ControlsState::Error
+        } else {
+          ControlsState::Stopped
+        }
+      }
     }
   };
 
   view! { cx,
-    <button title=title on:click=on_click class=classes>
+    <button
+      title=title
+      on:click=move |_| {
+          match controls_state() {
+              ControlsState::Playing | ControlsState::Error => set_player_src(None),
+              ControlsState::Stopped | ControlsState::Loading => set_player_src(Some(local_src.get())),
+          };
+      }
+
+      class=move || {
+          let specifics = match controls_state() {
+              ControlsState::Error => "bg-red-100 text-red-800 border-red-800",
+              ControlsState::Playing => "bg-blue-100 text-blue-800 border-blue-800",
+              ControlsState::Stopped | ControlsState::Loading => {
+                  "border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800"
+              }
+          };
+          format!("mr-4 rounded-full border my-1 py-2 px-4 flex items-center {}", specifics)
+      }
+    >
+
       <span class="mr-2">{label}</span>
-      {move || match icon() {
-          Icon::Play => {
+      {move || match controls_state() {
+          ControlsState::Stopped => {
               view! { cx,
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +177,7 @@ fn Controls(
                 </svg>
               }
           }
-          Icon::Stop => {
+          ControlsState::Error | ControlsState::Playing => {
 
               view! { cx,
                 <svg
@@ -183,7 +193,7 @@ fn Controls(
                 </svg>
               }
           }
-          Icon::Hourglass => {
+          ControlsState::Loading => {
 
               view! { cx,
                 <svg
@@ -206,42 +216,41 @@ fn Controls(
 
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal(cx, "".to_string());
-  let (current_stream_src, set_current_stream_src) = create_signal(cx, "".to_string());
+  let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
   let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
-
   let audio_ref = create_node_ref::<Audio>(cx);
+
+  create_effect(cx, move |_| {
+    if player_src.get().is_none() {
+      let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
+      set_player_state(PlayerState::Stopped)
+    };
+  });
 
   view! { cx,
     <audio
       autoplay
       _ref=audio_ref
       src=player_src
-      on:load=move |_| { set_player_state.set(PlayerState::Loading) }
+      on:loadstart=move |_| {
+          let node = audio_ref.get().expect("audio element missing on page.");
+          set_player_state.set(PlayerState::Loading(node.src()))
+      }
+
       on:play=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_current_stream_src.set(node.src());
-          set_player_state.set(PlayerState::Playing)
+          set_player_state.set(PlayerState::Playing(node.src()))
       }
 
       on:error=move |_| {
-          set_current_stream_src.set("".into());
-          if !player_src.get().is_empty() {
-              set_player_state.set(PlayerState::Error)
-          }
+          let node = audio_ref.get().expect("audio element missing on page.");
+          assert!(node.src().is_empty() == false, "Empty audio.src.");
+          set_player_state.set(PlayerState::Error(node.src()))
       }
 
-      on:ended=move |_| {
-          set_current_stream_src.set("".into());
-          set_player_state.set(PlayerState::Stopped)
-      }
-
-      on:pause=move |_| {
-          set_current_stream_src.set("".into());
-          set_player_state.set(PlayerState::Stopped)
-      }
-    >
-    </audio>
+      on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
+      on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
+    ></audio>
     <div class="flex justify-evenly mt-10 mb-10">
       <div class="max-w-sm">
         <div style="width: 384; height: 329">
@@ -266,11 +275,8 @@ fn HomePage(cx: Scope) -> impl IntoView {
             title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!".into()
             label="Luister live!".into()
             src="https://stream.dinxperfm.nl/1".into()
-            player_src=player_src
             set_player_src=set_player_src
             player_state=player_state
-            set_player_state=set_player_state
-            current_stream_src=current_stream_src
           />
         </li>
         <li>
@@ -410,7 +416,6 @@ impl From<&str> for Recording {
     // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
     let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
     let date = datetime.date();
-
     let public_url = std::env::var("PUBLIC_URL").unwrap_or("https://dfmsite.test:3000".to_string());
 
     Recording {
@@ -513,42 +518,41 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
 
 #[component]
 fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal(cx, "".to_string());
-  let (current_stream_src, set_current_stream_src) = create_signal(cx, "".to_string());
+  let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
   let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
-
   let audio_ref = create_node_ref::<Audio>(cx);
+
+  create_effect(cx, move |_| {
+    if player_src.get().is_none() {
+      let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
+      set_player_state(PlayerState::Stopped)
+    };
+  });
 
   view! { cx,
     <audio
       autoplay
       _ref=audio_ref
       src=player_src
-      on:load=move |_| { set_player_state.set(PlayerState::Loading) }
+      on:loadstart=move |_| {
+          let node = audio_ref.get().expect("audio element missing on page.");
+          set_player_state.set(PlayerState::Loading(node.src()))
+      }
+
       on:play=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_current_stream_src.set(node.src());
-          set_player_state.set(PlayerState::Playing)
+          set_player_state.set(PlayerState::Playing(node.src()))
       }
 
       on:error=move |_| {
-          set_current_stream_src.set("".into());
-          if !player_src.get().is_empty() {
-              set_player_state.set(PlayerState::Error)
-          }
+          let node = audio_ref.get().expect("audio element missing on page.");
+          assert!(node.src().is_empty() == false, "Empty audio.src.");
+          set_player_state.set(PlayerState::Error(node.src()))
       }
 
-      on:ended=move |_| {
-          set_current_stream_src.set("".into());
-          set_player_state.set(PlayerState::Stopped)
-      }
-
-      on:pause=move |_| {
-          set_current_stream_src.set("".into());
-          set_player_state.set(PlayerState::Stopped)
-      }
-    >
-    </audio>
+      on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
+      on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
+    ></audio>
 
     {items
         .group_by(|a, b| a.year == b.year)
@@ -583,11 +587,8 @@ fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
                                                       title=recording.title()
                                                       label=recording.label()
                                                       src=recording.src.clone()
-                                                      player_src=player_src
                                                       set_player_src=set_player_src
                                                       player_state=player_state
-                                                      set_player_state=set_player_state
-                                                      current_stream_src=current_stream_src
                                                     />
                                                   }
                                               })
