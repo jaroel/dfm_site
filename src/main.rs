@@ -15,8 +15,9 @@ async fn main() {
   use std::path::PathBuf;
   use tower_http::compression::CompressionLayer;
   use tower_http::services::ServeDir;
+  use tower_http::trace::TraceLayer;
 
-  simple_logger::init_with_level(log::Level::Error).expect("couldn't initialize logging");
+  console_subscriber::init();
 
   let redirect = move || async move {
     Redirect::temporary(
@@ -65,6 +66,7 @@ async fn main() {
     .route("/cache/image", get(leptos_image::image_cache_handler))
     .fallback(file_and_error_handler)
     .layer(CompressionLayer::new())
+    .layer(TraceLayer::new_for_http())
     .with_state(leptos_options);
 
   // configure certificate and private key used by https
