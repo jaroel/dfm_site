@@ -111,7 +111,9 @@ cargo leptos watch
 ```
 
 ## Build binaries:
+
 # Build aarch64-unknown-linux-gnu:
+
 ```bash
 brew tap messense/macos-cross-toolchains
 brew install aarch64-unknown-linux-gnu
@@ -120,6 +122,7 @@ CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-unknown-linux-gnu-gcc CARG
 ```
 
 # Build x86_64-unknown-linux-musl
+
 ```bash
 brew install x86_64-unknown-linux-musl
 rustup target add x86_64-unknown-linux-musl
@@ -127,6 +130,7 @@ RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL
 ```
 
 # Build i686-unknown-linux-musl
+
 ```bash
 brew install i686-unknown-linux-musl
 rustup target add i686-unknown-linux-musl
@@ -150,6 +154,7 @@ total 1256
 ```
 
 # Deploy:
+
 Locally:
 
 ```bash
@@ -171,9 +176,11 @@ PUBLIC_URL="http://dfmsite6.jaroel.nl" LEPTOS_SITE_ADDR="[2a03:b0c0:0:1010::1b:7
 ```
 
 ## Certbot
+
 On server:
+
 ```bash
-mkdir -p /home/leptos/well-known/acme-challenge
+mkdir -p /home/leptos/.well-known/acme-challenge
 ```
 
 ## FTP Mount
@@ -198,7 +205,7 @@ sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_ot
 ```bash
 sudo ufw route allow proto tcp from any to 2a03:b0c0:0:1010::1b:7001 port 80 to 2a03:b0c0:0:1010::1b:7001 port 3002
 sudo ufw route allow proto tcp from any to 2a03:b0c0:0:1010::1b:7001 port 443 to 2a03:b0c0:0:1010::1b:7001 port 3000
-````
+```
 
 add to /etc/ufw/before6.rules
 
