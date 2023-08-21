@@ -13,6 +13,7 @@ async fn main() {
   use leptos_image::cache_app_images;
   use std::net::SocketAddr;
   use std::path::PathBuf;
+  use tower_http::compression::CompressionLayer;
   use tower_http::services::ServeDir;
 
   simple_logger::init_with_level(log::Level::Error).expect("couldn't initialize logging");
@@ -63,6 +64,7 @@ async fn main() {
     .leptos_routes(&leptos_options, routes, |cx| view! { cx, <App/> })
     .route("/cache/image", get(leptos_image::image_cache_handler))
     .fallback(file_and_error_handler)
+    .layer(CompressionLayer::new())
     .with_state(leptos_options);
 
   // configure certificate and private key used by https
