@@ -215,9 +215,10 @@ fn Controls(
 }
 
 #[component]
-fn HomePage(cx: Scope) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
-  let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
+fn Player(cx: Scope,
+  player_src: ReadSignal<Option<String>>,
+  set_player_state: WriteSignal<PlayerState>,
+) -> impl IntoView {
   let audio_ref = create_node_ref::<Audio>(cx);
 
   create_effect(cx, move |_| {
@@ -225,7 +226,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
       let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
       set_player_state(PlayerState::Stopped)
     };
-  });
+  });  
 
   view! { cx,
     <audio
@@ -251,6 +252,17 @@ fn HomePage(cx: Scope) -> impl IntoView {
       on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
       on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
     ></audio>
+  }
+}
+
+
+#[component]
+fn HomePage(cx: Scope) -> impl IntoView {
+  let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
+  let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
+
+  view! { cx,
+    <Player player_src set_player_state/>
     <div class="flex justify-evenly mt-10 mb-10">
       <div class="max-w-sm">
         <div style="width: 384; height: 329">
@@ -520,40 +532,9 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
 fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
   let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
   let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
-  let audio_ref = create_node_ref::<Audio>(cx);
-
-  create_effect(cx, move |_| {
-    if player_src.get().is_none() {
-      let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
-      set_player_state(PlayerState::Stopped)
-    };
-  });
 
   view! { cx,
-    <audio
-      autoplay
-      _ref=audio_ref
-      src=player_src
-      on:loadstart=move |_| {
-          let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Loading(node.src()))
-      }
-
-      on:play=move |_| {
-          let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Playing(node.src()))
-      }
-
-      on:error=move |_| {
-          let node = audio_ref.get().expect("audio element missing on page.");
-          assert!(node.src().is_empty() == false, "Empty audio.src.");
-          set_player_state.set(PlayerState::Error(node.src()))
-      }
-
-      on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
-      on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
-    ></audio>
-
+    <Player player_src set_player_state/>
     {items
         .group_by(|a, b| a.year == b.year)
         .map(|by_year| {
