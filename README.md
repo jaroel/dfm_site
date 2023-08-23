@@ -199,7 +199,7 @@ machine ftp.example.com login your-user-name password your-password
 ```
 
 ```bash
-sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_other,connect_timeout=3 ftp://dinxperfm.freeddns.org/ /home/leptos/uzg_data
+sudo curlftpfs -o ro,auto_unmount,noatime,allow_other,auto_cache,connect_timeout=10 ftp://dinxperfm.freeddns.org/ /home/leptos/uzg_data
 ```
 
 ```bash
