@@ -155,17 +155,24 @@ total 1256
 
 # Deploy:
 
-Locally:
+1. On server:
+
+```bash
+systemctl stop --user leptos-dfmsite
+```
+
+2. Locally:
 
 ```bash
 scp -C -r target/site jaroel.nl:/home/leptos/
 scp -C target/server/i686-unknown-linux-musl/release/dfm_site jaroel.nl:/home/leptos/
 ```
 
-On server:
+3. On server:
 
 ```bash
 sudo chown -R leptos:leptos /home/leptos
+systemctl start --user leptos-dfmsite
 ```
 
 # Run:
