@@ -19,7 +19,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         outside_errors.insert_with_default_key(AppError::NotFound);
         view! { cx, <ErrorTemplate outside_errors/> }.into_view(cx)
     }>
-      <div class="h-100 overflow-auto bg-black/75">
+      <div class="h-screen overflow-auto bg-black/75">
         <div class="max-w-7xl mx-auto">
           <Routes>
             <Route path="" view=HomePage/>

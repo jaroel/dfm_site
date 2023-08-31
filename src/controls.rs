@@ -63,7 +63,7 @@ pub(crate) fn Controls(
               ControlsState::Error => "bg-red-100 text-red-800 border-red-800",
               ControlsState::Playing => "bg-blue-100 text-blue-800 border-blue-800",
               ControlsState::Stopped | ControlsState::Loading => {
-                  "border-gray-800 bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 hover:border-gray-800"
+                  "bg-gray-100 text-gray-800 border-gray-800 hover:bg-gray-800 hover:text-white"
               }
           };
           format!("mr-4 rounded-full border my-1 py-2 px-4 flex items-center {}", specifics)
