@@ -1,22 +1,21 @@
-#[cfg(feature = "ssr")]
+use app::*;
+use axum::{routing::post, Router, Server};
+use fileserv::file_and_error_handler;
+use leptos::*;
+use leptos_axum::{generate_route_list, LeptosRoutes};
+pub mod fileserv;
+use axum::response::Redirect;
+use axum::routing::get;
+use axum_server::tls_rustls::RustlsConfig;
+use leptos_image::cache_app_images;
+use std::net::SocketAddr;
+use std::path::PathBuf;
+use tower_http::compression::CompressionLayer;
+use tower_http::services::ServeDir;
+use tower_http::trace::TraceLayer;
+
 #[tokio::main]
 async fn main() {
-  use axum::response::Redirect;
-  use axum::routing::{get, post};
-  use axum::{Router, Server};
-  use axum_server;
-  use axum_server::tls_rustls::RustlsConfig;
-  use dfm_site::app::*;
-  use dfm_site::fileserv::file_and_error_handler;
-  use leptos::*;
-  use leptos_axum::{generate_route_list, LeptosRoutes};
-  use leptos_image::cache_app_images;
-  use std::net::SocketAddr;
-  use std::path::PathBuf;
-  use tower_http::compression::CompressionLayer;
-  use tower_http::services::ServeDir;
-  use tower_http::trace::TraceLayer;
-
   console_subscriber::init();
 
   let redirect = move || async move {
@@ -89,11 +88,4 @@ async fn main() {
       _ = http_server => {},
       _ = https_server => {},
   }
-}
-
-#[cfg(not(feature = "ssr"))]
-pub fn main() {
-  // no client-side main function
-  // unless we want this to work with e.g., Trunk for a purely client-side app
-  // see lib.rs for hydration function instead
 }
