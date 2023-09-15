@@ -112,10 +112,13 @@ cargo leptos watch
 
 ## Build binaries:
 
+```bash
+brew tap messense/macos-cross-toolchains
+```
+
 # Build aarch64-unknown-linux-gnu:
 
 ```bash
-brew tap messense/macos-cross-toolchains
 brew install aarch64-unknown-linux-gnu
 rustup target add aarch64-unknown-linux-gnu
 CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-unknown-linux-gnu-gcc CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu LEPTOS_BIN_TARGET_TRIPLE=aarch64-unknown-linux-gnu cargo leptos build  --release
@@ -137,7 +140,7 @@ rustup target add i686-unknown-linux-musl
 CARGO_TARGET_I686_UNKNOWN_LINUX_MUSL_LINKER=i686-linux-musl-gcc TARGET=i686-unknown-linux-musl LEPTOS_BIN_TARGET_TRIPLE=i686-unknown-linux-musl cargo leptos build  --release
 ```
 
-# Artifects:
+# Artifacts:
 
 ```bash
 ❯ file target/server/i686-unknown-linux-musl/release/dfm_site
