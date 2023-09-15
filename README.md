@@ -1,4 +1,4 @@
-See http://dfmsite6.jaroel.nl
+See https://www-dinxperfm-nl.intersumus.nl/
 
 <picture>
     <source srcset="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_Solid_White.svg" media="(prefers-color-scheme: dark)">
