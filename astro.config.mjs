@@ -1,16 +1,11 @@
-import { defineConfig, sharpImageService } from 'astro/config'
+import { defineConfig } from 'astro/config'
 import tailwind from '@astrojs/tailwind'
 import solidJs from '@astrojs/solid-js'
-import node from '@astrojs/node'
+import nodejs from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
   integrations: [tailwind(), solidJs()],
-  image: {
-    service: sharpImageService(),
-  },
-  adapter: node({
-    mode: 'standalone',
-  }),
+  adapter: nodejs({ mode: 'standalone' }),
 })

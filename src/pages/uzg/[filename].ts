@@ -1,33 +1,33 @@
-import type {APIRoute} from 'astro'
-import {FTP} from 'ftp-ts'
+import type { APIRoute } from "astro";
+import { FTP } from "ftp-ts";
 
 export const getFileStream = async (filename: string) => {
-  filename = filename.trim()
+  filename = filename.trim();
   if (!filename) {
-    return undefined
+    return undefined;
   }
 
   const connection = await FTP.connect({
-    host: 'dinxperfm.freeddns.org',
-    user: 'UZG',
-    password: '4862KpZ2',
-  })
-  const stream = await connection.get(filename)
-  stream.addListener('close', () => {
-    connection.destroy()
-  })
-  return stream
-}
+    host: "dinxperfm.freeddns.org",
+    user: "UZG",
+    password: "4862KpZ2",
+  });
+  const stream = await connection.get(filename);
+  stream.addListener("close", () => {
+    connection.destroy();
+  });
+  return stream;
+};
 
-export const get: APIRoute = async ({params}) => {
-  const stream = await getFileStream(params.filename ?? '')
+export const GET: APIRoute = async ({ params }) => {
+  const stream = await getFileStream(params.filename ?? "");
 
   if (stream) {
-    return new Response(stream, {headers: {'content-type': 'audio/mpeg'}})
+    return new Response(stream, { headers: { "content-type": "audio/mpeg" } });
   }
 
   return new Response(null, {
     status: 404,
-    statusText: 'Not found',
-  })
-}
+    statusText: "Not found",
+  });
+};
