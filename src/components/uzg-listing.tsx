@@ -25,72 +25,53 @@ export const UitzendingGemist: Component = () => {
   const [recordings] = createResource(fetchRecordings);
   return (
     <Show when={recordings()}>
-      <ol class="border-l border-gray-400">
-        {groupBy(recordings()!, (item) => item.year).map((byYear) => (
-          <li class="hover:text-black">
-            <div class="flex flex-start items-center pt-3">
-              <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
-              <p class="text-gray-800 text-xl">{byYear.head.year}</p>
-            </div>
-            <div class="mt-0.5 ml-4 mb-6">
-              <ol class="border-l border-gray-400">
-                {groupBy(
-                  byYear.members,
-                  (item) => item.monthDisplayLowerCase
-                ).map((byMonth) => (
-                  <li>
-                    <div class="flex flex-start items-center pt-3">
-                      <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
-                      <p class="text-gray-800 text-lg">
-                        {byMonth.head.monthDisplayUpperCase}
-                      </p>
-                    </div>
-                    <div class="mt-0.5 ml-4 mb-6">
-                      {groupBy(byMonth.members, (item) => item.weekNumber).map(
-                        (byWeek) => (
-                          <div class="mb-6">
-                            {groupBy(byWeek.members, (item) => item.day).map(
-                              (byDay) => (
-                                <ol class="border-l border-gray-400">
-                                  <li>
-                                    <div class="flex flex-start items-center pt-3">
-                                      <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
-                                      <p class="text-gray-800 text-l">
-                                        {byDay.head.weekdayDisplayUpperCase}{" "}
-                                        {byDay.head.day}{" "}
-                                        {byDay.head.monthDisplayLowerCase}
-                                      </p>
-                                    </div>
-                                    <div class="mt-0.5 ml-4">
-                                      {byDay.members.map((recording) => (
-                                        <div class="inline-block">
-                                          <Controls {...recording} />
-                                          <a
-                                            class="block ml-4 text-gray-500"
-                                            href={recording.url}
-                                            title={`${recording.title} downloaden`}
-                                            download
-                                          >
-                                            Opslaan
-                                          </a>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </li>
-                                </ol>
-                              )
-                            )}
+      {groupBy(recordings()!, (item) => item.year).map((byYear) => (
+        <>
+          <h2 class="text-gray-800 text-xl">{byYear.head.year}</h2>
+          <div class="mt-0.5 ml-4 mb-6">
+            {groupBy(byYear.members, (item) => item.monthDisplayLowerCase).map(
+              (byMonth) => (
+                <>
+                  <h3 class="text-gray-800 text-lg">
+                    {byMonth.head.monthDisplayUpperCase}
+                  </h3>
+                  <ol class="mt-0.5 ml-4 mb-6">
+                    {groupBy(byMonth.members, (item) => item.day).map(
+                      (byDay) => (
+                        <li>
+                          <div class="flex flex-start items-center pt-3">
+                            <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+                            <p class="text-gray-800 text-l">
+                              {byDay.head.weekdayDisplayUpperCase}{" "}
+                              {byDay.head.day}{" "}
+                              {byDay.head.monthDisplayLowerCase}
+                            </p>
                           </div>
-                        )
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </li>
-        ))}
-      </ol>
+                          <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
+                            {byDay.members.map((recording) => (
+                              <div class="inline-block">
+                                <Controls {...recording} />
+                                <a
+                                  class="block ml-4 text-gray-500"
+                                  href={recording.url}
+                                  title={`${recording.title} downloaden`}
+                                  download
+                                >
+                                  Opslaan
+                                </a>
+                              </div>
+                            ))}
+                          </div>
+                        </li>
+                      )
+                    )}
+                  </ol>
+                </>
+              )
+            )}
+          </div>
+        </>
+      ))}
     </Show>
   );
 };

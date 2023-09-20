@@ -130,7 +130,10 @@ export const getRecordings = async (): Promise<Recording[]> => {
     .sort((a, b) => ((a.date || 0) >= (b.date || 0) ? -1 : 1));
 };
 
-export const get: APIRoute = async () => {
-  const recordings = await getRecordings();
-  return { body: JSON.stringify(recordings) };
-};
+export const GET: APIRoute = async () =>
+  new Response(JSON.stringify(await getRecordings()), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
