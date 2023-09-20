@@ -97,12 +97,12 @@ const sponsors = [
       <Image
         src={logoDFM}
         alt="DinxperFM logo"
-        width={384}
+        width={800}
         loading="eager"
         decoding="auto"
         class="mx-auto"
         quality="max"
-        format="webp"
+        format="png"
       />
 
       <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
@@ -132,15 +132,11 @@ const sponsors = [
       loading="eager"
       decoding="auto"
       quality="max"
-      format="webp"
+      format="png"
     />
   </div>
   <div class="text-center">
-    <a
-      target="blank"
-      class="text-blue-400"
-      href="/programmering/WeekprogrammaDFM-20230304.jpg"
-    >
+    <a target="blank" class="text-blue-400" href={programmering.src}>
       "In nieuwe pagina openen"
     </a>
   </div>
@@ -156,6 +152,7 @@ const sponsors = [
                 alt={sponsor.alt}
                 width={250}
                 quality="high"
+                format="avif"
               />
             </a>
           </div>
