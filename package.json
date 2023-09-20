@@ -7,35 +7,26 @@
   "scripts": {
     "check": "astro check",
     "dev": "astro dev",
-    "start": "xo && astro check && astro dev",
+    "start": "astro check && astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "xo && astro check"
+    "lint": "astro check"
   },
   "dependencies": {
-    "@astrojs/node": "^5.3.0",
-    "@astrojs/solid-js": "^2.2.0",
-    "@astrojs/tailwind": "^4.0.0",
-    "@fontsource/cabin": "^5.0.5",
+    "@astrojs/node": "^6.0.0",
+    "@astrojs/solid-js": "^3.0.1",
+    "@astrojs/tailwind": "^5.0.0",
+    "@fontsource/cabin": "^5.0.8",
     "@nanostores/solid": "^0.4.2",
-    "astro": "^2.9.6",
+    "astro": "^3.1.1",
     "ftp-ts": "^1.1.0",
     "nanostores": "^0.9.3",
-    "sharp": "^0.32.4",
-    "solid-js": "^1.7.8",
+    "sharp": "^0.32.6",
+    "solid-js": "^1.7.12",
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
-    "@total-typescript/ts-reset": "^0.4.2",
-    "xo": "^0.55.0"
-  },
-  "xo": {
-    "space": true,
-    "semicolon": false,
-    "rules": {
-      "import/extensions": 0,
-      "n/file-extension-in-import": 0
-    }
+    "@total-typescript/ts-reset": "^0.5.1"
   }
 }
