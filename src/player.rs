@@ -11,20 +11,19 @@ pub(crate) enum PlayerState {
 
 #[component]
 pub(crate) fn Player(
-  cx: Scope,
   player_src: ReadSignal<Option<String>>,
   set_player_state: WriteSignal<PlayerState>,
 ) -> impl IntoView {
-  let audio_ref = create_node_ref::<Audio>(cx);
+  let audio_ref = create_node_ref::<Audio>();
 
-  create_effect(cx, move |_| {
+  create_effect(move |_| {
     if player_src.get().is_none() {
       let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
       set_player_state(PlayerState::Stopped)
     };
   });
 
-  view! { cx,
+  view! {
     <audio
       autoplay
       _ref=audio_ref

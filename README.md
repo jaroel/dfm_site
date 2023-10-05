@@ -180,15 +180,7 @@ systemctl start --user leptos-dfmsite
 
 ```bash
 su leptos
-PUBLIC_URL="http://dfmsite6.jaroel.nl" LEPTOS_SITE_ADDR="[2a03:b0c0:0:1010::1b:7001]:3000" HTTP_ADDR="[2a03:b0c0:0:1010::1b:7001]:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
-```
-
-## Certbot
-
-On server:
-
-```bash
-mkdir -p /home/leptos/.well-known/acme-challenge
+PUBLIC_URL="https://leptos-dinxperfm-nl.toffe.site" LEPTOS_SITE_ADDR="127.0.0.1:3002" HTTP_ADDR="127.0.0.1:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
 ```
 
 ## FTP Mount

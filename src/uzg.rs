@@ -1,6 +1,6 @@
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::*;
-use leptos_image::Image;
+// use leptos_image::Image;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
@@ -123,30 +123,29 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
 }
 
 #[component]
-fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<Option<String>>(cx, None);
-  let (player_state, set_player_state) = create_signal(cx, PlayerState::Stopped);
+fn UzgListing(items: Vec<Recording>) -> impl IntoView {
+  let (player_src, set_player_src) = create_signal::<Option<String>>(None);
+  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
 
-  view! { cx,
+  view! {
     <Player player_src set_player_state/>
     {items
         .group_by(|a, b| a.year == b.year)
         .map(|by_year| {
-            view! { cx,
+            view! {
               <h2 class="text-gray-800 text-xl">{by_year[0].year}</h2>
               <div class="mt-0.5 ml-4 mb-6">
                 {by_year
                     .group_by(|a, b| a.month == b.month)
                     .map(|by_month| {
-                        view! { cx,
+                        view! {
                           <h3 class="text-gray-800 text-lg">{by_month[0].month_long_c()}</h3>
 
                           <ol class="mt-0.5 ml-4 mb-6">
                             {by_month
                                 .group_by(|a, b| a.day == b.day)
                                 .map(|by_day| {
-
-                                    view! { cx,
+                                    view! {
                                       <li>
                                         <div class="flex flex-start items-center pt-3">
                                           <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
@@ -156,8 +155,7 @@ fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
                                           {by_day
                                               .iter()
                                               .map(|recording| {
-
-                                                  view! { cx,
+                                                  view! {
                                                     <Controls
                                                       title=recording.title()
                                                       label=recording.label()
@@ -167,33 +165,33 @@ fn UzgListing(cx: Scope, items: Vec<Recording>) -> impl IntoView {
                                                     />
                                                   }
                                               })
-                                              .collect_view(cx)}
+                                              .collect_view()}
                                         </div>
                                       </li>
                                     }
                                 })
-                                .collect_view(cx)}
+                                .collect_view()}
                           </ol>
                         }
                     })
-                    .collect_view(cx)}
+                    .collect_view()}
               </div>
             }
         })
-        .collect_view(cx)}
+        .collect_view()}
   }
 }
 
 #[component]
-pub(crate) fn UitzendingGemist(cx: Scope) -> impl IntoView {
-  let entries = create_resource(cx, || (), |_| async move { fetch_uzg_entries().await });
+pub(crate) fn UitzendingGemist() -> impl IntoView {
+  let entries = create_resource(|| (), |_| async move { fetch_uzg_entries().await });
 
-  view! { cx,
+  view! {
     <div class="flex justify-evenly">
       <div class="flex flex-auto items-center">
         <div class="mx-12 my-8">
           <A href="/">
-            <Image
+            <img
               src="/logodinxperfm.png"
               alt="DinxperFM logo"
               width=128
@@ -219,30 +217,23 @@ pub(crate) fn UitzendingGemist(cx: Scope) -> impl IntoView {
       </div>
       <hr class="my-8"/>
       <Suspense fallback=move || {
-          view! { cx, <p>"..."</p> }
+          view! { <p>"..."</p> }
       }>
-        {move || match entries.read(cx) {
-            None => {
-                view! { cx, <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view(cx)
-            }
+        {move || match entries.get() {
+            None => view! { <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view(),
             Some(Ok(items)) => {
                 if items.is_empty() {
-
-                    view! { cx, <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }
-                        .into_view(cx)
+                    view! { <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view()
                 } else {
-
-                    view! { cx, <UzgListing items=items/> }
-                        .into_view(cx)
+                    view! { <UzgListing items=items/> }.into_view()
                 }
             }
             Some(Err(error)) => {
-
-                view! { cx,
+                view! {
                   <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p>
                   <p>{format!("{}", error)}</p>
                 }
-                    .into_view(cx)
+                    .into_view()
             }
         }}
 

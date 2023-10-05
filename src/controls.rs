@@ -12,14 +12,13 @@ enum ControlsState {
 
 #[component]
 pub(crate) fn Controls(
-  cx: Scope,
   title: String,
   label: String,
   src: String,
   set_player_src: WriteSignal<Option<String>>,
   player_state: ReadSignal<PlayerState>,
 ) -> impl IntoView {
-  let (local_src, _) = create_signal(cx, src);
+  let (local_src, _) = create_signal(src);
   let controls_state = move || {
     let controls_src = local_src();
     match player_state.get() {
@@ -48,7 +47,7 @@ pub(crate) fn Controls(
     }
   };
 
-  view! { cx,
+  view! {
     <button
       title=title
       on:click=move |_| {
@@ -72,7 +71,7 @@ pub(crate) fn Controls(
       <span class="mr-2">{label}</span>
       {move || match controls_state() {
           ControlsState::Stopped => {
-              view! { cx,
+              view! {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -86,8 +85,7 @@ pub(crate) fn Controls(
               }
           }
           ControlsState::Error | ControlsState::Playing => {
-
-              view! { cx,
+              view! {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -102,8 +100,7 @@ pub(crate) fn Controls(
               }
           }
           ControlsState::Loading => {
-
-              view! { cx,
+              view! {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

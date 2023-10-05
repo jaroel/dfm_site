@@ -2,22 +2,22 @@ use crate::error_template::{AppError, ErrorTemplate};
 use crate::home::HomePage;
 use crate::uzg::UitzendingGemist;
 use leptos::*;
-use leptos_image::provide_image_context;
+// use leptos_image::provide_image_context;
 use leptos_meta::*;
 use leptos_router::*;
 
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
-  provide_image_context(cx);
-  provide_meta_context(cx);
-  view! { cx,
+pub fn App() -> impl IntoView {
+  // provide_image_context();
+  provide_meta_context();
+  view! {
     <Stylesheet id="leptos" href="/pkg/dfm_site.css"/>
     <Title text="Dinxper FM - het swingende geluid van Dinxperlo"/>
     <Body class="text-slate-50 h-screen bg-gray-600 bg-center bg-cover bg-fixed font-[Cabin]"/>
-    <Router fallback=|cx| {
+    <Router fallback=|| {
         let mut outside_errors = Errors::default();
         outside_errors.insert_with_default_key(AppError::NotFound);
-        view! { cx, <ErrorTemplate outside_errors/> }.into_view(cx)
+        view! { <ErrorTemplate outside_errors/> }.into_view()
     }>
       <div class="h-screen overflow-auto bg-black/75">
         <div class="max-w-7xl mx-auto">
