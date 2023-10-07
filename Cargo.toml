@@ -32,7 +32,7 @@ serde = { version = "1.0.171", features = ["derive"] }
 chrono = { version = "0.4.26" }
 # leptos_image = "0.1.5"
 # leptos_image = { git = "https://github.com/nicoburniske/leptos_image.git" }
-axum-server = { version = "0.5.1", features = ["tls-rustls"], optional = true }
+axum-server = { version = "0.5.1", optional = true }
 # console-subscriber = { version = "0.1.10", optional = true }
 
 [features]

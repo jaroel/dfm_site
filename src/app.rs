@@ -33,7 +33,7 @@ pub fn App() -> impl IntoView {
                 </a>
               </li>
               <li class="ml-1 mr-2">
-                <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facbook pagina">
+                <a href="https://www.facebook.com/DinxperFM" title="DinxperFM Facebook pagina">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

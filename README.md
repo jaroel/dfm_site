@@ -29,7 +29,7 @@ cd {projectname}
 
 to go to your newly created project.
 Feel free to explore the project structure, but the best place to start with your application code is in `src/app.rs`.
-Addtionally, Cargo.toml may need updating as new versions of the dependencies are released, especially if things are not working after a `cargo update`.
+Additionally, Cargo.toml may need updating as new versions of the dependencies are released, especially if things are not working after a `cargo update`.
 
 ## Running your project
 
@@ -130,6 +130,14 @@ rustup target add x86_64-unknown-linux-musl
 RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc TARGET=x86_64-unknown-linux-musl LEPTOS_BIN_TARGET_TRIPLE=x86_64-unknown-linux-musl cargo leptos build  --release
 ```
 
+# Build x86_64-unknown-linux-gnu
+
+```bash
+brew install x86_64-unknown-linux-gnu
+rustup target add x86_64-unknown-linux-gnu
+RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-linux-gnu-gcc TARGET=x86_64-unknown-linux-gnu LEPTOS_BIN_TARGET_TRIPLE=x86_64-unknown-linux-gnu cargo leptos build  --release
+```
+
 # Build i686-unknown-linux-musl
 
 ```bash
@@ -165,21 +173,21 @@ systemctl stop --user leptos-dfmsite
 2. Locally:
 
 ```bash
-scp -C -r target/site jaroel.nl:/home/leptos/
-scp -C target/server/i686-unknown-linux-musl/release/dfm_site jaroel.nl:/home/leptos/
+scp -C -r target/site toffe.site:/home/leptos-dfmsite/
+scp -C target/server/x86_64-unknown-linux-musl/release/dfm_site www-dinxperfm-nl.toffe.site:/home/leptos-dfmsite/
 ```
 
 3. On server:
 
 ```bash
-sudo chown -R leptos:leptos /home/leptos
+sudo chown -R leptos-dfmsite:leptos-dfmsite /home/leptos-dfmsite
 systemctl start --user leptos-dfmsite
 ```
 
 # Run:
 
 ```bash
-su leptos
+su leptos-dfmsite
 PUBLIC_URL="https://leptos-dinxperfm-nl.toffe.site" LEPTOS_SITE_ADDR="127.0.0.1:3002" HTTP_ADDR="127.0.0.1:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
 ```
 
@@ -232,9 +240,8 @@ After=network.target
 Type=simple
 User=leptos
 WorkingDirectory=/home/leptos
-Environment="PUBLIC_URL=http://dfmsite6.jaroel.nl"
-Environment="LEPTOS_SITE_ADDR=[2a03:b0c0:0:1010::1b:7001]:3000"
-Environment="HTTP_ADDR=[2a03:b0c0:0:1010::1b:7001]:3002"
+Environment="PUBLIC_URL=https://www-dinxperfm-nl.toffe.site"
+Environment="LEPTOS_SITE_ADDR=localhost:3001"
 Environment="LEPTOS_SITE_ROOT=./site"
 ExecStart=/home/leptos/dfm_site
 
