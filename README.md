@@ -173,8 +173,8 @@ systemctl stop --user leptos-dfmsite
 2. Locally:
 
 ```bash
-scp -C -r target/site toffe.site:/home/leptos-dfmsite/
-scp -C target/server/x86_64-unknown-linux-musl/release/dfm_site www-dinxperfm-nl.toffe.site:/home/leptos-dfmsite/
+scp -C -r target/site www-dinxperfm-nl.toffe.site:/home/leptos-dfmsite/
+scp -C target/server/x86_64-unknown-linux-gnu/release/dfm_site www-dinxperfm-nl.toffe.site:/home/leptos-dfmsite/
 ```
 
 3. On server:
