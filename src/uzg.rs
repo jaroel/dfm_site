@@ -1,6 +1,6 @@
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::*;
-// use leptos_image::Image;
+use leptos_image::Image;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
@@ -191,7 +191,7 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
       <div class="flex flex-auto items-center">
         <div class="mx-12 my-8">
           <A href="/">
-            <img
+            <Image
               src="/logodinxperfm.png"
               alt="DinxperFM logo"
               width=128

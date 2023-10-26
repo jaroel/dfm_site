@@ -2,13 +2,13 @@ use crate::error_template::{AppError, ErrorTemplate};
 use crate::home::HomePage;
 use crate::uzg::UitzendingGemist;
 use leptos::*;
-// use leptos_image::provide_image_context;
+use leptos_image::provide_image_context;
 use leptos_meta::*;
 use leptos_router::*;
 
 #[component]
 pub fn App() -> impl IntoView {
-  // provide_image_context();
+  provide_image_context();
   provide_meta_context();
   view! {
     <Stylesheet id="leptos" href="/pkg/dfm_site.css"/>

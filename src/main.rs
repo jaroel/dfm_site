@@ -1,14 +1,14 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-  use axum::routing::post;
+  use axum::routing::{get, post};
   use axum::Router;
   use dfm_site::app::*;
   use dfm_site::fileserv::file_and_error_handler;
   use leptos::logging::log;
   use leptos::*;
   use leptos_axum::{generate_route_list, LeptosRoutes};
-  // use leptos_image::cache_app_images;
+  use leptos_image::cache_app_images;
 
   use std::net::SocketAddr;
   // use std::path::PathBuf;
@@ -25,10 +25,10 @@ async fn main() {
   // The file would need to be included with the executable when moved to deployment
   let conf = get_configuration(None).await.unwrap();
   let leptos_options = conf.leptos_options;
-  // let root = leptos_options.site_root.clone();
-  // cache_app_images(root, |_| view! { <App/> }, 2, || (), || ())
-  //   .await
-  //   .expect("Failed to cache images");
+  let root = leptos_options.site_root.clone();
+  cache_app_images(root, || view! { <App/> }, 2, || (), || ())
+    .await
+    .expect("Failed to cache images");
 
   let routes = generate_route_list(|| view! { <App/> });
 
@@ -37,7 +37,7 @@ async fn main() {
     .nest_service("/uzg_data", ServeDir::new("./uzg_data"))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, || view! { <App/> })
-    // .route("/cache/image", get(leptos_image::image_cache_handler))
+    .route("/cache/image", get(leptos_image::image_cache_handler))
     .fallback(file_and_error_handler)
     // .layer(CompressionLayer::new())
     // .layer(TraceLayer::new_for_http())

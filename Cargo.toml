@@ -31,14 +31,14 @@ http = "0.2.8"
 serde = { version = "1.0.171", features = ["derive"] }
 chrono = { version = "0.4.26" }
 # leptos_image = "0.1.5"
-# leptos_image = { git = "https://github.com/nicoburniske/leptos_image.git" }
+leptos_image = { git = "https://github.com/jinseok9338/leptos_image.git", branch = "leptos_5_support" }
 axum-server = { version = "0.5.1", optional = true }
 # console-subscriber = { version = "0.1.10", optional = true }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
 ssr = [
-  # "leptos_image/ssr",
+  "leptos_image/ssr",
   "dep:axum",
   "dep:tokio",
   "dep:tower",
