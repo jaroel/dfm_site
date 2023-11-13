@@ -30,10 +30,15 @@ thiserror = "1.0.38"
 http = "0.2.8"
 serde = { version = "1.0.171", features = ["derive"] }
 chrono = { version = "0.4.26" }
-# leptos_image = "0.1.5"
 leptos_image = { git = "https://github.com/jinseok9338/leptos_image.git", rev = "e111471e67b731b6e2657d1f3649fd0a04f85cef" }
 axum-server = { version = "0.5.1", optional = true }
-# console-subscriber = { version = "0.1.10", optional = true }
+suppaftp = { version = "5.2.1", features = ["async"], optional = true }
+futures-util = { version = "0.3.29", optional = true }
+async-stream = { version = "0.3.5", optional = true }
+tokio-util = { version = "0.7.10", features = [
+  "io",
+  "compat",
+], optional = true }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
@@ -48,7 +53,10 @@ ssr = [
   "leptos_meta/ssr",
   "leptos_router/ssr",
   "dep:axum-server",
-  # "dep:console-subscriber",
+  "dep:futures-util",
+  "dep:async-stream",
+  "dep:suppaftp",
+  "dep:tokio-util",
 ]
 
 [package.metadata.cargo-all-features]

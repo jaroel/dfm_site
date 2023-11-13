@@ -3,26 +3,18 @@ use leptos::*;
 use leptos_image::Image;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
 
 use crate::{
   controls::Controls,
   player::{Player, PlayerState},
 };
 
-impl From<PathBuf> for Recording {
-  fn from(path: PathBuf) -> Self {
-    let file_name = path.file_name().unwrap().to_str().unwrap();
-    Recording::from(file_name)
-  }
-}
-
-impl From<&str> for Recording {
-  fn from(file_name: &str) -> Self {
+impl From<&String> for Recording {
+  fn from(file_name: &String) -> Self {
     // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
     let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
     let date = datetime.date();
-    let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3002/".to_string());
+    let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3002".to_string());
 
     Recording {
       day: date.day(),
@@ -30,7 +22,7 @@ impl From<&str> for Recording {
       year: date.year(),
       weekday: date.weekday().number_from_monday(),
       hour: datetime.time().hour(),
-      src: format!("{}/uzg_data/{}", public_url, file_name),
+      src: format!("{}/uzg/{}", public_url, file_name),
       key: datetime.timestamp(),
     }
   }
@@ -108,12 +100,15 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  let paths = std::fs::read_dir("./uzg_data")?;
-  let mut names = paths
-    .filter_map(|res| res.ok())
-    .map(|entry| entry.path())
-    .filter(|path| path.extension().is_some_and(|ext| ext == "mp3"))
-    // .filter(|path| path.file_name().is_some_and(|name| name == "04-08-2023-11-00.mp3"))
+  use suppaftp::AsyncFtpStream;
+  let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await.unwrap();
+  ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
+  let items = ftp_stream.nlst(None).await?;
+  let _ = ftp_stream.quit().await;
+  let mut names = items
+    .iter()
+    // .filter(|filename| filename.ends_with("04-08-2023-11-00.mp3"))
+    .filter(|filename| filename.ends_with(".mp3"))
     .map(Recording::from)
     .collect::<Vec<Recording>>();
   names.sort_by_key(|k| k.key);

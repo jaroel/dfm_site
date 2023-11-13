@@ -1,8 +1,13 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-  use axum::routing::{get, post};
-  use axum::Router;
+  use axum::{
+    body::{Bytes, StreamBody},
+    extract::Path,
+    routing::get,
+    routing::post,
+    Router,
+  };
   use dfm_site::app::*;
   use dfm_site::fileserv::file_and_error_handler;
   use leptos::logging::log;
@@ -11,12 +16,10 @@ async fn main() {
   use leptos_image::cache_app_images;
 
   use std::net::SocketAddr;
-  // use std::path::PathBuf;
-  // use tower_http::compression::CompressionLayer;
-  use tower_http::services::ServeDir;
-  // use tower_http::trace::TraceLayer;
 
-  // console_subscriber::init();
+  use futures_util::stream::Stream;
+  use suppaftp::{types::FileType, AsyncFtpStream};
+  use tokio_util::{compat::FuturesAsyncReadCompatExt, io::ReaderStream};
 
   // Setting get_configuration(None) means we'll be using cargo-leptos's env values
   // For deployment these variables are:
@@ -32,9 +35,18 @@ async fn main() {
 
   let routes = generate_route_list(|| view! { <App/> });
 
+  async fn stream_ftp_file(Path(filename): Path<String>) -> StreamBody<impl Stream<Item = std::io::Result<Bytes>>> {
+    let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await.unwrap();
+    ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
+    ftp_stream.transfer_type(FileType::Binary).await.unwrap();
+
+    let data_stream = ftp_stream.retr_as_stream(filename).await.unwrap();
+    StreamBody::new(ReaderStream::new(data_stream.compat()))
+  }
+
   // build our application with a route
   let app = Router::new()
-    .nest_service("/uzg_data", ServeDir::new("./uzg_data"))
+    .route("/uzg/:filename", get(stream_ftp_file))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, || view! { <App/> })
     .route("/cache/image", get(leptos_image::image_cache_handler))
