@@ -22,7 +22,7 @@ impl From<&str> for Recording {
     // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
     let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
     let date = datetime.date();
-    let public_url = std::env::var("PUBLIC_URL").unwrap_or("https://dfmsite.test:3000".to_string());
+    let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3002/".to_string());
 
     Recording {
       day: date.day(),
