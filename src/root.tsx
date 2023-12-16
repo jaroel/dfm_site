@@ -32,7 +32,7 @@ export default function Root() {
           <Player></Player>
         </ErrorBoundary>
         <div class="h-screen overflow-auto bg-black/75">
-          <div class="max-w-7xl mx-auto">
+          <div class="max-w-6xl mx-auto">
             <Suspense>
               <ErrorBoundary>
                 <Routes>

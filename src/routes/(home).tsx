@@ -69,7 +69,9 @@ export default function Home() {
         </a>
       </div>
       <div class="mt-10 text-center">
-        <h2 class="text-2xl">Dinxper FM wordt mede mogelijk gemaakt door</h2>
+        <h2 class="text-2xl mb-8">
+          Dinxper FM wordt mede mogelijk gemaakt door
+        </h2>
         <div class="flex flex-row flex-wrap justify-evenly">
           <div class="p-1 mb-2">
             <a href="https://www.facebook.com/markt.dinxperlo/" target="blank">
