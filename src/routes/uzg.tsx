@@ -1,5 +1,5 @@
 import { A, useRouteData } from "solid-start";
-import { createServerData$ } from "solid-start/server";
+import { HttpHeader, createServerData$ } from "solid-start/server";
 
 import Controls from "~/components/Controls";
 
@@ -41,6 +41,7 @@ export default function UZG() {
   const entries = useRouteData<typeof routeData>();
   return (
     <>
+      <HttpHeader name="Cache-Control" value="max-age=3600" />
       <div class="flex justify-evenly">
         <div class="flex flex-auto items-center">
           <div class="mx-12 my-8">
