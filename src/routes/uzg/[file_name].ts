@@ -4,7 +4,7 @@ import { FTP } from "ftp-ts";
 export const getFileStream = async (filename: string) => {
   filename = filename.trim();
   if (!filename) {
-    return undefined;
+    return;
   }
 
   const connection = await FTP.connect({
@@ -12,6 +12,14 @@ export const getFileStream = async (filename: string) => {
     user: "UZG",
     password: "4862KpZ2",
   });
+
+  const listing = (await connection.list()).map((el) =>
+    typeof el === "string" ? el : el.name
+  );
+  if (!listing.includes(filename)) {
+    return;
+  }
+
   const stream = await connection.get(filename);
   stream.addListener("close", () => {
     connection.destroy();
