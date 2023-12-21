@@ -50,10 +50,10 @@ export async function getUzgListing() {
           weekday: datetime.getDay() as 0 | 1 | 2 | 3 | 4 | 5 | 6,
           hour: datetime.getHours(),
           src: `/uzg/${file_name}`,
-          key: datetime.getTime(),
+          timestamp: datetime.getTime(),
         };
       })
-      .filter((el) => el.key <= threshold_timestamp)
-      .sort((a, b) => (a.key >= b.key ? -1 : 1))
+      .filter((el) => el.timestamp <= threshold_timestamp)
+      .sort((a, b) => (a.timestamp >= b.timestamp ? -1 : 1))
   );
 }

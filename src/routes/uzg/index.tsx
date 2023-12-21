@@ -4,8 +4,14 @@ import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 import { getUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
+
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+  cacheControl({
+    maxAge: 3600,
+  });
+};
 
 export const useRecordings = routeLoader$(async () => {
   return await getUzgListing();
@@ -88,7 +94,7 @@ export default component$(() => {
                           (byDay) => {
                             const weekday = weekday_long_c[byDay.head.weekday];
                             return (
-                              <li key={byDay.head.key}>
+                              <li key={byDay.head.timestamp}>
                                 <div class="flex-start flex items-center pt-3">
                                   <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400"></div>
                                   <p class="text-l text-gray-800">{`${weekday} ${byDay.head.day} ${month}`}</p>
@@ -97,7 +103,7 @@ export default component$(() => {
                                   {byDay.members.map((recording) => {
                                     return (
                                       <Controls
-                                        key={recording.key}
+                                        key={recording.timestamp}
                                         title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
                                         label={`${recording.hour}:00`}
                                         src={recording.src}
