@@ -8,13 +8,12 @@ export const [state, setState] = createSignal<
 export default function Player() {
   return (
     <audio
-      autoplay={false}
+      autoplay={!!source()}
       src={source()}
       onPlaying={() => setState("playing")}
       onAbort={() => setState("stopped")}
       onError={() => setState("error")}
-      onLoadStart={() => setState(source() ? "loading" : "stopped")}
-      onloadeddata={(event) => event.currentTarget.play()}
+      onLoadStart={() => setState("loading")}
     ></audio>
   );
 }
