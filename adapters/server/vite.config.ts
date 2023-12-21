@@ -2,6 +2,8 @@ import { nodeServerAdapter } from "@builder.io/qwik-city/adapters/node-server/vi
 import { extendConfig } from "@builder.io/qwik-city/vite";
 import baseConfig from "../../vite.config";
 
+import { compression } from 'vite-plugin-compression2'
+
 export default extendConfig(baseConfig, () => {
   return {
     build: {
@@ -17,6 +19,6 @@ export default extendConfig(baseConfig, () => {
         exclude:["/uzg"],
         origin: "https://www-dinxperfm-nl.toffe.site/"
       }
-    })],
+    }), compression({compressionOptions: {level: 9}})],
   };
 });
