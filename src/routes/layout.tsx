@@ -5,16 +5,10 @@ import {
   useContextProvider,
   useStore,
 } from "@builder.io/qwik";
-import { Link, type RequestHandler } from "@builder.io/qwik-city";
+import { Link } from "@builder.io/qwik-city";
 
 import bgImage from "~/assets/dfm_studio-blurred.jpg";
 import Player from "~/components/Player";
-
-export const onGet: RequestHandler = async ({ cacheControl }) => {
-  cacheControl({
-    staleWhileRevalidate: 60 * 60 * 24,
-  });
-};
 
 export const PLAYER_CTX = createContextId<{
   src: string;

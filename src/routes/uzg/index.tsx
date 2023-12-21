@@ -13,7 +13,10 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
-export const useRecordings = routeLoader$(async () => {
+export const useRecordings = routeLoader$(async ({ cacheControl }) => {
+  cacheControl({
+    maxAge: 3600,
+  });
   return await getUzgListing();
 });
 
