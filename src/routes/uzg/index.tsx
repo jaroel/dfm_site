@@ -4,7 +4,8 @@ import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 import { getUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
 import { component$ } from "@builder.io/qwik";
-import { DocumentHead, Link, routeLoader$ } from "@builder.io/qwik-city";
+import type { DocumentHead } from "@builder.io/qwik-city";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 
 export const useRecordings = routeLoader$(async () => {
   return await getUzgListing();
