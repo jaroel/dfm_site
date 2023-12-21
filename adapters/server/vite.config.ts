@@ -12,13 +12,16 @@ export default extendConfig(baseConfig, () => {
         input: ["src/entry.express.tsx", "@qwik-city-plan"],
       },
     },
-    plugins: [nodeServerAdapter({
-      name: "express",
-      ssg: {
-        include:["*"],
-        exclude:["/uzg"],
-        origin: "https://www-dinxperfm-nl.toffe.site/"
-      }
-    }), compression({compressionOptions: {level: 9}})],
+    plugins: [
+      nodeServerAdapter({
+        name: "express",
+        ssg: {
+          include:["*"],
+          exclude:["/uzg"],
+          origin: "https://www-dinxperfm-nl.toffe.site/"
+        }
+      }),
+      compression({compressionOptions: {level: 9}})
+    ],
   };
 });
