@@ -8,19 +8,19 @@
   "type": "module",
   "devDependencies": {
     "@fontsource/cabin": "^5.0.16",
-    "autoprefixer": "^10.4.15",
-    "postcss": "^8.4.28",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
     "solid-start-node": "^0.3.10",
-    "tailwindcss": "^3.3.3",
+    "tailwindcss": "^3.4.0",
     "typescript": "^4.9.5",
-    "vite": "^4.4.9",
-    "vite-imagetools": "^6.2.7"
+    "vite": "^4.5.1",
+    "vite-imagetools": "^6.2.8"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.3",
+    "@solidjs/meta": "^0.29.3",
+    "@solidjs/router": "^0.8.4",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^1.8.5",
+    "solid-js": "^1.8.7",
     "solid-start": "^0.3.10"
   },
   "engines": {
