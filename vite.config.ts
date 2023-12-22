@@ -4,4 +4,7 @@ import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
   plugins: [imagetools(), solid()],
+  build: {
+    reportCompressedSize: false,
+  },
 });
