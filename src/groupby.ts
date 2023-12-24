@@ -1,13 +1,8 @@
-export class Group<K, T> {
+type Group<K, T> = {
   key: K;
   head: T;
-  members: T[] = [];
-
-  constructor(key: K, head: T) {
-    this.key = key;
-    this.head = head;
-  }
-}
+  members: T[];
+};
 
 export function groupBy<K, T>(
   list: T[],
@@ -20,7 +15,11 @@ export function groupBy<K, T>(
     const key = func(item);
 
     if (!group || key !== group.key) {
-      group = new Group(key, item);
+      group = {
+        key,
+        head: item,
+        members: [],
+      };
       results.push(group);
     }
 
