@@ -5,7 +5,7 @@ import Controls from "~/components/Controls";
 
 import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 import { getUzgListing } from "~/uzg";
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
 import { groupBy } from "~/groupby";
 
 export function routeData() {
@@ -71,52 +71,59 @@ export default function UZG() {
         </div>
         <hr class="my-8" />
         <Show when={entries()}>
-          {groupBy(entries()!, (item) => item.year).map((byYear) => (
-            <>
-              <h2 class="text-gray-800 text-xl">{byYear.key}</h2>
-              <div class="mt-0.5 ml-4 mb-6">
-                {groupBy(byYear.members, (item) => item.month).map(
-                  (byMonth) => {
-                    const month = month_long_c[byMonth.head.month];
-                    return (
-                      <>
-                        <h3 class="text-gray-800 text-lg">{month}</h3>
-                        <div class="mt-0.5 ml-4 mb-6">
-                          <ol>
-                            {groupBy(byMonth.members, (item) => item.day).map(
-                              (byDay) => {
-                                const weekday =
-                                  weekday_long_c[byDay.head.weekday];
-                                return (
-                                  <li>
-                                    <div class="flex flex-start items-center pt-3">
-                                      <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
-                                      <p class="text-gray-800 text-l">{`${weekday} ${byDay.head.day} ${month}`}</p>
-                                    </div>
-                                    <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
-                                      {byDay.members.map((recording) => {
-                                        return (
-                                          <Controls
-                                            title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
-                                            label={`${recording.hour}:00`}
-                                            src={recording.src}
-                                          />
-                                        );
-                                      })}
-                                    </div>
-                                  </li>
-                                );
-                              }
-                            )}
-                          </ol>
-                        </div>
-                      </>
-                    );
-                  }
-                )}
-              </div>
-            </>
-          ))}
+          <For each={groupBy(entries()!, (item) => item.year)}>
+            {(byYear) => (
+              <>
+                <h2 class="text-gray-800 text-xl">{byYear.key}</h2>
+                <div class="mt-0.5 ml-4 mb-6">
+                  <For each={groupBy(byYear.members, (item) => item.month)}>
+                    {(byMonth) => {
+                      const month = month_long_c[byMonth.head.month];
+                      return (
+                        <>
+                          <h3 class="text-gray-800 text-lg">{month}</h3>
+                          <div class="mt-0.5 ml-4 mb-6">
+                            <ol>
+                              <For
+                                each={groupBy(
+                                  byMonth.members,
+                                  (item) => item.day
+                                )}
+                              >
+                                {(byDay) => {
+                                  const weekday =
+                                    weekday_long_c[byDay.head.weekday];
+                                  return (
+                                    <li>
+                                      <div class="flex flex-start items-center pt-3">
+                                        <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+                                        <p class="text-gray-800 text-l">{`${weekday} ${byDay.head.day} ${month}`}</p>
+                                      </div>
+                                      <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
+                                        {byDay.members.map((recording) => {
+                                          return (
+                                            <Controls
+                                              title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
+                                              label={`${recording.hour}:00`}
+                                              src={recording.src}
+                                            />
+                                          );
+                                        })}
+                                      </div>
+                                    </li>
+                                  );
+                                }}
+                              </For>
+                            </ol>
+                          </div>
+                        </>
+                      );
+                    }}
+                  </For>
+                </div>
+              </>
+            )}
+          </For>
         </Show>
       </div>
     </>
