@@ -4,6 +4,7 @@ async fn main() {
   use axum::{
     body::{Bytes, StreamBody},
     extract::Path,
+    response::Response,
     routing::get,
     routing::post,
     Router,
@@ -35,13 +36,18 @@ async fn main() {
 
   let routes = generate_route_list(|| view! { <App/> });
 
-  async fn stream_ftp_file(Path(filename): Path<String>) -> StreamBody<impl Stream<Item = std::io::Result<Bytes>>> {
+  async fn stream_ftp_file(
+    Path(filename): Path<String>,
+  ) -> Response<StreamBody<impl Stream<Item = std::io::Result<Bytes>>>> {
     let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await.unwrap();
     ftp_stream.login("UZG", "4862KpZ2").await.unwrap();
     ftp_stream.transfer_type(FileType::Binary).await.unwrap();
 
     let data_stream = ftp_stream.retr_as_stream(filename).await.unwrap();
-    StreamBody::new(ReaderStream::new(data_stream.compat()))
+    axum::response::Response::builder()
+      .header(http::header::CONTENT_TYPE, http::HeaderValue::from_static("audio/mp3"))
+      .body(StreamBody::new(ReaderStream::new(data_stream.compat())))
+      .unwrap()
   }
 
   // build our application with a route
