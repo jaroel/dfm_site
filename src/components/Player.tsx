@@ -9,10 +9,7 @@ export default component$(() => {
       autoplay={!!player_ctx.src}
       src={player_ctx.src || undefined}
       onPlaying$={() => (player_ctx.state = "playing")}
-      onAbort$={() => (player_ctx.state = "stopped")}
-      onError$={() => {
-        player_ctx.state = "error";
-      }}
+      onError$={() => (player_ctx.state = "error")}
       onLoadStart$={() => (player_ctx.state = "loading")}
     ></audio>
   );
