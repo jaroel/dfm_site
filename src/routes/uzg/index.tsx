@@ -3,7 +3,7 @@ import Controls from "~/components/Controls";
 import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 import { getUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
-import { component$ } from "@builder.io/qwik";
+import { Fragment, component$ } from "@builder.io/qwik";
 import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 
@@ -83,13 +83,13 @@ export default component$(() => {
         )}
 
         {groupBy(entries.value, (item) => item.year).map((byYear) => (
-          <>
+          <Fragment key={`key-byYear-${byYear.head.timestamp}`}>
             <h2 class="text-xl text-gray-800">{byYear.key}</h2>
             <div class="mb-6 ml-4 mt-0.5">
               {groupBy(byYear.members, (item) => item.month).map((byMonth) => {
                 const month = month_long_c[byMonth.head.month];
                 return (
-                  <>
+                  <Fragment key={`key-byMonth-${byMonth.head.timestamp}`}>
                     <h3 class="text-lg text-gray-800">{month}</h3>
                     <div class="mb-6 ml-4 mt-0.5">
                       <ol>
@@ -97,7 +97,7 @@ export default component$(() => {
                           (byDay) => {
                             const weekday = weekday_long_c[byDay.head.weekday];
                             return (
-                              <li key={byDay.head.timestamp}>
+                              <li key={`key-byDay-${byDay.head.timestamp}`}>
                                 <div class="flex-start flex items-center pt-3">
                                   <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400"></div>
                                   <p class="text-l text-gray-800">{`${weekday} ${byDay.head.day} ${month}`}</p>
@@ -106,7 +106,7 @@ export default component$(() => {
                                   {byDay.members.map((recording) => {
                                     return (
                                       <Controls
-                                        key={recording.timestamp}
+                                        key={`key-Controls-${recording.timestamp}`}
                                         title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
                                         label={`${recording.hour}:00`}
                                         src={recording.src}
@@ -120,11 +120,11 @@ export default component$(() => {
                         )}
                       </ol>
                     </div>
-                  </>
+                  </Fragment>
                 );
               })}
             </div>
-          </>
+          </Fragment>
         ))}
       </div>
     </>
