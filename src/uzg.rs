@@ -112,20 +112,12 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
     .expect("Failed to send request");
   if response.status().is_success() {
     let body = response.text().await.expect("Failed to read response body");
-
     let files: Vec<FtpFile> = serde_json::from_str(&body).expect("Failed to deserialize JSON");
-
     let recordings: Vec<Recording> = files.into_iter().map(Recording::from).collect();
-
     return Ok(recordings);
-  } else {
-    println!("Request failed with status: {:?}", response.status());
   }
-
-  let names = vec![];
-  Ok(names)
+  Err(leptos::ServerFnError::ServerError(response.status().to_string()))
 }
-
 #[component]
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
   let (player_src, set_player_src) = create_signal::<Option<String>>(None);
@@ -220,28 +212,23 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
         </p>
       </div>
       <hr class="my-8"/>
-      <Suspense fallback=move || {
-          view! { <p>"..."</p> }
-      }>
+      <Transition>
         {move || match entries.get() {
-            None => view! { <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view(),
+            None => view! { <p>"Uitzendingen worden uitgezocht!"</p> }.into_view(),
+            Some(Err(_)) => {
+                view! { <p>"Helaas, de uitzendingen zijn op dit moment uitgezonden. Probeer het later nog eens."</p> }
+                    .into_view()
+            }
             Some(Ok(items)) => {
                 if items.is_empty() {
-                    view! { <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p> }.into_view()
+                    view! { <p>"Geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view()
                 } else {
                     view! { <UzgListing items=items/> }.into_view()
                 }
             }
-            Some(Err(error)) => {
-                view! {
-                  <p>"Op dit moment zijn er geen historische uitzendingen te beluisteren."</p>
-                  <p>{format!("{}", error)}</p>
-                }
-                    .into_view()
-            }
         }}
 
-      </Suspense>
+      </Transition>
     </div>
   }
 }

@@ -23,7 +23,7 @@ pub fn App() -> impl IntoView {
         <div class="max-w-7xl mx-auto">
           <Routes>
             <Route path="" view=HomePage/>
-            <Route path="/uzg" view=UitzendingGemist/>
+            <Route path="/uzg" view=UitzendingGemist ssr=SsrMode::InOrder/>
           </Routes>
           <nav class="text-black bg-gray-100 p-2 flex justify-center">
             <ul class="flex flex-wrap">
