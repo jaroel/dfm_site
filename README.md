@@ -188,26 +188,7 @@ systemctl start --user leptos-dfmsite
 
 ```bash
 su leptos-dfmsite
-PUBLIC_URL="https://leptos-dinxperfm-nl.toffe.site" LEPTOS_SITE_ADDR="127.0.0.1:3002" HTTP_ADDR="127.0.0.1:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
-```
-
-## FTP Mount
-
-The UZG listing data...
-Setup:
-
-```bash
-sudo apt-get install curlftpfs
-```
-
-Add to ~leptos/.netrc
-
-```text
-machine ftp.example.com login your-user-name password your-password
-```
-
-```bash
-sudo curlftpfs -o ro,intr,enable_epsv,auto_unmount,kernel_cache,noatime,allow_other,connect_timeout=3 ftp://dinxperfm.freeddns.org/ /home/leptos/uzg_data
+LEPTOS_SITE_ADDR="127.0.0.1:3002" HTTP_ADDR="127.0.0.1:3002" LEPTOS_SITE_ROOT=./site ./dfm_site
 ```
 
 ```bash
@@ -240,7 +221,6 @@ After=network.target
 Type=simple
 User=leptos
 WorkingDirectory=/home/leptos
-Environment="PUBLIC_URL=https://www-dinxperfm-nl.toffe.site"
 Environment="LEPTOS_SITE_ADDR=localhost:3001"
 Environment="LEPTOS_SITE_ROOT=./site"
 ExecStart=/home/leptos/dfm_site

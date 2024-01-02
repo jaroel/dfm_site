@@ -49,13 +49,11 @@ ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
 ENV LEPTOS_RELOAD_PORT=3001
 ENV RUST_LOG="info"
 ENV APP_ENVIRONMENT="production"
-ENV PUBLIC_URL="https://dmfsite.test"
 
 USER 10001
 
 WORKDIR /app
 
-COPY uzg_data /app/uzg_data
 COPY certs /app/certs
 COPY --chown=10001:10001 --from=builder /work/target/site/ ./site/
 COPY --chown=10001:10001 --from=builder /work/target/server/release/server .

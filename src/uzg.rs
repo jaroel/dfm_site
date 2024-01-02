@@ -3,26 +3,25 @@ use leptos::*;
 use leptos_image::Image;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::str::FromStr;
 
 use crate::{
   controls::Controls,
   player::{Player, PlayerState},
 };
 
-impl From<PathBuf> for Recording {
-  fn from(path: PathBuf) -> Self {
-    let file_name = path.file_name().unwrap().to_str().unwrap();
-    Recording::from(file_name)
-  }
+#[derive(Serialize, Deserialize, Clone, Debug)]
+struct FtpFile {
+  datetime: String,
+  name: String,
+  size: u64,
+  key: i64,
 }
 
-impl From<&str> for Recording {
-  fn from(file_name: &str) -> Self {
-    // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
-    let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
+impl From<FtpFile> for Recording {
+  fn from(ftp_file: FtpFile) -> Self {
+    let datetime = NaiveDateTime::from_str(ftp_file.datetime.as_str()).expect("Not a date?");
     let date = datetime.date();
-    let public_url = std::env::var("PUBLIC_URL").unwrap_or("https://dfmsite.test:3000".to_string());
 
     Recording {
       day: date.day(),
@@ -30,8 +29,8 @@ impl From<&str> for Recording {
       year: date.year(),
       weekday: date.weekday().number_from_monday(),
       hour: datetime.time().hour(),
-      src: format!("{}/uzg_data/{}", public_url, file_name),
-      key: datetime.timestamp(),
+      src: format!("http://127.0.0.1:8000/uzg/fetch/{}", ftp_file.name),
+      key: ftp_file.key,
     }
   }
 }
@@ -108,17 +107,22 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  let paths = std::fs::read_dir("./uzg_data")?;
-  let mut names = paths
-    .filter_map(|res| res.ok())
-    .map(|entry| entry.path())
-    .filter(|path| path.extension().is_some_and(|ext| ext == "mp3"))
-    // .filter(|path| path.file_name().is_some_and(|name| name == "04-08-2023-11-00.mp3"))
-    .map(Recording::from)
-    .collect::<Vec<Recording>>();
-  names.sort_by_key(|k| k.key);
-  names.reverse();
-  // print!("{:#?}", names);
+  let response = reqwest::get("http://127.0.0.1:8000/uzg/listing")
+    .await
+    .expect("Failed to send request");
+  if response.status().is_success() {
+    let body = response.text().await.expect("Failed to read response body");
+
+    let files: Vec<FtpFile> = serde_json::from_str(&body).expect("Failed to deserialize JSON");
+
+    let recordings: Vec<Recording> = files.into_iter().map(Recording::from).collect();
+
+    return Ok(recordings);
+  } else {
+    println!("Request failed with status: {:?}", response.status());
+  }
+
+  let names = vec![];
   Ok(names)
 }
 

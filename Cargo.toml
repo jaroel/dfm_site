@@ -33,6 +33,8 @@ chrono = { version = "0.4.26" }
 # leptos_image = "0.1.5"
 leptos_image = { git = "https://github.com/jinseok9338/leptos_image.git", rev = "e111471e67b731b6e2657d1f3649fd0a04f85cef" }
 axum-server = { version = "0.5.1", optional = true }
+reqwest = { version = "0.11.23", optional = true }
+serde_json = { version = "1.0.110", optional = true }
 # console-subscriber = { version = "0.1.10", optional = true }
 
 [features]
@@ -49,7 +51,11 @@ ssr = [
   "leptos_router/ssr",
   "dep:axum-server",
   # "dep:console-subscriber",
+  "dep:reqwest",
+  "dep:serde_json",
 ]
+reqwest = ["dep:reqwest"]
+serde_json = ["dep:serde_json"]
 
 [package.metadata.cargo-all-features]
 denylist = ["axum", "tokio", "tower", "tower-http", "leptos_axum"]

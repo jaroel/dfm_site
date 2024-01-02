@@ -13,7 +13,7 @@ async fn main() {
   use std::net::SocketAddr;
   // use std::path::PathBuf;
   // use tower_http::compression::CompressionLayer;
-  use tower_http::services::ServeDir;
+
   // use tower_http::trace::TraceLayer;
 
   // console_subscriber::init();
@@ -34,7 +34,6 @@ async fn main() {
 
   // build our application with a route
   let app = Router::new()
-    .nest_service("/uzg_data", ServeDir::new("./uzg_data"))
     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
     .leptos_routes(&leptos_options, routes, || view! { <App/> })
     .route("/cache/image", get(leptos_image::image_cache_handler))
