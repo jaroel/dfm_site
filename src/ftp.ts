@@ -1,3 +1,4 @@
+"use server";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
@@ -19,6 +20,7 @@ export async function getFtpListing() {
 }
 
 export async function getUzgListing() {
+  "use server";
   // Current hour isn't uploaded fully yet
   const threshold_timestamp = new Date().getTime() - 3600000;
   return (

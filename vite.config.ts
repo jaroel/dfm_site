@@ -1,9 +1,8 @@
-import solid from "solid-start/vite";
-import { defineConfig } from "vite";
+import { defineConfig } from "@solidjs/start/config";
 import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
-  plugins: [imagetools(), solid()],
+  plugins: [imagetools()],
   build: {
     reportCompressedSize: false,
   },

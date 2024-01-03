@@ -1,16 +1,20 @@
-import { A, useRouteData } from "solid-start";
-import { HttpHeader, createServerData$ } from "solid-start/server";
-
-import Controls from "~/components/Controls";
-
-import logo from "~/assets/logodinxperfm.png?as=img&w=128";
-import { getUzgListing } from "~/uzg";
+import { A, createAsync } from "@solidjs/router";
 import { For, Show } from "solid-js";
+
+import { getUzgListing } from "~/ftp";
 import { groupBy } from "~/groupby";
 
-export function routeData() {
-  return createServerData$(() => getUzgListing());
-}
+import Controls from "~/components/Controls";
+import logo from "~/assets/logodinxperfm.png?as=img&w=128";
+
+const getStudents = async () => {
+  "use server";
+  return await getUzgListing();
+};
+
+export const route = {
+  load: () => getStudents(),
+};
 
 const weekday_long_c = {
   0: "Zondag",
@@ -38,10 +42,9 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const entries = useRouteData<typeof routeData>();
+  const entries = createAsync(getStudents);
   return (
     <>
-      <HttpHeader name="Cache-Control" value="max-age=3600" />
       <div class="flex justify-evenly">
         <div class="flex flex-auto items-center">
           <div class="mx-12 my-8">
