@@ -1,5 +1,7 @@
-use crate::controls::Controls;
-use crate::player::{Player, PlayerState};
+use crate::components::{
+  controls::Controls,
+  player::{Player, PlayerState},
+};
 use leptos::*;
 use leptos_image::Image;
 use leptos_router::*;

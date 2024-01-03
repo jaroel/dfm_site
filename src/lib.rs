@@ -1,12 +1,10 @@
 #![feature(slice_group_by)]
 use cfg_if::cfg_if;
 pub mod app;
-mod controls;
+mod components;
 pub mod error_template;
 pub mod fileserv;
-pub mod home;
-pub mod player;
-pub mod uzg;
+mod routes;
 
 cfg_if! { if #[cfg(feature = "hydrate")] {
     use leptos::*;

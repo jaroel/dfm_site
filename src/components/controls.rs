@@ -1,4 +1,4 @@
-use crate::player::PlayerState;
+use crate::components::player::PlayerState;
 use leptos::*;
 
 #[derive(PartialEq)]

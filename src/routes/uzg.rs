@@ -5,7 +5,7 @@ use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use crate::{
+use crate::components::{
   controls::Controls,
   player::{Player, PlayerState},
 };
@@ -185,7 +185,6 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                     .map(|by_month| {
                         view! {
                           <h3 class="text-gray-800 text-lg">{by_month[0].month_long_c()}</h3>
-
                           <ol class="mt-0.5 ml-4 mb-6">
                             {by_month
                                 .group_by(|a, b| a.day == b.day)

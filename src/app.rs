@@ -1,6 +1,5 @@
 use crate::error_template::{AppError, ErrorTemplate};
-use crate::home::HomePage;
-use crate::uzg::UitzendingGemist;
+use crate::routes::{home::HomePage, uzg::UitzendingGemist};
 use leptos::*;
 use leptos_image::provide_image_context;
 use leptos_meta::*;
