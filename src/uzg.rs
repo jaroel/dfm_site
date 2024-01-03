@@ -107,17 +107,66 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  let response = reqwest::get("http://127.0.0.1:8000/uzg/listing")
-    .await
-    .expect("Failed to send request");
-  if response.status().is_success() {
-    let body = response.text().await.expect("Failed to read response body");
-    let files: Vec<FtpFile> = serde_json::from_str(&body).expect("Failed to deserialize JSON");
-    let recordings: Vec<Recording> = files.into_iter().map(Recording::from).collect();
-    return Ok(recordings);
-  }
-  Err(leptos::ServerFnError::ServerError(response.status().to_string()))
+  let response = reqwest::get("http://127.0.0.1:8000/uzg/listing").await?;
+  let files: Vec<FtpFile> = serde_json::from_str(&response.text().await?)?;
+  let recordings: Vec<Recording> = files.into_iter().map(Recording::from).collect();
+  Ok(recordings)
 }
+
+#[component]
+pub(crate) fn UitzendingGemist() -> impl IntoView {
+  let entries = create_resource(|| (), |_| async move { fetch_uzg_entries().await });
+
+  view! {
+    <div class="flex justify-evenly">
+      <div class="flex flex-auto items-center">
+        <div class="mx-12 my-8">
+          <A href="/">
+            <Image
+              src="/logodinxperfm.png"
+              alt="DinxperFM logo"
+              width=128
+              height=128
+              quality=100
+              lazy=false
+              priority=true
+              class="mx-auto"
+            />
+          </A>
+          <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">"Uitzending gemist"</h1>
+      </div>
+    </div>
+    <div class="bg-gray-100 text-black p-9">
+      <div class="max-w-7xl px-6 text-center">
+        <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
+          "Dit zijn opnames van uitzendingen op de Dinxper FM stream. Gebruik
+          de speler om de uitzending terug te luisteren of klik de link om de
+          uitzending op te slaan."
+        </p>
+      </div>
+      <hr class="my-8"/>
+      <Transition>
+        {move || match entries.get() {
+            None => view! { "" }.into_view(),
+            Some(Err(_)) => {
+                view! { <p>"Er is geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view()
+            }
+            Some(Ok(items)) => {
+                if items.is_empty() {
+                    view! { <p>"Er is geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view()
+                } else {
+                    view! { <UzgListing items=items/> }.into_view()
+                }
+            }
+        }}
+
+      </Transition>
+    </div>
+  }
+}
+
 #[component]
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
   let (player_src, set_player_src) = create_signal::<Option<String>>(None);
@@ -175,60 +224,5 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
             }
         })
         .collect_view()}
-  }
-}
-
-#[component]
-pub(crate) fn UitzendingGemist() -> impl IntoView {
-  let entries = create_resource(|| (), |_| async move { fetch_uzg_entries().await });
-
-  view! {
-    <div class="flex justify-evenly">
-      <div class="flex flex-auto items-center">
-        <div class="mx-12 my-8">
-          <A href="/">
-            <Image
-              src="/logodinxperfm.png"
-              alt="DinxperFM logo"
-              width=128
-              height=128
-              quality=100
-              lazy=false
-              priority=true
-              class="mx-auto"
-            />
-          </A>
-          <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
-        </div>
-        <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">"Uitzending gemist"</h1>
-      </div>
-    </div>
-    <div class="bg-gray-100 text-black p-9">
-      <div class="max-w-7xl px-6 text-center">
-        <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
-          "Dit zijn opnames van uitzendingen op de Dinxper FM stream. Gebruik
-          de speler om de uitzending terug te luisteren of klik de link om de
-          uitzending op te slaan."
-        </p>
-      </div>
-      <hr class="my-8"/>
-      <Transition>
-        {move || match entries.get() {
-            None => view! { <p>"Uitzendingen worden uitgezocht!"</p> }.into_view(),
-            Some(Err(_)) => {
-                view! { <p>"Helaas, de uitzendingen zijn op dit moment uitgezonden. Probeer het later nog eens."</p> }
-                    .into_view()
-            }
-            Some(Ok(items)) => {
-                if items.is_empty() {
-                    view! { <p>"Geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view()
-                } else {
-                    view! { <UzgListing items=items/> }.into_view()
-                }
-            }
-        }}
-
-      </Transition>
-    </div>
   }
 }
