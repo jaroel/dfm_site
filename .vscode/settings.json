@@ -22,15 +22,5 @@
     "editor.renderWhitespace": "trailing",
     "files.trimTrailingWhitespace": true
   },
-  "rust-analyzer.cargo.features": ["ssr"],
-  "rust-analyzer.check.command": "clippy",
-  "emeraldwalk.runonsave": {
-    "commands": [
-      {
-        "match": ".rs",
-        "isAsync": true,
-        "cmd": "leptosfmt -c ${workspaceFolder}/leptosfmt.toml ${file}"
-      }
-    ]
-  }
+  "rust-analyzer.cargo.features": ["ssr"]
 }
