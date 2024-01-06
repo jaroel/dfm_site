@@ -124,7 +124,16 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
       <div class="flex flex-auto items-center">
         <div class="mx-12 my-8">
           <A href="/">
-            <Image src="/logodinxperfm.png" alt="DinxperFM logo" width=128 height=128 quality=100 lazy=false priority=true class="mx-auto"/>
+            <Image
+              src="/logodinxperfm.png"
+              alt="DinxperFM logo"
+              width=128
+              height=128
+              quality=100
+              lazy=false
+              priority=true
+              class="mx-auto"
+            />
           </A>
           <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
         </div>
@@ -143,10 +152,10 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
       <Transition>
         {move || match entries.get() {
             None => view! { "" }.into_view(),
-            Some(Err(_)) => view! { <p>"Er is geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view(),
+            Some(Err(_)) => view! { <p>"Er zijn geen opnamen beschikbaar."</p> }.into_view(),
             Some(Ok(items)) => {
                 if items.is_empty() {
-                    view! { <p>"Er is geen enkele uitzending beschikbaar voor uitzending, helaas."</p> }.into_view()
+                    view! { <p>"Er zijn geen opnamen beschikbaar."</p> }.into_view()
                 } else {
                     view! { <UzgListing items=items/> }.into_view()
                 }

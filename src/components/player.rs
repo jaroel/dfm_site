@@ -40,7 +40,7 @@ pub(crate) fn Player(
 
       on:error=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          assert!(! node.src().is_empty(), "Empty audio.src.");
+          assert!(!node.src().is_empty(), "Empty audio.src.");
           set_player_state.set(PlayerState::Error(node.src()))
       }
 
