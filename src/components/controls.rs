@@ -20,28 +20,18 @@ pub(crate) fn Controls(
 ) -> impl IntoView {
   let (local_src, _) = create_signal(src);
   let controls_state = move || {
-    let controls_src = local_src();
-    match player_state.get() {
+    let player_state_ = player_state.get();
+    match &player_state_ {
       PlayerState::Stopped => ControlsState::Stopped,
-      PlayerState::Loading(url) => {
-        if url == controls_src {
-          ControlsState::Loading
-        } else {
-          ControlsState::Stopped
+      PlayerState::Loading(url) | PlayerState::Playing(url) | PlayerState::Error(url) => {
+        if *url != local_src() {
+          return ControlsState::Stopped;
         }
-      }
-      PlayerState::Playing(url) => {
-        if url == controls_src {
-          ControlsState::Playing
-        } else {
-          ControlsState::Stopped
-        }
-      }
-      PlayerState::Error(url) => {
-        if url == controls_src {
-          ControlsState::Error
-        } else {
-          ControlsState::Stopped
+        match &player_state_ {
+          PlayerState::Loading(_) => ControlsState::Loading,
+          PlayerState::Playing(_) => ControlsState::Playing,
+          PlayerState::Error(_) => ControlsState::Error,
+          PlayerState::Stopped => ControlsState::Stopped,
         }
       }
     }
