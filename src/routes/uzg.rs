@@ -30,7 +30,7 @@ impl From<FtpFile> for Recording {
       year: date.year(),
       weekday: date.weekday().number_from_monday(),
       hour: datetime.time().hour(),
-      src: format!("http://127.0.0.1:8000/uzg/fetch/{}", ftp_file.name),
+      src: format!("http://127.0.0.1:8000/fetch/{}", ftp_file.name),
       key: ftp_file.key,
     }
   }
@@ -108,7 +108,7 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  let response = reqwest::get("http://127.0.0.1:8000/uzg/listing").await?;
+  let response = reqwest::get("http://127.0.0.1:8000/listing").await?;
   let files: Vec<FtpFile> = serde_json::from_str(&response.text().await?)?;
   let recordings: Vec<Recording> = files.into_iter().map(Recording::from).collect();
   Ok(recordings)
