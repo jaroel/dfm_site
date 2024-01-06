@@ -105,11 +105,19 @@ export default function UZG() {
                                       <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
                                         {byDay.members.map((recording) => {
                                           return (
-                                            <Controls
-                                              title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
-                                              label={`${recording.hour}:00`}
-                                              src={recording.src}
-                                            />
+                                            <>
+                                              <Controls
+                                                title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
+                                                label={`${recording.hour}:00`}
+                                                src={recording.src}
+                                              />
+                                              <a
+                                                href={recording.src}
+                                                rel="external"
+                                              >
+                                                Download
+                                              </a>
+                                            </>
                                           );
                                         })}
                                       </div>
