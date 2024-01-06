@@ -19,7 +19,7 @@ fn Sponsor(href: String, title: String, children: Children) -> impl IntoView {
 
 #[component]
 pub(crate) fn HomePage() -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<Option<String>>(None);
+  let (player_src, set_player_src) = create_signal::<String>("".to_string());
   let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
 
   view! {

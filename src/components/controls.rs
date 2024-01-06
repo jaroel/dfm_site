@@ -15,7 +15,7 @@ pub(crate) fn Controls(
   title: String,
   label: String,
   src: String,
-  set_player_src: WriteSignal<Option<String>>,
+  set_player_src: WriteSignal<String>,
   player_state: ReadSignal<PlayerState>,
 ) -> impl IntoView {
   let (local_src, _) = create_signal(src);
@@ -42,8 +42,8 @@ pub(crate) fn Controls(
       title=title
       on:click=move |_| {
           match controls_state() {
-              ControlsState::Playing | ControlsState::Error => set_player_src(None),
-              ControlsState::Stopped | ControlsState::Loading => set_player_src(Some(local_src.get())),
+              ControlsState::Playing | ControlsState::Error => set_player_src("".to_string()),
+              ControlsState::Stopped | ControlsState::Loading => set_player_src(local_src.get()),
           };
       }
 

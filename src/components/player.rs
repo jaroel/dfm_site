@@ -10,10 +10,7 @@ pub(crate) enum PlayerState {
 }
 
 #[component]
-pub(crate) fn Player(
-  player_src: ReadSignal<Option<String>>,
-  set_player_state: WriteSignal<PlayerState>,
-) -> impl IntoView {
+pub(crate) fn Player(player_src: ReadSignal<String>, set_player_state: WriteSignal<PlayerState>) -> impl IntoView {
   let audio_ref = create_node_ref::<Audio>();
 
   create_effect(move |_| {
