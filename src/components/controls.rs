@@ -54,7 +54,7 @@ pub(crate) fn Controls(
               ControlsState::Loading => "bg-blue-100 text-blue-800 border-blue-800",
               ControlsState::Stopped => "bg-gray-100 text-gray-800 border-gray-800 hover:bg-gray-800 hover:text-white",
           };
-          format!("mr-4 rounded-full border my-1 py-2 px-4 flex items-center {}", specifics)
+          format!("rounded-full border my-1 py-2 px-4 flex items-center {}", specifics)
       }
     >
 

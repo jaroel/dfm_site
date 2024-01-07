@@ -195,18 +195,26 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                                           <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
                                           <p class="text-gray-800 text-l">{by_day[0].listing_title()}</p>
                                         </div>
-                                        <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
+                                        <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
                                           {by_day
                                               .iter()
                                               .map(|recording| {
                                                   view! {
-                                                    <Controls
-                                                      title=recording.title()
-                                                      label=recording.label()
-                                                      src=recording.src.clone()
-                                                      set_player_src=set_player_src
-                                                      player_state=player_state
-                                                    />
+                                                    <div class="flex-row text-center">
+                                                      <Controls
+                                                        title=recording.title()
+                                                        label=recording.label()
+                                                        src=recording.src.clone()
+                                                        set_player_src=set_player_src
+                                                        player_state=player_state
+                                                      />
+                                                      <a
+                                                        class="text-sm text-gray-800 underline"
+                                                        href=recording.src.clone()
+                                                      >
+                                                        download
+                                                      </a>
+                                                    </div>
                                                   }
                                               })
                                               .collect_view()}
