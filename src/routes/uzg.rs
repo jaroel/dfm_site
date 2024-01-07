@@ -8,7 +8,7 @@ use std::str::FromStr;
 
 use crate::components::{
   controls::Controls,
-  player::{Player, PlayerState},
+  player::Player,
 };
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -114,8 +114,8 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
   Ok(recordings)
 }
 
-#[component]
-pub(crate) fn UitzendingGemist() -> impl IntoView {
+#[island]
+pub fn UitzendingGemist() -> impl IntoView {
   let entries = create_resource(|| (), |_| async move { fetch_uzg_entries().await });
 
   view! {
@@ -169,11 +169,10 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
 
 #[component]
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<String>("".to_string());
-  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
+
 
   view! {
-    <Player player_src set_player_state/>
+    <Player/>
     {items
         .group_by(|a, b| a.year == b.year)
         .map(|by_year| {
@@ -205,8 +204,6 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                                                         title=recording.title()
                                                         label=recording.label()
                                                         src=recording.src.clone()
-                                                        set_player_src=set_player_src
-                                                        player_state=player_state
                                                       />
                                                       <a
                                                         class="text-sm text-gray-800 underline"
@@ -233,3 +230,4 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
         .collect_view()}
   }
 }
+

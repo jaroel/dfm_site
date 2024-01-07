@@ -1,23 +1,19 @@
 use crate::components::player::PlayerState;
+use leptos::logging::log;
 use leptos::*;
 
-#[derive(PartialEq)]
-enum ControlsState {
-  // The state of the specific controls component
+#[derive(Clone, PartialEq, Debug, serde::Serialize, serde::Deserialize)]
+pub enum ControlsState {
   Stopped,
   Loading,
   Playing,
   Error,
 }
 
-#[component]
-pub(crate) fn Controls(
-  title: String,
-  label: String,
-  src: String,
-  set_player_src: WriteSignal<String>,
-  player_state: ReadSignal<PlayerState>,
-) -> impl IntoView {
+#[island]
+pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
+  let set_player_src = expect_context::<WriteSignal<String>>();
+  let player_state = expect_context::<ReadSignal<PlayerState>>();
   let (local_src, _) = create_signal(src);
   let controls_state = move || {
     let player_state_ = player_state.get();
@@ -41,6 +37,7 @@ pub(crate) fn Controls(
     <button
       title=title
       on:click=move |_| {
+          log!("hello!");
           match controls_state() {
               ControlsState::Playing | ControlsState::Error => set_player_src("".to_string()),
               ControlsState::Stopped | ControlsState::Loading => set_player_src(local_src.get()),

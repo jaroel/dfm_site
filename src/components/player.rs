@@ -1,7 +1,7 @@
 use leptos::{html::Audio, *};
 
-#[derive(Clone, PartialEq)]
-pub(crate) enum PlayerState {
+#[derive(Clone, PartialEq, Debug, serde::Serialize, serde::Deserialize)]
+pub enum PlayerState {
   // The state of the audio element.
   Stopped,
   Loading(String),
@@ -9,8 +9,13 @@ pub(crate) enum PlayerState {
   Error(String),
 }
 
-#[component]
-pub(crate) fn Player(player_src: ReadSignal<String>, set_player_state: WriteSignal<PlayerState>) -> impl IntoView {
+#[island]
+pub fn Player() -> impl IntoView {
+  let (player_src, set_player_src) = create_signal("".to_string());
+  provide_context(set_player_src);
+  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
+  provide_context(player_state);
+
   let audio_ref = create_node_ref::<Audio>();
 
   // Maybe we do need this for iOS?
