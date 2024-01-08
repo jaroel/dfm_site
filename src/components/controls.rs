@@ -11,14 +11,10 @@ enum ControlsState {
 }
 
 #[component]
-pub(crate) fn Controls(
-  title: String,
-  label: String,
-  src: String,
-  set_player_src: WriteSignal<String>,
-  player_state: ReadSignal<PlayerState>,
-) -> impl IntoView {
-  let (local_src, _) = create_signal(src);
+pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
+  let player_src = expect_context::<RwSignal<String>>();
+  let player_state = expect_context::<RwSignal<PlayerState>>();
+  let local_src = RwSignal::new(src);
   let controls_state = move || {
     let player_state_ = player_state.get();
     match &player_state_ {
@@ -42,8 +38,8 @@ pub(crate) fn Controls(
       title=title
       on:click=move |_| {
           match controls_state() {
-              ControlsState::Playing | ControlsState::Error => set_player_src("".to_string()),
-              ControlsState::Stopped | ControlsState::Loading => set_player_src(local_src.get()),
+              ControlsState::Playing | ControlsState::Error => player_src.set("".to_string()),
+              ControlsState::Stopped | ControlsState::Loading => player_src.set(local_src.get()),
           };
       }
 

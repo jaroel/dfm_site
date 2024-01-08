@@ -8,7 +8,7 @@ use std::str::FromStr;
 
 use crate::components::{
   controls::Controls,
-  player::{Player, PlayerState},
+  player::Player,
 };
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -169,11 +169,10 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
 
 #[component]
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<String>("".to_string());
-  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
+
 
   view! {
-    <Player player_src set_player_state/>
+    <Player/>
     {items
         .group_by(|a, b| a.year == b.year)
         .map(|by_year| {
@@ -205,8 +204,6 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                                                         title=recording.title()
                                                         label=recording.label()
                                                         src=recording.src.clone()
-                                                        set_player_src=set_player_src
-                                                        player_state=player_state
                                                       />
                                                       <a
                                                         class="text-sm text-gray-800 underline"

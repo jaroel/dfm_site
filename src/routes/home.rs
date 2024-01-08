@@ -1,7 +1,4 @@
-use crate::components::{
-  controls::Controls,
-  player::{Player, PlayerState},
-};
+use crate::components::{controls::Controls, player::Player};
 use leptos::*;
 use leptos_image::Image;
 use leptos_router::*;
@@ -19,11 +16,8 @@ fn Sponsor(href: String, title: String, children: Children) -> impl IntoView {
 
 #[component]
 pub(crate) fn HomePage() -> impl IntoView {
-  let (player_src, set_player_src) = create_signal::<String>("".to_string());
-  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
-
   view! {
-    <Player player_src set_player_state/>
+    <Player/>
     <div class="flex justify-evenly mt-10 mb-10">
       <div class="max-w-sm">
         <div style="width: 384; height: 329">
@@ -48,8 +42,6 @@ pub(crate) fn HomePage() -> impl IntoView {
             title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!".into()
             label="Luister live!".into()
             src="https://stream.dinxperfm.nl/1".into()
-            set_player_src=set_player_src
-            player_state=player_state
           />
         </li>
         <li>

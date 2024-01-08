@@ -1,7 +1,7 @@
 use leptos::{html::Audio, *};
 
-#[derive(Clone, PartialEq)]
-pub(crate) enum PlayerState {
+#[derive(Clone, PartialEq, Debug, serde::Serialize, serde::Deserialize)]
+pub enum PlayerState {
   // The state of the audio element.
   Stopped,
   Loading(String),
@@ -10,7 +10,12 @@ pub(crate) enum PlayerState {
 }
 
 #[component]
-pub(crate) fn Player(player_src: ReadSignal<String>, set_player_state: WriteSignal<PlayerState>) -> impl IntoView {
+pub fn Player() -> impl IntoView {
+  let player_src = RwSignal::new("".to_string());
+  provide_context(player_src);
+  let player_state = RwSignal::new(PlayerState::Stopped);
+  provide_context(player_state);
+
   let audio_ref = create_node_ref::<Audio>();
 
   // Maybe we do need this for iOS?
@@ -28,22 +33,22 @@ pub(crate) fn Player(player_src: ReadSignal<String>, set_player_state: WriteSign
       src=player_src
       on:loadstart=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Loading(node.src()))
+          player_state.set(PlayerState::Loading(node.src()))
       }
 
       on:play=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Playing(node.src()))
+          player_state.set(PlayerState::Playing(node.src()))
       }
 
       on:error=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
           assert!(!node.src().is_empty(), "Empty audio.src.");
-          set_player_state.set(PlayerState::Error(node.src()))
+          player_state.set(PlayerState::Error(node.src()))
       }
 
-      on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
-      on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
+      on:ended=move |_| { player_state.set(PlayerState::Stopped) }
+      on:pause=move |_| { player_state.set(PlayerState::Stopped) }
     ></audio>
   }
 }
