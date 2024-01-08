@@ -11,9 +11,9 @@ pub enum PlayerState {
 
 #[island]
 pub fn Player() -> impl IntoView {
-  let (player_src, set_player_src) = create_signal("".to_string());
-  provide_context(set_player_src);
-  let (player_state, set_player_state) = create_signal(PlayerState::Stopped);
+  let player_src = RwSignal::new("".to_string());
+  provide_context(player_src);
+  let player_state = RwSignal::new(PlayerState::Stopped);
   provide_context(player_state);
 
   let audio_ref = create_node_ref::<Audio>();
@@ -33,22 +33,22 @@ pub fn Player() -> impl IntoView {
       src=player_src
       on:loadstart=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Loading(node.src()))
+          player_state.set(PlayerState::Loading(node.src()))
       }
 
       on:play=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
-          set_player_state.set(PlayerState::Playing(node.src()))
+          player_state.set(PlayerState::Playing(node.src()))
       }
 
       on:error=move |_| {
           let node = audio_ref.get().expect("audio element missing on page.");
           assert!(!node.src().is_empty(), "Empty audio.src.");
-          set_player_state.set(PlayerState::Error(node.src()))
+          player_state.set(PlayerState::Error(node.src()))
       }
 
-      on:ended=move |_| { set_player_state.set(PlayerState::Stopped) }
-      on:pause=move |_| { set_player_state.set(PlayerState::Stopped) }
+      on:ended=move |_| { player_state.set(PlayerState::Stopped) }
+      on:pause=move |_| { player_state.set(PlayerState::Stopped) }
     ></audio>
   }
 }

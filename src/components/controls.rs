@@ -12,9 +12,9 @@ pub enum ControlsState {
 
 #[island]
 pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
-  let set_player_src = expect_context::<WriteSignal<String>>();
-  let player_state = expect_context::<ReadSignal<PlayerState>>();
-  let (local_src, _) = create_signal(src);
+  let player_src = expect_context::<RwSignal<String>>();
+  let player_state = expect_context::<RwSignal<PlayerState>>();
+  let local_src = RwSignal::new(src);
   let controls_state = move || {
     let player_state_ = player_state.get();
     match &player_state_ {
@@ -39,8 +39,8 @@ pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
       on:click=move |_| {
           log!("hello!");
           match controls_state() {
-              ControlsState::Playing | ControlsState::Error => set_player_src("".to_string()),
-              ControlsState::Stopped | ControlsState::Loading => set_player_src(local_src.get()),
+              ControlsState::Playing | ControlsState::Error => player_src.set("".to_string()),
+              ControlsState::Stopped | ControlsState::Loading => player_src.set(local_src.get()),
           };
       }
 
