@@ -102,22 +102,23 @@ export default function UZG() {
                                         <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
                                         <p class="text-gray-800 text-l">{`${weekday} ${byDay.head.day} ${month}`}</p>
                                       </div>
-                                      <div class="mt-0.5 ml-4 flex flex-wrap gap-2">
+                                      <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
                                         {byDay.members.map((recording) => {
                                           return (
-                                            <>
+                                            <div class="flex-row text-center">
                                               <Controls
                                                 title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
                                                 label={`${recording.hour}:00`}
                                                 src={recording.src}
                                               />
                                               <a
+                                                class="text-sm text-gray-800 underline"
                                                 href={recording.src}
                                                 rel="external"
                                               >
-                                                Download
+                                                download
                                               </a>
-                                            </>
+                                            </div>
                                           );
                                         })}
                                       </div>
