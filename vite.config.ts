@@ -6,4 +6,11 @@ export default defineConfig({
   build: {
     reportCompressedSize: false,
   },
+  start: {
+    server: {
+      prerender: {
+        routes: ["/"],
+      },
+    },
+  },
 });
