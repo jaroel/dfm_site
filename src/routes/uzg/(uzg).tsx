@@ -1,19 +1,19 @@
-import { A, createAsync } from "@solidjs/router";
+import { A, cache, createAsync } from "@solidjs/router";
 import { For, Show } from "solid-js";
 
-import { getUzgListing } from "~/ftp";
+import { fetchUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
 
 import Controls from "~/components/Controls";
 import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 
-const getStudents = async () => {
+const getUzgListing = cache(async () => {
   "use server";
-  return await getUzgListing();
-};
+  return await fetchUzgListing();
+}, "students");
 
 export const route = {
-  load: () => getStudents(),
+  load: () => getUzgListing(),
 };
 
 const weekday_long_c = {
@@ -42,7 +42,7 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const entries = createAsync(getStudents);
+  const entries = createAsync(getUzgListing);
   return (
     <>
       <div class="flex justify-evenly">
