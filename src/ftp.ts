@@ -19,9 +19,9 @@ export async function getFtpListing() {
 }
 
 export async function getFtpStream(filename: string) {
-  const connection = await getConnection();
-  const listing = await connection.list();
+  const listing = (await getFtpListing()).map((item) => item.name);
   if (listing.includes(filename)) {
+    const connection = await getConnection();
     const stream = await connection.get(filename);
     stream.addListener("close", () => {
       connection.destroy();

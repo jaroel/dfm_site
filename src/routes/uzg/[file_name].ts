@@ -1,5 +1,4 @@
 import { type APIEvent } from "@solidjs/start/server";
-import { FTP } from "ftp-ts";
 import { getFtpStream } from "~/ftp";
 
 export async function GET({ params }: APIEvent) {

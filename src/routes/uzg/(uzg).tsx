@@ -5,6 +5,8 @@ import { fetchUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
 
 import Controls from "~/components/Controls";
+import Player from "~/components/Player";
+
 import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 
 const getUzgListing = cache(async () => {
@@ -45,6 +47,7 @@ export default function UZG() {
   const entries = createAsync(getUzgListing);
   return (
     <>
+      <Player></Player>
       <div class="flex justify-evenly">
         <div class="flex flex-auto items-center">
           <div class="mx-12 my-8">

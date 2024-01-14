@@ -1,6 +1,7 @@
 import { A } from "@solidjs/router";
 
 import Controls from "~/components/Controls";
+import Player from "~/components/Player";
 
 import logo from "~/assets/logodinxperfm.png?as=img&w=768";
 import programmering from "~/assets/programmering.jpg?as=img&w=1085";
@@ -23,6 +24,7 @@ import dedriesprong from "~/assets/sponsors/dedriesprong.jpg?as=img&w=250";
 export default function Home() {
   return (
     <>
+      <Player></Player>
       <div class="flex justify-evenly mt-10 mb-10">
         <div class="max-w-sm">
           <img

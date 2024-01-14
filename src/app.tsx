@@ -3,7 +3,6 @@ import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start";
 import { Suspense } from "solid-js";
 import bgImage from "~/assets/dfm_studio-blurred.jpg";
-import Player from "./components/Player";
 import "./app.css";
 
 export default function Root() {
@@ -12,8 +11,6 @@ export default function Root() {
       class="text-slate-50 h-screen bg-gray-600 bg-center bg-cover bg-fixed font-[Cabin]"
       style={{ "background-image": `url(${bgImage})` }}
     >
-      <Player></Player>
-
       <div class="h-screen overflow-auto bg-black/75">
         <div class="max-w-6xl mx-auto">
           <Router
