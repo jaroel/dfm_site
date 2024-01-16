@@ -14,14 +14,14 @@ npm init solid@latest my-app
 
 ## Developing
 
-Once you've created a project and installed dependencies with `bun install``, start a development server:
+Once you've created a project and installed dependencies with `pnpm install``, start a development server:
 
 ```bash
-bun run dev
+pnpm run dev
 ```
 
 ## Building
 
 ```bash
-bun run build
+pnpm run build
 ```
