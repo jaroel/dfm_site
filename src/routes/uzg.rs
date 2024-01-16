@@ -1,3 +1,4 @@
+use crate::components::{controls::Controls, player::Player};
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::*;
 use leptos_image::Image;
@@ -6,45 +7,41 @@ use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-use crate::components::{
-        controls::Controls,
-        player::Player,
-};
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 struct FtpFile {
-        datetime: String,
-        name: String,
-        size: u64,
-        key: i64,
+    datetime: String,
+    name: String,
+    size: u64,
+    key: i64,
 }
 
 impl From<FtpFile> for Recording {
-        fn from(ftp_file: FtpFile) -> Self {
-                let datetime = NaiveDateTime::from_str(ftp_file.datetime.as_str()).expect("Not a date?");
-                let date = datetime.date();
+    fn from(ftp_file: FtpFile) -> Self {
+        let datetime = NaiveDateTime::from_str(ftp_file.datetime.as_str())
+            .expect("Not a date?");
+        let date = datetime.date();
 
-                Recording {
-                        day: date.day(),
-                        month: date.month(),
-                        year: date.year(),
-                        weekday: date.weekday().number_from_monday(),
-                        hour: datetime.time().hour(),
-                        src: format!("http://127.0.0.1:8000/fetch/{}", ftp_file.name),
-                        key: ftp_file.key,
-                }
+        Recording {
+            day: date.day(),
+            month: date.month(),
+            year: date.year(),
+            weekday: date.weekday().number_from_monday(),
+            hour: datetime.time().hour(),
+            src: format!("http://127.0.0.1:8000/fetch/{}", ftp_file.name),
+            key: ftp_file.key,
         }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Recording {
-        day: u32,
-        month: u32,
-        year: i32,
-        weekday: u32,
-        hour: u32,
-        src: String,
-        key: i64,
+    day: u32,
+    month: u32,
+    year: i32,
+    weekday: u32,
+    hour: u32,
+    src: String,
+    key: i64,
 }
 
 impl Recording {
@@ -114,7 +111,8 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
 
 #[component]
 pub(crate) fn UitzendingGemist() -> impl IntoView {
-    let entries = create_resource(|| (), |_| async move { fetch_uzg_entries().await });
+    let entries =
+        create_resource(|| (), |_| async move { fetch_uzg_entries().await });
     view! {
         <Title text="Dinxper FM - het gemiste geluid van Dinxperlo"/>
         <div class="flex justify-evenly">

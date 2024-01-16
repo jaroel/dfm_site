@@ -1,15 +1,14 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-        use axum::routing::{get, post};
-    use axum::Router;
-    use dfm_site::app::*;
-    use dfm_site::fileserv::file_and_error_handler;
-    use leptos::logging::log;
-    use leptos::*;
+    use axum::{
+        routing::{get, post},
+        Router,
+    };
+    use dfm_site::{app::*, fileserv::file_and_error_handler};
+    use leptos::{logging::log, *};
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use leptos_image::cache_app_images;
-
     use std::net::SocketAddr;
     // use std::path::PathBuf;
     // use tower_http::compression::CompressionLayer;
@@ -42,7 +41,8 @@ async fn main() {
         // .layer(TraceLayer::new_for_http())
         .with_state(leptos_options);
 
-    let http_addr = std::env::var("HTTP_ADDR").unwrap_or("127.0.0.1:3002".to_string());
+    let http_addr =
+        std::env::var("HTTP_ADDR").unwrap_or("127.0.0.1:3002".to_string());
     let http_addr = http_addr.parse::<SocketAddr>().expect("HTTP_ADDR");
     log!("listening on http://{}", &http_addr);
     axum::Server::bind(&http_addr)
