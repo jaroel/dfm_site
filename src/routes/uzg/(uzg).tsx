@@ -76,8 +76,8 @@ export default function UZG() {
           </p>
         </div>
         <hr class="my-8" />
-        <Show when={entries()}>
-          <For each={groupBy(entries()!, (item) => item.year)}>
+        <Show when={entries()}>{(entries) =>
+          <For each={groupBy(entries(), (item) => item.year)}>
             {(byYear) => (
               <>
                 <h2 class="text-gray-800 text-xl">{byYear.key}</h2>
@@ -102,7 +102,7 @@ export default function UZG() {
                                   return (
                                     <li>
                                       <div class="flex flex-start items-center pt-3">
-                                        <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3"></div>
+                                        <div class="bg-gray-400 w-2 h-2 rounded-full -ml-1 mr-3" />
                                         <p class="text-gray-800 text-l">{`${weekday} ${byDay.head.day} ${month}`}</p>
                                       </div>
                                       <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
@@ -138,7 +138,7 @@ export default function UZG() {
                 </div>
               </>
             )}
-          </For>
+          </For>}
         </Show>
       </div>
     </>
