@@ -9,19 +9,16 @@
   "devDependencies": {
     "@fontsource/cabin": "^5.0.16",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "solid-start-node": "^0.3.10",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.11",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
     "vite-imagetools": "^6.2.9"
   },
   "dependencies": {
     "@solidjs/router": "^0.10.9",
-    "@solidjs/start": "^0.4.9",
+    "@solidjs/start": "^0.4.10",
     "ftp-ts": "^1.1.0",
     "solid-js": "^1.8.11",
-    "vinxi": "0.1.1"
+    "vinxi": "0.1.4"
   },
   "engines": {
     "node": "20"
