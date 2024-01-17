@@ -34,6 +34,12 @@ Additionally, Cargo.toml may need updating as new versions of the dependencies a
 ## Running your project
 
 ```bash
+brew install gdk-pixbuf pango librsvg cairo gtk+3
+```
+
+atk-sys
+
+```bash
 cargo leptos watch
 ```
 

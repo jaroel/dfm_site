@@ -8,7 +8,7 @@ async fn main() {
     use dfm_site::{app::*, fileserv::file_and_error_handler};
     use leptos::{logging::log, *};
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use leptos_image::cache_app_images;
+    use leptos_image_optimizer::cache_app_images;
     use std::net::SocketAddr;
     // use std::path::PathBuf;
     // use tower_http::compression::CompressionLayer;
@@ -35,7 +35,7 @@ async fn main() {
     let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
         .leptos_routes(&leptos_options, routes, || view! { <App/> })
-        .route("/cache/image", get(leptos_image::image_cache_handler))
+        .route("/cache/image", get(leptos_image_optimizer::image_cache_handler))
         .fallback(file_and_error_handler)
         // .layer(CompressionLayer::new())
         // .layer(TraceLayer::new_for_http())

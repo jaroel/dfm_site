@@ -1,6 +1,6 @@
 use crate::components::{controls::Controls, player::Player};
 use leptos::*;
-use leptos_image::Image;
+use leptos_image_optimizer::Image;
 use leptos_router::*;
 
 #[component]

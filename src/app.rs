@@ -3,7 +3,7 @@ use crate::{
     routes::{home::HomePage, uzg::UitzendingGemist},
 };
 use leptos::*;
-use leptos_image::provide_image_context;
+use leptos_image_optimizer::provide_image_context;
 use leptos_meta::*;
 use leptos_router::*;
 
