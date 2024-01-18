@@ -47,7 +47,7 @@ export default function Home() {
 					</li>
 					<li>
 						<A
-							class="inline-block mt-3 px-4 no-underline text-blue-700"
+							class="inline-block py-3 px-4 no-underline text-blue-700"
 							href="/uzg"
 						>
 							Uitzending gemist?
