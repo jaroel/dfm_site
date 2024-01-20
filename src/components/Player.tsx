@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, onCleanup } from "solid-js";
 
 export const [source, setSource] = createSignal("");
 export const [state, setState] = createSignal<
@@ -6,11 +6,13 @@ export const [state, setState] = createSignal<
 >("stopped");
 
 export default function Player() {
+	onCleanup(() => setSource(""));
 	return (
 		// biome-ignore lint/a11y/useMediaCaption: <explanation>
 		<audio
+			preload="none"
 			autoplay={!!source()}
-			src={source()}
+			src={source() || undefined}
 			onPlaying={() => setState("playing")}
 			onAbort={() => setState("stopped")}
 			onError={() => setState("error")}
