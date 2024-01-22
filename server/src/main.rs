@@ -7,7 +7,7 @@ use fileserv::file_and_error_handler;
 use leptos::*;
 use leptos_axum::{generate_route_list, LeptosRoutes};
 use leptos_image_optimizer::cache_app_images;
-use tower_http::services::ServeDir;
+
 pub mod fileserv;
 
 #[tokio::main]
@@ -32,7 +32,6 @@ async fn main() {
 
     // build our application with a route
     let app = Router::new()
-        .nest_service("/pkg/", ServeDir::new(format!("{}/pkg", root.clone())))
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
         .leptos_routes(&leptos_options, routes, App)
         .route(
