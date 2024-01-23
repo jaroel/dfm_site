@@ -15,7 +15,9 @@ export default function Player() {
 			src={source() || undefined}
 			onPlaying={() => setState("playing")}
 			onAbort={() => setState("stopped")}
-			onError={() => setState("error")}
+			onError={({ currentTarget }) => {
+				currentTarget.currentSrc ? setState("error") : setState("stopped");
+			}}
 			onLoadStart={() => setState("loading")}
 		/>
 	);
