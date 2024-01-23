@@ -2,7 +2,7 @@
 import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start";
 import { Suspense } from "solid-js";
-import bgImage from "~/assets/dfm_studio-blurred.jpg";
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800";
 import "./app.css";
 
 export default function Root() {
