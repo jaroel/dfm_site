@@ -39,9 +39,9 @@ pub(crate) fn HomePage() -> impl IntoView {
             <ul class="flex flex-wrap list-none my-1">
                 <li>
                     <Controls
-                        title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!".into()
-                        label="Luister live!".into()
-                        src="https://stream.dinxperfm.nl/1".into()
+                        title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!".to_string()
+                        label="Luister live!".to_string()
+                        src="https://stream.dinxperfm.nl/1".to_string()
                     />
                 </li>
                 <li>
@@ -77,8 +77,8 @@ pub(crate) fn HomePage() -> impl IntoView {
             <h2 class="text-2xl">"Dinxper FM wordt mede mogelijk gemaakt door"</h2>
             <div class="flex flex-row flex-wrap justify-evenly">
                 <Sponsor
-                    title="De markt van Dinxperlo".into()
-                    href="https://www.facebook.com/markt.dinxperlo/".into()
+                    title="De markt van Dinxperlo".to_string()
+                    href="https://www.facebook.com/markt.dinxperlo/".to_string()
                 >
                     <Image
                         src="/sponsors/makt.jpg"
@@ -89,8 +89,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Naaiatelier Monique Harmsen".into()
-                    href="http://www.naaiateliermoniqueharmsen.nl/".into()
+                    title="Naaiatelier Monique Harmsen".to_string()
+                    href="http://www.naaiateliermoniqueharmsen.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/logo13.jpg"
@@ -101,7 +101,7 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
 
                 </Sponsor>
-                <Sponsor title="Podesta event supplies".into() href="https://podesta.nl/".into()>
+                <Sponsor title="Podesta event supplies".to_string() href="https://podesta.nl/".to_string()>
                     <Image
                         src="/sponsors/logo15.jpg"
                         alt="Podesta event supplies"
@@ -112,9 +112,9 @@ pub(crate) fn HomePage() -> impl IntoView {
 
                 </Sponsor>
                 <Sponsor
-                    title="Adviesbureau Roenhorst Dinxperlo".into()
+                    title="Adviesbureau Roenhorst Dinxperlo".to_string()
                     href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
-                        .into()
+                        .to_string()
                 >
                     <Image
                         src="/sponsors/logo16.jpg"
@@ -127,8 +127,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                 </Sponsor>
                 <Sponsor
                     title="Landwinkel Smits Groenten & Fruit | Smits Groentekwekerij B.V. | Smits Groenten en Fruit"
-                        .into()
-                    href="http://www.groentekwekerij-smits.nl/".into()
+                        .to_string()
+                    href="http://www.groentekwekerij-smits.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/logo18.jpg"
@@ -139,8 +139,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo".into()
-                    href="http://www.tegrotenhuisdinxperlo.nl/".into()
+                    title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo".to_string()
+                    href="http://www.tegrotenhuisdinxperlo.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/logo19.jpg"
@@ -151,8 +151,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Tiggelovend-Kok B.V.".into()
-                    href="https://www.tiggelovend-kok.nl/".into()
+                    title="Tiggelovend-Kok B.V.".to_string()
+                    href="https://www.tiggelovend-kok.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/logo22.jpg"
@@ -164,8 +164,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                 </Sponsor>
                 <Sponsor
                     title="VVNF: Vereniging Viering Nationale Feest- en Gedenkdagen Dinxperlo"
-                        .into()
-                    href="http://www.vvnf.nl/".into()
+                        .to_string()
+                    href="http://www.vvnf.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/logo23.jpg"
@@ -176,8 +176,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Jumbo Dinxperlo Leussink".into()
-                    href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/".into()
+                    title="Jumbo Dinxperlo Leussink".to_string()
+                    href="https://www.jumbo.com/content/jumbo-dinxperlo-heelweg/".to_string()
                 >
                     <Image
                         src="/sponsors/jumbo.jpg"
@@ -188,8 +188,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Old Dutch Dinxperlo".into()
-                    href="https://www.olddutchdinxperlo.nl/".into()
+                    title="Old Dutch Dinxperlo".to_string()
+                    href="https://www.olddutchdinxperlo.nl/".to_string()
                 >
                     <Image
                         src="/sponsors/olddutch.jpg"
@@ -200,8 +200,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="MA-Shops".into()
-                    href="https://www.ma-shops.nl/?ref=dinxperfm".into()
+                    title="MA-Shops".to_string()
+                    href="https://www.ma-shops.nl/?ref=dinxperfm".to_string()
                 >
                     <Image
                         src="/sponsors/mashops.jpg"
@@ -212,9 +212,9 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Expert Dinxperlo".into()
+                    title="Expert Dinxperlo".to_string()
                     href="https://www.expert.nl/winkels/dinxperlo?gclid=EAIaIQobChMI1Jutxdrh4AIVzLztCh02DgFoEAAYASAAEgJwevD_BwE"
-                        .into()
+                        .to_string()
                 >
                     <Image
                         src="/sponsors/expert.jpg"
@@ -224,7 +224,7 @@ pub(crate) fn HomePage() -> impl IntoView {
                         quality=100
                     />
                 </Sponsor>
-                <Sponsor title="Alswin".into() href="https://www.dinxperlo.nl".into()>
+                <Sponsor title="Alswin".to_string() href="https://www.dinxperlo.nl".to_string()>
                     <Image
                         src="/sponsors/alswingr.jpg"
                         alt="Alswin"
