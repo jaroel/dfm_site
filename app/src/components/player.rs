@@ -22,15 +22,24 @@ pub fn Player() -> impl IntoView {
     // create_effect(move |_| {
     //   if player_src.get().is_none() {
     //     let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
-    //     set_player_state(PlayerState::Stopped)
+    //     player_state.set(PlayerState::Stopped)
     //   };
     // });
 
+    let src = move || {
+        let value = player_src.get();
+        if value.is_empty() {
+            None
+        } else {
+            Some(value)
+        }
+    };
+
     view! {
         <audio
-            autoplay
+            autoplay=move || src().is_some()
             _ref=audio_ref
-            src=player_src
+            src=src
             on:loadstart=move |_| {
                 let node = audio_ref.get().expect("audio element missing on page.");
                 player_state.set(PlayerState::Loading(node.src()))
