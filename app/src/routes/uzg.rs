@@ -104,9 +104,13 @@ impl Recording {
 
 #[server(FetchUZGEntries, "/api")]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-    let response = reqwest::get("http://127.0.0.1:8000/listing").await?;
-    let files: Vec<FtpFile> = serde_json::from_str(&response.text().await?)?;
-    Ok(files.into_iter().map(Recording::from).collect())
+    Ok(reqwest::get("http://127.0.0.1:8000/listing")
+        .await?
+        .json::<Vec<FtpFile>>()
+        .await?
+        .into_iter()
+        .map(Recording::from)
+        .collect())
 }
 
 #[component]
