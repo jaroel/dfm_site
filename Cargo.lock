@@ -1570,7 +1570,7 @@ dependencies = [
 [[package]]
 name = "leptos_image_optimizer"
 version = "0.1.0"
-source = "git+https://github.com/jaroel/leptos_image_optimizer.git?branch=main#039f36a5caf206e509e50cad6ae7880a7b7d41fa"
+source = "git+https://github.com/jaroel/leptos_image_optimizer.git?branch=main#6246678318b5eed0e8eecdaef70a61a70e792816"
 dependencies = [
  "axum",
  "base64",
