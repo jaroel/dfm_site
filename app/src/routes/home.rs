@@ -39,7 +39,8 @@ pub(crate) fn HomePage() -> impl IntoView {
             <ul class="flex flex-wrap list-none my-1">
                 <li>
                     <Controls
-                        title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!".to_string()
+                        title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
+                            .to_string()
                         label="Luister live!".to_string()
                         src="https://stream.dinxperfm.nl/1".to_string()
                     />
@@ -101,7 +102,10 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
 
                 </Sponsor>
-                <Sponsor title="Podesta event supplies".to_string() href="https://podesta.nl/".to_string()>
+                <Sponsor
+                    title="Podesta event supplies".to_string()
+                    href="https://podesta.nl/".to_string()
+                >
                     <Image
                         src="/sponsors/logo15.jpg"
                         alt="Podesta event supplies"
@@ -139,7 +143,8 @@ pub(crate) fn HomePage() -> impl IntoView {
                     />
                 </Sponsor>
                 <Sponsor
-                    title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo".to_string()
+                    title="Te Grotenhuis - Afvalstraat - Zand & grind verkoop - Dinxperlo"
+                        .to_string()
                     href="http://www.tegrotenhuisdinxperlo.nl/".to_string()
                 >
                     <Image

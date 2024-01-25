@@ -11,53 +11,53 @@ pub enum PlayerState {
 
 #[component]
 pub fn Player() -> impl IntoView {
-    let player_src = RwSignal::new("".to_string());
+    let player_src: RwSignal<Option<String>> = RwSignal::new(None);
     provide_context(player_src);
     let player_state = RwSignal::new(PlayerState::Stopped);
     provide_context(player_state);
 
     let audio_ref = create_node_ref::<Audio>();
 
-    // Maybe we do need this for iOS?
-    // create_effect(move |_| {
-    //   if player_src.get().is_none() {
-    //     let _ = audio_ref.get().is_some_and(|audio| audio.pause().is_ok());
-    //     player_state.set(PlayerState::Stopped)
-    //   };
-    // });
-
-    let src = move || {
-        let value = player_src.get();
-        if value.is_empty() {
-            None
-        } else {
-            Some(value)
-        }
-    };
+    // iOS
+    create_effect(move |_| {
+        audio_ref.get().is_some_and(|audio| audio.pause().is_ok())
+    });
 
     view! {
         <audio
-            autoplay=move || src().is_some()
             _ref=audio_ref
-            src=src
-            on:loadstart=move |_| {
-                let node = audio_ref.get().expect("audio element missing on page.");
-                player_state.set(PlayerState::Loading(node.src()))
+            preload="none"
+            autoplay=move || player_src.get().is_some()
+            src=move || player_src.get().unwrap_or("".to_string())
+            on:playing=move |_| {
+                let node = audio_ref.get().unwrap();
+                player_state.set(PlayerState::Playing(node.current_src()))
             }
 
-            on:play=move |_| {
-                let node = audio_ref.get().expect("audio element missing on page.");
-                player_state.set(PlayerState::Playing(node.src()))
-            }
+            on:abort=move |_| { player_state.set(PlayerState::Stopped) }
 
             on:error=move |_| {
-                let node = audio_ref.get().expect("audio element missing on page.");
-                assert!(!node.src().is_empty(), "Empty audio.src.");
-                player_state.set(PlayerState::Error(node.src()))
+                let node = audio_ref.get().unwrap();
+                if !node.current_src().is_empty() {
+                    player_state
+                        .set(
+                            match player_src.get() {
+                                Some(src) if node.current_src() == src => PlayerState::Error(src),
+                                Some(_) => PlayerState::Stopped,
+                                None => PlayerState::Error(node.current_src()),
+                            },
+                        )
+                }
+                player_state.set(PlayerState::Stopped)
             }
 
-            on:ended=move |_| { player_state.set(PlayerState::Stopped) }
-            on:pause=move |_| { player_state.set(PlayerState::Stopped) }
-        ></audio>
+            on:loadstart=move |_| {
+                let node = audio_ref.get().unwrap();
+                if !node.current_src().is_empty() {
+                    player_state.set(PlayerState::Loading(node.current_src()))
+                }
+            }
+        >
+        </audio>
     }
 }
