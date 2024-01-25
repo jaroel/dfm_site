@@ -1,6 +1,6 @@
 use app::App;
 use axum::{
-    body::{boxed, Body, BoxBody},
+    body::Body,
     extract::State,
     http::{Request, Response, StatusCode, Uri},
     response::{IntoResponse, Response as AxumResponse},
@@ -31,7 +31,7 @@ pub async fn file_and_error_handler(
 async fn get_static_file(
     uri: Uri,
     root: &str,
-) -> Result<Response<BoxBody>, (StatusCode, String)> {
+) -> Result<Response<Body>, (StatusCode, String)> {
     let req = Request::builder()
         .uri(uri.clone())
         .body(Body::empty())
@@ -39,7 +39,7 @@ async fn get_static_file(
     // `ServeDir` implements `tower::Service` so we can call it with `tower::ServiceExt::oneshot`
     // This path is relative to the cargo root
     match ServeDir::new(root).oneshot(req).await {
-        Ok(res) => Ok(res.map(boxed)),
+        Ok(res) => Ok(res.into_response()),
         Err(err) => Err((
             StatusCode::INTERNAL_SERVER_ERROR,
             format!("Something went wrong: {err}"),
