@@ -1,3 +1,4 @@
+edition = "2021"
 tab_spaces = 4
 imports_granularity = "Crate"
 max_width = 80
