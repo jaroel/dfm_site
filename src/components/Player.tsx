@@ -1,4 +1,4 @@
-import { createSignal, onCleanup } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 
 export const [source, setSource] = createSignal("");
 export const [state, setState] = createSignal<
@@ -7,14 +7,23 @@ export const [state, setState] = createSignal<
 
 export default function Player() {
 	onCleanup(() => setSource(""));
+	let audio: HTMLAudioElement | undefined;
+
+	createEffect(() => {
+		if (audio && !source()) {
+			audio.pause();
+		}
+	});
+
 	return (
 		// biome-ignore lint/a11y/useMediaCaption: <explanation>
 		<audio
+			ref={audio}
 			preload="none"
 			autoplay={!!source()}
 			src={source() || undefined}
 			onPlaying={() => setState("playing")}
-			onAbort={() => setState("stopped")}
+			onPause={() => setState("stopped")}
 			onError={({ currentTarget }) => {
 				currentTarget.currentSrc ? setState("error") : setState("stopped");
 			}}
