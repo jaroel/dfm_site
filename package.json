@@ -14,11 +14,11 @@
     "vite-imagetools": "^6.2.9"
   },
   "dependencies": {
-    "@solidjs/router": "^0.10.9",
-    "@solidjs/start": "^0.4.10",
+    "@solidjs/router": "^0.10.10",
+    "@solidjs/start": "^0.4.11",
     "ftp-ts": "^1.1.0",
     "solid-js": "^1.8.12",
-    "vinxi": "0.1.4"
+    "vinxi": "0.1.10"
   },
   "engines": {
     "node": "20"
