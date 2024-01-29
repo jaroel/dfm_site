@@ -17,7 +17,6 @@ fn Sponsor(href: String, title: String, children: Children) -> impl IntoView {
 #[component]
 pub(crate) fn HomePage() -> impl IntoView {
     view! {
-        <Player/>
         <div class="flex justify-evenly mt-10 mb-10">
             <div class="max-w-sm">
                 <div style="width: 384; height: 329">
@@ -38,12 +37,14 @@ pub(crate) fn HomePage() -> impl IntoView {
         <nav class="flex justify-evenly bg-gray-100">
             <ul class="flex flex-wrap list-none my-1">
                 <li>
-                    <Controls
-                        title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
-                            .to_string()
-                        label="Luister live!".to_string()
-                        src="https://stream.dinxperfm.nl/1".to_string()
-                    />
+                    <Player>
+                        <Controls
+                            title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
+                                .to_string()
+                            label="Luister live!".to_string()
+                            src="https://stream.dinxperfm.nl/1".to_string()
+                        />
+                    </Player>
                 </li>
                 <li>
                     <A class="inline-block mt-3 px-4 no-underline text-blue-700" href="/uzg">

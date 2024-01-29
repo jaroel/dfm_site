@@ -151,18 +151,22 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
             </div>
             <hr class="my-8"/>
             <Transition>
-                {move || match entries.get() {
-                    None => view! { "" }.into_view(),
-                    Some(Err(_)) => view! { <p>"Er zijn geen opnamen beschikbaar."</p> }.into_view(),
-                    Some(Ok(items)) => {
-                        if items.is_empty() {
+                <Player>
+                    {move || match entries.get() {
+                        None => view! { "" }.into_view(),
+                        Some(Err(_)) => {
                             view! { <p>"Er zijn geen opnamen beschikbaar."</p> }.into_view()
-                        } else {
-                            view! { <UzgListing items=items/> }.into_view()
                         }
-                    }
-                }}
+                        Some(Ok(items)) => {
+                            if items.is_empty() {
+                                view! { <p>"Er zijn geen opnamen beschikbaar."</p> }.into_view()
+                            } else {
+                                view! { <UzgListing items=items/> }.into_view()
+                            }
+                        }
+                    }}
 
+                </Player>
             </Transition>
         </div>
     }
@@ -171,7 +175,6 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
 #[component]
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
     view! {
-        <Player/>
         {items
             .group_by(|a, b| a.year == b.year)
             .map(|by_year| {

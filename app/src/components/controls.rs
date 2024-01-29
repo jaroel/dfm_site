@@ -10,7 +10,7 @@ enum ControlsState {
     Error,
 }
 
-#[component]
+#[island]
 pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
     let player_src = expect_context::<RwSignal<Option<String>>>();
     let player_state = expect_context::<RwSignal<PlayerState>>();

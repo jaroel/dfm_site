@@ -9,8 +9,8 @@ pub enum PlayerState {
     Error(String),
 }
 
-#[component]
-pub fn Player() -> impl IntoView {
+#[island]
+pub fn Player(children: Children) -> impl IntoView {
     let player_src: RwSignal<Option<String>> = RwSignal::new(None);
     provide_context(player_src);
     let player_state = RwSignal::new(PlayerState::Stopped);
@@ -59,5 +59,7 @@ pub fn Player() -> impl IntoView {
             }
         >
         </audio>
+
+        {children()}
     }
 }
