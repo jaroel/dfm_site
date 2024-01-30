@@ -1,8 +1,8 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 
-import bgImage from "~/assets/dfm_studio-blurred.jpg";
-import Player from "~/components/Player";
+// @ts-ignore
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=1024";
 
 export default component$(() => {
 	return (
