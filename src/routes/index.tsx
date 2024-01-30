@@ -4,36 +4,21 @@ import { Link, type DocumentHead } from "@builder.io/qwik-city";
 import Player from "~/components/Player";
 import Controls from "~/components/Controls";
 
-// @ts-ignore
-import Logo from "~/assets/logodinxperfm.png?jsx&w=768";
-// @ts-ignore
-import Programmering from "~/assets/programmering.jpg?jsx&w=1085";
+import Logo from "~/assets/logodinxperfm.png?w=768&jsx";
+import Programmering from "~/assets/programmering.jpg?w=1085&jsx";
 import programmering_source from "~/assets/programmering.jpg";
-
-// @ts-ignore
-import Logomakt from "~/assets/sponsors/makt.jpg?jsx&w=250";
-// @ts-ignore
-import Logo13 from "~/assets/sponsors/logo13.jpg?jsx&w=250";
-// @ts-ignore
-import Logo15 from "~/assets/sponsors/logo15.jpg?jsx&w=250";
-// @ts-ignore
-import Logo16 from "~/assets/sponsors/logo16.jpg?jsx&w=250";
-// @ts-ignore
-import Logo23 from "~/assets/sponsors/logo23.jpg?jsx&w=250";
-// @ts-ignore
-import Olddutch from "~/assets/sponsors/olddutch.jpg?jsx&w=250";
-// @ts-ignore
-import Mashops from "~/assets/sponsors/mashops.jpg?jsx&w=250";
-// @ts-ignore
-import Harmtakke from "~/assets/sponsors/logo-harmtakke.jpg?jsx&w=250";
-// @ts-ignore
-import Etenbijrico from "~/assets/sponsors/etenbijrico.jpg?jsx&w=250";
-// @ts-ignore
-import Blauwemeer from "~/assets/sponsors/logo-blauwe-meer.png?jsx&w=250";
-// @ts-ignore
-import Tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?jsx&w=250";
-// @ts-ignore
-import LogoDedriesprong from "~/assets/sponsors/dedriesprong.jpg?jsx&w=250";
+import Logomakt from "~/assets/sponsors/makt.jpg?w=250&jsx";
+import Logo13 from "~/assets/sponsors/logo13.jpg?w=250&jsx";
+import Logo15 from "~/assets/sponsors/logo15.jpg?w=250&jsx";
+import Logo16 from "~/assets/sponsors/logo16.jpg?w=250&jsx";
+import Logo23 from "~/assets/sponsors/logo23.jpg?w=250&jsx";
+import Olddutch from "~/assets/sponsors/olddutch.jpg?w=250&jsx";
+import Mashops from "~/assets/sponsors/mashops.jpg?w=250&jsx";
+import Harmtakke from "~/assets/sponsors/logo-harmtakke.jpg?w=250&jsx";
+import Etenbijrico from "~/assets/sponsors/etenbijrico.jpg?w=250&jsx";
+import Blauwemeer from "~/assets/sponsors/logo-blauwe-meer.png?w=250&jsx";
+import Tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=250&jsx";
+import LogoDedriesprong from "~/assets/sponsors/dedriesprong.jpg?w=250&jsx";
 
 export default component$(() => {
 	return (
@@ -57,8 +42,9 @@ export default component$(() => {
 					</li>
 					<li>
 						<Link
-							class="mt-3 inline-block px-4 text-blue-700 no-underline"
+							class="inline-block py-3 px-4 no-underline text-blue-700"
 							href="/uzg"
+							title="Uitzending gemist? Luister ze terug!"
 						>
 							Uitzending gemist?
 						</Link>

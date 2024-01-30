@@ -1,12 +1,13 @@
-import Controls from "~/components/Controls";
-// @ts-ignore
-import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 import { getUzgListing } from "~/uzg";
 import { groupBy } from "~/groupby";
 import { Fragment, component$ } from "@builder.io/qwik";
 import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
+
 import Player from "~/components/Player";
+import Controls from "~/components/Controls";
+
+import Logo from "~/assets/logodinxperfm.png?w=128&jsx";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
 	cacheControl({
@@ -54,13 +55,7 @@ export default component$(() => {
 				<div class="flex flex-auto items-center">
 					<div class="mx-12 my-8">
 						<Link href="/">
-							<img
-								src={logo.src}
-								alt="DinxperFM logo"
-								width={logo.w}
-								height={logo.h}
-								class="mx-auto"
-							/>
+							<Logo alt="DinxperFM logo" class="mx-auto" />
 						</Link>
 						<p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
 					</div>
@@ -118,7 +113,6 @@ export default component$(() => {
 																				<a
 																					class="text-sm text-gray-800 underline"
 																					href={recording.src}
-																					rel="external"
 																				>
 																					download
 																				</a>
