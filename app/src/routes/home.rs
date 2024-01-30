@@ -19,18 +19,16 @@ pub(crate) fn HomePage() -> impl IntoView {
     view! {
         <div class="flex justify-evenly mt-10 mb-10">
             <div class="max-w-sm">
-                <div style="width: 384; height: 329">
-                    <Image
-                        src="/logodinxperfm.png"
-                        alt="De markt van Dinxperlo"
-                        width=384
-                        height=329
-                        quality=100
-                        lazy=false
-                        priority=true
-                        class="w-[384] h-auto"
-                    />
-                </div>
+                <Image
+                    src="/logodinxperfm.png"
+                    alt="De markt van Dinxperlo"
+                    width=384
+                    height=329
+                    quality=100
+                    lazy=false
+                    priority=true
+                    class="w-[384] h-auto"
+                />
                 <p class="text-center mt-4">"Het swingende geluid van Dinxperlo!"</p>
             </div>
         </div>
@@ -54,17 +52,15 @@ pub(crate) fn HomePage() -> impl IntoView {
             </ul>
         </nav>
         <div class="mt-10 flex justify-center">
-            <div style="width: 1085; height: 656">
-                <Image
-                    src="/programmering/WeekprogrammaDFM-20230304.jpg"
-                    alt="Programmering vanaf 4 maart 2023 van Dinxperlo FM "
-                    width=1085
-                    height=656
-                    quality=100
-                    lazy=false
-                    priority=true
-                />
-            </div>
+            <Image
+                src="/programmering/WeekprogrammaDFM-20230304.jpg"
+                alt="Programmering vanaf 4 maart 2023 van Dinxperlo FM "
+                width=1085
+                height=656
+                quality=100
+                lazy=false
+                priority=true
+            />
         </div>
         <div class="text-center">
             <a
