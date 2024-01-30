@@ -1,9 +1,7 @@
-use crate::components::player::PlayerState;
+use crate::components::player::{PlayerCtx, PlayerState};
 use leptos::*;
 
-#[derive(PartialEq)]
 enum ControlsState {
-    // The state of the specific controls component
     Stopped,
     Loading,
     Playing,
@@ -12,42 +10,36 @@ enum ControlsState {
 
 #[island]
 pub fn Controls(title: String, label: String, src: String) -> impl IntoView {
-    let player_src = expect_context::<RwSignal<Option<String>>>();
-    let player_state = expect_context::<RwSignal<PlayerState>>();
-    let local_src = RwSignal::new(src);
+    let player_ctx = expect_context::<PlayerCtx>();
+    let controls_src = RwSignal::new(src);
     let controls_state = move || {
-        let player_state_ = player_state.get();
-        match &player_state_ {
-            PlayerState::Stopped => ControlsState::Stopped,
-            PlayerState::Loading(url)
-            | PlayerState::Playing(url)
-            | PlayerState::Error(url) => {
-                if *url != local_src() {
-                    return ControlsState::Stopped;
-                }
-                match &player_state_ {
-                    PlayerState::Loading(_) => ControlsState::Loading,
-                    PlayerState::Playing(_) => ControlsState::Playing,
-                    PlayerState::Error(_) => ControlsState::Error,
-                    PlayerState::Stopped => ControlsState::Stopped,
-                }
+        if controls_src() == player_ctx.src.get() {
+            match player_ctx.state.get() {
+                PlayerState::Loading => ControlsState::Loading,
+                PlayerState::Playing => ControlsState::Playing,
+                PlayerState::Error => ControlsState::Error,
+                PlayerState::Stopped => ControlsState::Stopped,
             }
+        } else {
+            ControlsState::Stopped
         }
-    };
-
-    let set_player_src = move |_| {
-        player_src.set(match controls_state() {
-            ControlsState::Playing
-            | ControlsState::Loading
-            | ControlsState::Error => None,
-            ControlsState::Stopped => Some(local_src.get()),
-        });
     };
 
     view! {
         <button
             title=title
-            on:click=set_player_src
+            on:click=move |_| {
+                player_ctx
+                    .src
+                    .set(
+                        match controls_state() {
+                            ControlsState::Playing
+                            | ControlsState::Loading
+                            | ControlsState::Error => "".to_string(),
+                            ControlsState::Stopped => controls_src.get(),
+                        },
+                    );
+            }
 
             class=move || {
                 let specifics = match controls_state() {

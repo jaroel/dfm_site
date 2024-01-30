@@ -7,11 +7,10 @@ use leptos_router::*;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Deserialize, Clone)]
 struct FtpFile {
     datetime: String,
     name: String,
-    size: u64,
     key: i64,
 }
 
@@ -33,7 +32,7 @@ impl From<FtpFile> for Recording {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Recording {
     day: u32,
     month: u32,

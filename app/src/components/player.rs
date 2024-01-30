@@ -1,64 +1,43 @@
 use leptos::{html::Audio, *};
 
-#[derive(Clone, PartialEq, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone)]
 pub enum PlayerState {
-    // The state of the audio element.
     Stopped,
-    Loading(String),
-    Playing(String),
-    Error(String),
+    Loading,
+    Playing,
+    Error,
+}
+
+#[derive(Clone)]
+pub struct PlayerCtx {
+    pub src: RwSignal<String>,
+    pub state: RwSignal<PlayerState>,
 }
 
 #[island]
 pub fn Player(children: Children) -> impl IntoView {
-    let player_src: RwSignal<Option<String>> = RwSignal::new(None);
-    provide_context(player_src);
-    let player_state = RwSignal::new(PlayerState::Stopped);
-    provide_context(player_state);
-
-    let audio_ref = create_node_ref::<Audio>();
-
-    // iOS
-    create_effect(move |_| {
-        audio_ref.get().is_some_and(|audio| audio.pause().is_ok())
+    provide_context(PlayerCtx {
+        src: RwSignal::new("".to_string()),
+        state: RwSignal::new(PlayerState::Stopped),
     });
-
+    let player_ctx = expect_context::<PlayerCtx>();
+    let audio_ref = create_node_ref::<Audio>();
     view! {
         <audio
             _ref=audio_ref
             preload="none"
-            autoplay=move || player_src.get().is_some()
-            src=move || player_src.get().unwrap_or("".to_string())
-            on:playing=move |_| {
-                let node = audio_ref.get().unwrap();
-                player_state.set(PlayerState::Playing(node.current_src()))
-            }
-
-            on:abort=move |_| { player_state.set(PlayerState::Stopped) }
-
+            autoplay=move || !player_ctx.src.get().is_empty()
+            src=player_ctx.src
+            on:playing=move |_| player_ctx.state.set(PlayerState::Playing)
+            on:abort=move |_| player_ctx.state.set(PlayerState::Stopped)
             on:error=move |_| {
-                let node = audio_ref.get().unwrap();
-                if !node.current_src().is_empty() {
-                    player_state
-                        .set(
-                            match player_src.get() {
-                                Some(src) if node.current_src() == src => PlayerState::Error(src),
-                                Some(_) => PlayerState::Stopped,
-                                None => PlayerState::Error(node.current_src()),
-                            },
-                        )
+                if !audio_ref.get().unwrap().current_src().is_empty() {
+                    player_ctx.state.set(PlayerState::Error)
                 }
-                player_state.set(PlayerState::Stopped)
             }
 
-            on:loadstart=move |_| {
-                let node = audio_ref.get().unwrap();
-                if !node.current_src().is_empty() {
-                    player_state.set(PlayerState::Loading(node.current_src()))
-                }
-            }
-        >
-        </audio>
+            on:loadstart=move |_| player_ctx.state.set(PlayerState::Loading)
+        ></audio>
 
         {children()}
     }
