@@ -30,7 +30,7 @@ export default component$(() => {
         </div>
       </div>
       <nav class="flex justify-evenly bg-gray-100">
-        <ul class="my-1 flex list-none flex-wrap">
+        <ul class="flex-start my-1 flex list-none items-center">
           <li>
             <Player>
               <Controls

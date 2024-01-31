@@ -82,13 +82,13 @@ export default component$(() => {
           {groupBy(entries.value, (item) => item.year).map((years) => (
             <Fragment key={`key-byYear-${years.head.timestamp}`}>
               <h2 class="text-xl text-gray-800">{years.key}</h2>
-              <div class="mb-6 ml-4 mt-0.5">
+              <div class="mb-6 ml-4">
                 {groupBy(years.members, (item) => item.month).map((months) => {
                   const month = month_long_c[months.head.month];
                   return (
                     <Fragment key={`key-byMonth-${months.head.timestamp}`}>
-                      <h3 class="text-lg text-gray-800">{month}</h3>
-                      <div class="mb-6 ml-4 mt-0.5">
+                      <h3 class="mt-2 text-lg text-gray-800">{month}</h3>
+                      <div class="mb-6 ml-4">
                         <ol>
                           {groupBy(months.members, (item) => item.day).map(
                             (days) => {
@@ -96,10 +96,10 @@ export default component$(() => {
                               return (
                                 <li key={`key-byDay-${days.head.timestamp}`}>
                                   <div class="flex-start flex items-center pt-3">
-                                    <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400" />
-                                    <p class="text-l text-gray-800">{`${weekday} ${days.head.day} ${month}`}</p>
+                                    <div class="mr-3 h-2 w-2 rounded-full bg-gray-400" />
+                                    <p class="text-l text-gray-800">{`${weekday} ${days.head.day} ${month.toLowerCase()}`}</p>
                                   </div>
-                                  <div class="ml-4 mt-0.5 flex flex-wrap gap-2">
+                                  <div class="ml-4 mt-2 flex flex-wrap gap-2">
                                     {days.members.map((recording) => (
                                       <div
                                         class="flex-row text-center"
