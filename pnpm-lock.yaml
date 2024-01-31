@@ -22,6 +22,9 @@ devDependencies:
   '@builder.io/qwik-city':
     specifier: ^1.4.3
     version: 1.4.3(@types/node@20.11.12)
+  '@fontsource/cabin':
+    specifier: ^5.0.16
+    version: 5.0.16
   '@types/eslint':
     specifier: ^8.56.2
     version: 8.56.2
@@ -380,6 +383,10 @@ packages:
   /@fastify/busboy@2.1.0:
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
     engines: {node: '>=14'}
+
+  /@fontsource/cabin@5.0.16:
+    resolution: {integrity: sha512-oBuQRDMo/MPy5MDCxcNqTvG4cOZ8+/y6VZpLY0EaNDslHxIt3qsdF8aWGDL+iHBb4WeKU2izeUVPlWdS3y0IAg==}
+    dev: true
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
