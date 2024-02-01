@@ -20,7 +20,7 @@ export default component$(
           }[control_state.value];
         }}
         title={props.title}
-        class={`flex items-center rounded-full border px-4 py-2 pl-6 ${
+        class={`flex items-center rounded-full border p-2 ${
           {
             error: "border-red-800 bg-red-100 text-red-800",
             playing: "border-green-800 bg-green-100 text-green-800",
@@ -30,7 +30,7 @@ export default component$(
           }[control_state.value]
         }`}
       >
-        <span class="mr-2">{props.label}</span>
+        <span class="mx-2">{props.label}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -43,7 +43,7 @@ export default component$(
               loading: "hourglass-split",
               stopped: "play",
             }[control_state.value]
-          } inline`}
+          } mr-1 inline`}
           viewBox="0 0 16 16"
         >
           <title>
