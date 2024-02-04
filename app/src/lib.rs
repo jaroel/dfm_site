@@ -1,4 +1,3 @@
-#![feature(slice_group_by)]
 use crate::{
     error_template::{AppError, ErrorTemplate},
     routes::{home::HomePage, uzg::UitzendingGemist},

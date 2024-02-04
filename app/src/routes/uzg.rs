@@ -175,13 +175,13 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
 fn UzgListing(items: Vec<Recording>) -> impl IntoView {
     view! {
         {items
-            .group_by(|a, b| a.year == b.year)
+            .chunk_by(|a, b| a.year == b.year)
             .map(|by_year| {
                 view! {
                     <h2 class="text-gray-800 text-xl">{by_year[0].year}</h2>
                     <div class="mt-0.5 ml-4 mb-6">
                         {by_year
-                            .group_by(|a, b| a.month == b.month)
+                            .chunk_by(|a, b| a.month == b.month)
                             .map(|by_month| {
                                 view! {
                                     <h3 class="text-gray-800 text-lg">
@@ -189,7 +189,7 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                                     </h3>
                                     <ol class="mt-0.5 ml-4 mb-6">
                                         {by_month
-                                            .group_by(|a, b| a.day == b.day)
+                                            .chunk_by(|a, b| a.day == b.day)
                                             .map(|by_day| {
                                                 view! {
                                                     <li>
