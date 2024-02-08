@@ -4,22 +4,22 @@ import Controls from "~/components/Controls";
 import Player from "~/components/Player";
 
 import logo from "~/assets/logodinxperfm.png?w=768&as=img";
-import programmering from "~/assets/programmering.jpg?w=1085&as=img";
 import programmering_source from "~/assets/programmering.jpg";
+import programmering from "~/assets/programmering.jpg?w=1085&as=img";
 
 // sponsors
-import logomakt from "~/assets/sponsors/makt.jpg?w=250&as=img";
+import dedriesprong from "~/assets/sponsors/dedriesprong.jpg?w=250&as=img";
+import etenbijrico from "~/assets/sponsors/etenbijrico.jpg?w=250&as=img";
+import blauwemeer from "~/assets/sponsors/logo-blauwe-meer.png?w=250&as=img";
+import harmtakke from "~/assets/sponsors/logo-harmtakke.jpg?w=250&as=img";
 import logo13 from "~/assets/sponsors/logo13.jpg?w=250&as=img";
 import logo15 from "~/assets/sponsors/logo15.jpg?w=250&as=img";
 import logo16 from "~/assets/sponsors/logo16.jpg?w=250&as=img";
 import logo23 from "~/assets/sponsors/logo23.jpg?w=250&as=img";
-import olddutch from "~/assets/sponsors/olddutch.jpg?w=250&as=img";
+import logomakt from "~/assets/sponsors/makt.jpg?w=250&as=img";
 import mashops from "~/assets/sponsors/mashops.jpg?w=250&as=img";
-import harmtakke from "~/assets/sponsors/logo-harmtakke.jpg?w=250&as=img";
-import etenbijrico from "~/assets/sponsors/etenbijrico.jpg?w=250&as=img";
-import blauwemeer from "~/assets/sponsors/logo-blauwe-meer.png?w=250&as=img";
+import olddutch from "~/assets/sponsors/olddutch.jpg?w=250&as=img";
 import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=250&as=img";
-import dedriesprong from "~/assets/sponsors/dedriesprong.jpg?w=250&as=img";
 
 export default function Home() {
   return (

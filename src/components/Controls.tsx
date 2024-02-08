@@ -1,8 +1,8 @@
 import { Dynamic } from "solid-js/web";
 import {
-  state as player_state,
-  source as player_source,
   setSource,
+  source as player_source,
+  state as player_state,
 } from "./Player";
 
 export default function Controls(props: {
