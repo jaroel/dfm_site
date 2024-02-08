@@ -9,7 +9,7 @@
   "devDependencies": {
     "@fontsource/cabin": "^5.0.16",
     "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.33",
+    "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "vite-imagetools": "^6.2.9"
   },
@@ -17,7 +17,7 @@
     "@solidjs/router": "^0.10.10",
     "@solidjs/start": "^0.4.11",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^1.8.12",
+    "solid-js": "^1.8.14",
     "vinxi": "0.1.10"
   },
   "engines": {
