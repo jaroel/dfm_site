@@ -17,7 +17,7 @@
     "@solidjs/router": "^0.10.10",
     "@solidjs/start": "^0.4.11",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^1.8.14",
+    "solid-js": "^1.8.15",
     "vinxi": "0.1.10"
   },
   "engines": {
