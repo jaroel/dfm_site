@@ -1,12 +1,13 @@
 import { A, cache, createAsync } from "@solidjs/router";
 import { For, Show } from "solid-js";
 
-import { fetchUzgListing, type Recording } from "~/uzg";
 import { groupBy } from "~/groupby";
+import { type Recording, fetchUzgListing } from "~/uzg";
 
 import Controls from "~/components/Controls";
 import Player from "~/components/Player";
 
+import { Meta, Title } from "@solidjs/meta";
 import logo from "~/assets/logodinxperfm.png?as=img&w=128";
 
 const getUzgListing = cache(async () => {
@@ -47,6 +48,16 @@ export default function UZG() {
   const recordings = createAsync(getUzgListing);
   return (
     <>
+      <Title>Dinxper FM - Uitzending gemisto</Title>
+      <Meta name="description" content="Luister uitzendingen terug" />
+      <Meta
+        property="og:title"
+        content="Dinxper FM - Uitzending gemisto"
+      />
+      <Meta
+        property="og:description"
+        content="Luister uitzendingen terug"
+      />
       <Player />
       <div class="flex justify-evenly">
         <div class="flex flex-auto items-center">

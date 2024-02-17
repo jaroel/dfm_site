@@ -14,6 +14,7 @@
     "vite-imagetools": "^6.2.9"
   },
   "dependencies": {
+    "@solidjs/meta": "^0.29.3",
     "@solidjs/router": "^0.10.10",
     "@solidjs/start": "^0.4.11",
     "ftp-ts": "^1.1.0",

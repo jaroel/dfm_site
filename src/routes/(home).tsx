@@ -1,3 +1,4 @@
+import { Meta, Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
 
 import Controls from "~/components/Controls";
