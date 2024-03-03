@@ -4,7 +4,7 @@ import { Meta, MetaProvider, Title } from "@solidjs/meta";
 import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start";
 import { Suspense } from "solid-js";
-import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800";
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&as=img";
 import "./app.css";
 
 export default function Root() {
@@ -22,7 +22,7 @@ export default function Root() {
       />
     <div
       class="h-screen bg-gray-600 bg-cover bg-fixed bg-center font-[Cabin] text-slate-50"
-      style={{ "background-image": `url(${bgImage})` }}
+      style={{ "background-image": `url(${bgImage.src})` }}
     >
       <div class="h-screen overflow-auto bg-black/75">
         <div class="mx-auto max-w-6xl">
