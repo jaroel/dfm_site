@@ -7,7 +7,7 @@
     "start": "vinxi start"
   },
   "devDependencies": {
-    "@fontsource/cabin": "^5.0.16",
+    "@fontsource/cabin": "^5.0.17",
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
