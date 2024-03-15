@@ -57,14 +57,12 @@ export default function Home() {
         </ul>
       </nav>
       <div class="mt-10 flex justify-center">
-        <div style="width: 1085; height: 656">
           <img
             src={programmering.src}
-            alt="Programmering vanaf 4 maart 2023 van Dinxperlo FM "
+            alt="Programmering van Dinxperlo FM"
             width={programmering.w}
             height={programmering.h}
           />
-        </div>
       </div>
       <div class="text-center">
         <a target="blank" class="text-blue-400" href={programmering_source}>
