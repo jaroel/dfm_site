@@ -2,7 +2,7 @@ import { Fragment, component$ } from "@builder.io/qwik";
 import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { groupBy } from "~/groupby";
-import { getUzgListing } from "~/uzg";
+import { fetchUzgListing } from "~/uzg";
 
 import Controls from "~/components/Controls";
 import Player from "~/components/Player";
@@ -19,7 +19,7 @@ export const useRecordings = routeLoader$(async ({ cacheControl }) => {
 	cacheControl({
 		maxAge: 3600,
 	});
-	return await getUzgListing();
+	return await fetchUzgListing();
 });
 
 const weekday_long_c = {
@@ -83,32 +83,32 @@ export default component$(() => {
 
 				<Player>
 					{groupBy(entries.value, (item) => item.year).map((years) => (
-						<Fragment key={`key-byYear-${years.head.timestamp}`}>
+						<Fragment key={`key-byYear-${years.head.key}`}>
 							<h2 class="text-xl text-gray-800">{years.key}</h2>
-							<div class="mb-6 ml-4">
+							<div class="mb-6 ml-4 mt-0.5">
 								{groupBy(years.members, (item) => item.month).map((months) => {
 									const month = month_long_c[months.head.month];
 									return (
-										<Fragment key={`key-byMonth-${months.head.timestamp}`}>
-											<h3 class="mt-2 text-lg text-gray-800">{month}</h3>
-											<div class="mb-6 ml-4">
+										<Fragment key={`key-byMonth-${months.head.key}`}>
+											<h3 class="text-lg text-gray-800">{month}</h3>
+											<div class="mb-6 ml-4 mt-0.5">
 												<ol>
 													{groupBy(months.members, (item) => item.day).map(
 														(days) => {
 															const weekday = weekday_long_c[days.head.weekday];
 															return (
-																<li key={`key-byDay-${days.head.timestamp}`}>
+																<li key={`key-byDay-${days.head.key}`}>
 																	<div class="flex-start flex items-center pt-3">
 																		<div class="mr-3 h-2 w-2 rounded-full bg-gray-400" />
 																		<p class="text-l text-gray-800">{`${weekday} ${
 																			days.head.day
 																		} ${month.toLowerCase()}`}</p>
 																	</div>
-																	<div class="ml-4 mt-2 flex flex-wrap gap-2">
+																	<div class="ml-4 mt-0.5 flex flex-wrap gap-4">
 																		{days.members.map((recording) => (
 																			<div
 																				class="flex-row text-center"
-																				key={`key-recording-${recording.timestamp}`}
+																				key={`key-recording-${recording.key}`}
 																			>
 																				<Controls
 																					title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}

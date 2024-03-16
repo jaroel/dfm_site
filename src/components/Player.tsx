@@ -23,9 +23,15 @@ export default component$(() => {
 				preload="none"
 				autoplay={!!player_ctx.src}
 				src={player_ctx.src || undefined}
-				onPlaying$={() => (player_ctx.state = "playing")}
-				onError$={() => (player_ctx.state = "error")}
-				onLoadStart$={() => (player_ctx.state = "loading")}
+				onPlaying$={() => {
+					player_ctx.state = "playing";
+				}}
+				onError$={() => {
+					player_ctx.state = "error";
+				}}
+				onLoadStart$={() => {
+					player_ctx.state = "loading";
+				}}
 			/>
 			<Slot />
 		</Fragment>
