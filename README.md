@@ -73,12 +73,3 @@ pnpm serve
 ```
 
 Then visit [http://localhost:8080/](http://localhost:8080/)
-
-
-## Stream url
-
-The url for the Control on the homepage can be overridden with the PUBLIC_STREAM_URL environment variable.
-
-```
-PUBLIC_STREAM_URL=https://stream-dinxpermfm-nl.toffe.site/1 pnpm run dev
-```
