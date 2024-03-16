@@ -20,6 +20,9 @@ import Mashops from "~/assets/sponsors/mashops.jpg?w=250&jsx";
 import Olddutch from "~/assets/sponsors/olddutch.jpg?w=250&jsx";
 import Tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=250&jsx";
 
+const STREAM_URL =
+	process.env.PUBLIC_STREAM_URL || "https://stream.dinxperfm.nl/1";
+
 export default component$(() => {
 	return (
 		<>
@@ -36,7 +39,7 @@ export default component$(() => {
 							<Controls
 								title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
 								label="Luister live!"
-								src="https://stream.dinxperfm.nl/1"
+								src={STREAM_URL}
 							/>
 						</Player>
 					</li>
