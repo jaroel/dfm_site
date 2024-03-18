@@ -114,7 +114,7 @@ export default component$(() => {
 					<Sponsor href="https://hetblauwemeer.nl" title="Het Blauwe Meer">
 						<Blauwemeer alt="Logo van Het Blauwe Meer" />
 					</Sponsor>
-					<Sponsor href="https://tibatek.de" title="Tibatek">
+					<Sponsor href="https://tibatek.nl" title="Tibatek">
 						<Tibatek_logo_web
 							style="background-color: white; padding: 4px"
 							alt="Logo van Tibatek"
