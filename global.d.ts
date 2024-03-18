@@ -1,4 +1,4 @@
-declare module "*.jpg?w=1024" {
-  const value: string;
-  export = value;
+declare module "*w=786" {
+	const value: string;
+	export = value;
 }

@@ -2,7 +2,7 @@ import { Slot, component$ } from "@builder.io/qwik";
 import { Link } from "@builder.io/qwik-city";
 
 import "@fontsource/cabin";
-import bgImage from "~/assets/dfm_studio-blurred.jpg?w=1024";
+import bgImage from "~/assets/dfm_studio-blurred.jpg?format=png&w=786";
 
 export default component$(() => {
 	return (
