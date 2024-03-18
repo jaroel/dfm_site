@@ -1,7 +1,7 @@
 use crate::components::{controls::Controls, player::Player};
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::*;
-use leptos_image_optimizer::Image;
+use leptos_image::Image;
 use leptos_meta::Title;
 use leptos_router::*;
 use serde::{Deserialize, Serialize};

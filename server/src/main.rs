@@ -1,14 +1,20 @@
 use app::*;
-use axum::{routing::get, Router};
+use axum::{routing::post, Router};
 use fileserv::file_and_error_handler;
 use leptos::*;
-use leptos_axum::{generate_route_list, LeptosRoutes};
-use leptos_image_optimizer::cache_app_images;
+use leptos_axum::{generate_route_list, handle_server_fns, LeptosRoutes};
+use leptos_image::{ImageCacheRoute, ImageOptimizer};
 
 pub mod fileserv;
 
 #[tokio::main]
 async fn main() {
+    // Composite App State with the optimizer and leptos options.
+    #[derive(Clone, axum::extract::FromRef)]
+    struct AppState {
+        leptos_options: leptos::LeptosOptions,
+        optimizer: leptos_image::ImageOptimizer,
+    }
     simple_logger::init_with_level(log::Level::Info)
         .expect("couldn't initialize logging");
 
@@ -20,22 +26,31 @@ async fn main() {
     let conf = get_configuration(None).await.unwrap();
     let leptos_options = conf.leptos_options;
     let addr = leptos_options.site_addr;
-    let root = &leptos_options.site_root;
     let routes = generate_route_list(App);
 
-    cache_app_images(root.clone(), || view! { <App/> }, 2, || (), || ())
-        .await
-        .expect("Failed to pre-render images");
+    let conf = get_configuration(None).await.unwrap();
+    let leptos_options = conf.leptos_options;
+    let root = leptos_options.site_root.clone();
 
-    // build our application with a route
+    let state = AppState {
+        leptos_options,
+        optimizer: ImageOptimizer::new("/cache/image", root, 1),
+    };
+
+    // Build Router.
     let app = Router::new()
-        .leptos_routes(&leptos_options, routes, App)
-        .route(
-            "/cache/image",
-            get(leptos_image_optimizer::image_cache_handler),
+        .route("/api/*fn_name", post(handle_server_fns))
+        // Add a handler for serving the cached images.
+        .image_cache_route(&state)
+        // Provide the optimizer to leptos context.
+        .leptos_routes_with_context(
+            &state,
+            routes,
+            state.optimizer.provide_context(),
+            App,
         )
         .fallback(file_and_error_handler)
-        .with_state(leptos_options);
+        .with_state(state);
 
     println!("listening on {}", addr);
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
