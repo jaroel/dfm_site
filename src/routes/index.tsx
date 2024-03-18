@@ -1,5 +1,9 @@
 import { Slot, component$ } from "@builder.io/qwik";
-import { type DocumentHead, Link } from "@builder.io/qwik-city";
+import {
+	type DocumentHead,
+	Link,
+	type RequestHandler,
+} from "@builder.io/qwik-city";
 
 import Controls from "~/components/Controls";
 import Player from "~/components/Player";
@@ -19,6 +23,10 @@ import Logomakt from "~/assets/sponsors/makt.jpg?w=250&jsx";
 import Mashops from "~/assets/sponsors/mashops.jpg?w=250&jsx";
 import Olddutch from "~/assets/sponsors/olddutch.jpg?w=250&jsx";
 import Tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=250&jsx";
+
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+	cacheControl(3600);
+};
 
 export default component$(() => {
 	return (
@@ -43,7 +51,7 @@ export default component$(() => {
 					<li>
 						<Link
 							class="inline-block px-4 py-3 text-blue-700 no-underline"
-							href="/uzg"
+							href="/uzg/"
 							title="Uitzending gemist? Luister ze terug!"
 						>
 							Uitzending gemist?

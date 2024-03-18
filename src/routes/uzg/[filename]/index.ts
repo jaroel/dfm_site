@@ -7,6 +7,7 @@ export const onGet: RequestHandler = async (requestEvent) => {
 	if (!requestEvent.params.filename) {
 		return;
 	}
+	requestEvent.cacheControl("immutable");
 	const connection = await FTP.connect({
 		host: "dinxperfm.freeddns.org",
 		user: "UZG",

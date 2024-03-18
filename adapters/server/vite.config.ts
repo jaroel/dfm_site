@@ -13,11 +13,6 @@ export default extendConfig(baseConfig, () => {
 		plugins: [
 			nodeServerAdapter({
 				name: "express",
-				ssg: {
-					include: ["*"],
-					exclude: ["/uzg"],
-					origin: "https://dfmtest.toffe.site/",
-				},
 			}),
 		],
 	};
