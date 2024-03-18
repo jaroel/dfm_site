@@ -9,9 +9,6 @@ export default defineConfig({
     },
   },
     server: {
-      prerender: {
-        routes: ["/"],
-      },
       routeRules: {
         "/_build/assets/**": {
           headers: { "cache-control": "max-age=31536000, immutable" },
@@ -23,7 +20,7 @@ export default defineConfig({
           headers: { "cache-control": "max-age=31536000, immutable" },
         },
         "/": {
-          headers: { "cache-control": "private,max-age=3600" },
+          headers: { "cache-control": "max-age=3600, must-revalidate" },
         },
         "/uzg/": {
           headers: { "cache-control": "max-age=3600" },
