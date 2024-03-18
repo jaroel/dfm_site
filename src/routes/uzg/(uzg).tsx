@@ -8,7 +8,7 @@ import Controls from "~/components/Controls";
 import Player from "~/components/Player";
 
 import { Meta, Title } from "@solidjs/meta";
-import logo from "~/assets/logodinxperfm.png?as=img&w=128";
+import logo from "~/assets/logodinxperfm.png?w=128&as=img";
 
 const getUzgListing = cache(async () => {
   "use server";
@@ -45,14 +45,14 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(getUzgListing);
+  const recordings = createAsync(() => getUzgListing());
   return (
     <>
-      <Title>Dinxper FM - Uitzending gemisto</Title>
+      <Title>Dinxper FM - Uitzending gemist</Title>
       <Meta name="description" content="Luister uitzendingen terug" />
       <Meta
         property="og:title"
-        content="Dinxper FM - Uitzending gemisto"
+        content="Dinxper FM - Uitzending gemist"
       />
       <Meta
         property="og:description"

@@ -1,4 +1,4 @@
-import { type APIEvent } from "@solidjs/start/server";
+import type { APIEvent } from "@solidjs/start/server";
 import { getFtpStream } from "~/ftp";
 
 export async function GET({ params }: APIEvent) {
@@ -6,7 +6,7 @@ export async function GET({ params }: APIEvent) {
   const stream = await getFtpStream(filename);
   if (stream) {
     return new Response(stream, {
-      headers: { "content-type": "audio/mpeg" },
+      headers: { "content-type": "audio/mpeg", "cache-control": "immutable" },
     });
   }
 
