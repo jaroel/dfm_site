@@ -1,3 +1,4 @@
+"use server";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 

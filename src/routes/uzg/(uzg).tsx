@@ -11,7 +11,6 @@ import { Meta, Title } from "@solidjs/meta";
 import logo from "~/assets/logodinxperfm.png?w=128&as=img";
 
 const getUzgListing = cache(async () => {
-  "use server";
   return await fetchUzgListing();
 }, "students");
 
