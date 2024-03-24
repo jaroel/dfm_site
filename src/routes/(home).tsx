@@ -1,4 +1,3 @@
-import { Meta, Title } from "@solidjs/meta";
 import { A } from "@solidjs/router";
 
 import Controls from "~/components/Controls";
@@ -43,7 +42,7 @@ export default function Home() {
             <Controls
               title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
               label="Luister live!"
-              src="https://stream.dinxperfm.nl/1"
+              src="https://stream-dinxperfm-nl.toffe.site/1"
             />
           </li>
           <li>
