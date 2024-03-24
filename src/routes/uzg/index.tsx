@@ -19,7 +19,28 @@ export const useRecordings = routeLoader$(async ({ cacheControl }) => {
 	cacheControl({
 		maxAge: 3600,
 	});
-	return await fetchUzgListing();
+	return (await fetchUzgListing()).map((item) => {
+    return {
+      year: item.datetime.getFullYear(),
+      month: item.datetime.getMonth() as
+      | 0
+      | 1
+      | 2
+      | 3
+      | 4
+      | 5
+      | 6
+      | 7
+      | 8
+      | 9
+      | 10
+      | 11,
+      day: item.datetime.getDate(),
+      weekday: item.datetime.getDay() as 0 | 1 | 2 | 3 | 4 | 5 | 6,
+      hour: item.datetime.getHours(),
+      src: item.src,
+    };
+  });
 });
 
 const weekday_long_c = {
@@ -83,24 +104,26 @@ export default component$(() => {
 
 				<Player>
 					{groupBy(entries.value, (item) => item.year).map((years) => (
-						<Fragment key={`key-byYear-${years.head.key}`}>
+						<Fragment key={`uzg-${years.key}`}>
 							<h2 class="text-xl text-gray-800">{years.key}</h2>
 							<div class="mb-6 ml-4 mt-0.5">
 								{groupBy(years.members, (item) => item.month).map((months) => {
-									const month = month_long_c[months.head.month];
+									const month = month_long_c[months.key];
 									return (
-										<Fragment key={`key-byMonth-${months.head.key}`}>
+										<Fragment key={`uzg-${years.key}-${months.key}`}>
 											<h3 class="text-lg text-gray-800">{month}</h3>
 											<div class="mb-6 ml-4 mt-0.5">
 												<ol>
-													{groupBy(months.members, (item) => item.day).map(
+													{groupBy(months.members, (item) => item.weekday).map(
 														(days) => {
-															const weekday = weekday_long_c[days.head.weekday];
+															const weekday_name = weekday_long_c[days.key];
 															return (
-																<li key={`key-byDay-${days.head.key}`}>
+																<li
+																	key={`key-${years.key}-${months.key}-${days.key}`}
+																>
 																	<div class="flex-start flex items-center pt-3">
 																		<div class="mr-3 h-2 w-2 rounded-full bg-gray-400" />
-																		<p class="text-l text-gray-800">{`${weekday} ${
+																		<p class="text-l text-gray-800">{`${weekday_name} ${
 																			days.head.day
 																		} ${month.toLowerCase()}`}</p>
 																	</div>
@@ -108,10 +131,10 @@ export default component$(() => {
 																		{days.members.map((recording) => (
 																			<div
 																				class="flex-row text-center"
-																				key={`key-recording-${recording.key}`}
+																				key={`uzg-${recording.src}`}
 																			>
 																				<Controls
-																					title={`Uitzending Dinxper FM van ${weekday} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
+																					title={`Uitzending Dinxper FM van ${weekday_name} ${recording.day} ${month} ${recording.year} om ${recording.hour} uur`}
 																					label={`${recording.hour}:00`}
 																					src={recording.src}
 																				/>
