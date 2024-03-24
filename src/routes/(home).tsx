@@ -32,7 +32,7 @@ export default function Home() {
             src={logo.src}
             width={logo.w}
             height={logo.h}
-            alt="De markt van Dinxperlo"
+            alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
           />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
