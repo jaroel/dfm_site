@@ -12,7 +12,7 @@ import logo from "~/assets/logodinxperfm.png?w=128&as=img";
 
 const getUzgListing = cache(async () => {
   return await fetchUzgListing();
-}, "students");
+}, "uzglisting");
 
 export const route = {
   load: () => getUzgListing(),

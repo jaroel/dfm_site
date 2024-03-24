@@ -1,6 +1,7 @@
 import { getFtpListing } from "./ftp";
 
 export async function fetchUzgListing() {
+  "use server";
   // Current hour isn't uploaded fully yet
   const threshold_timestamp = new Date().getTime() - 3600000;
   return (
