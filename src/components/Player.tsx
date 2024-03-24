@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup } from "solid-js";
+import { createSignal, onCleanup } from "solid-js";
 
 export const [source, setSource] = createSignal("");
 export const [state, setState] = createSignal<
@@ -6,13 +6,10 @@ export const [state, setState] = createSignal<
 >("stopped");
 
 export default function Player() {
-  onCleanup(() => setSource(""));
   let audio: HTMLAudioElement | undefined;
-
-  createEffect(() => {
-    if (audio && !source()) {
-      audio.pause();
-    }
+  onCleanup(() => {
+    audio?.pause();
+    setSource("");
   });
 
   return (
