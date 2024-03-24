@@ -8,8 +8,8 @@
   },
   "devDependencies": {
     "@fontsource/cabin": "^5.0.17",
-    "autoprefixer": "^10.4.18",
-    "postcss": "^8.4.36",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
     "tailwindcss": "^3.4.1",
     "vite-imagetools": "^6.2.9"
   },
@@ -18,8 +18,8 @@
     "@solidjs/router": "^0.12.5",
     "@solidjs/start": "^0.6.1",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^1.8.15",
-    "vinxi": "0.3.9"
+    "solid-js": "^1.8.16",
+    "vinxi": "^0.3.10"
   },
   "engines": {
     "node": "20"
