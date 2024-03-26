@@ -4,14 +4,17 @@ import { Meta, MetaProvider, Title } from "@solidjs/meta";
 import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start";
 import { Suspense } from "solid-js";
-import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&as=img";
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&as=img";
 import "./app.css";
 
 export default function App() {
   return (
     <MetaProvider>
       <Title>Dinxper FM - Het swingende geluid van Dinxperlo</Title>
-      <Meta name="description" content="Dinxper FM - Het swingende geluid van Dinxperlo" />
+      <Meta
+        name="description"
+        content="Dinxper FM - Het swingende geluid van Dinxperlo"
+      />
       <Meta
         property="og:title"
         content="Dinxper FM - Het swingende geluid van Dinxperlo"
@@ -20,25 +23,25 @@ export default function App() {
         property="og:description"
         content="Dinxper FM - Het swingende geluid van Dinxperlo"
       />
-    <div
-      class="h-screen bg-gray-600 bg-cover bg-fixed bg-center font-[Cabin] text-slate-50"
-      style={{ "background-image": `url(${bgImage.src})` }}
-    >
-      <div class="h-screen overflow-auto bg-black/75">
-        <div class="mx-auto max-w-6xl">
-          <Router
-            root={(props) => (
-              <>
-                <Suspense>{props.children}</Suspense>
-                <Nav />
-              </>
-            )}
-          >
-            <FileRoutes />
-          </Router>
+      <div
+        class="h-screen bg-gray-600 bg-cover bg-fixed bg-center font-[Cabin] text-slate-50"
+        style={{ "background-image": `url(${bgImage.src})` }}
+      >
+        <div class="h-screen overflow-auto bg-black/75">
+          <div class="mx-auto max-w-6xl">
+            <Router
+              root={(props) => (
+                <>
+                  <Suspense>{props.children}</Suspense>
+                  <Nav />
+                </>
+              )}
+            >
+              <FileRoutes />
+            </Router>
+          </div>
         </div>
       </div>
-    </div>
     </MetaProvider>
   );
 }

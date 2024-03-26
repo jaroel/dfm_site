@@ -18,8 +18,9 @@
     "@solidjs/router": "^0.12.5",
     "@solidjs/start": "^0.6.1",
     "ftp-ts": "^1.1.0",
+    "imagetools-core": "^6.0.4",
     "solid-js": "^1.8.16",
-    "vinxi": "^0.3.10"
+    "vinxi": "^0.3.11"
   },
   "engines": {
     "node": "20"
