@@ -37,7 +37,8 @@ export default function Home() {
           <li>
             <A
               class="inline-block px-4 py-3 text-blue-700 no-underline"
-              href="/uzg"
+              href="/uzg/"
+              title="Uitzending gemist? Luister ze terug!"
             >
               Uitzending gemist?
             </A>
@@ -51,7 +52,12 @@ export default function Home() {
         ></Picture>
       </div>
       <div class="text-center">
-        <a target="blank" class="text-blue-400" href={programmering.img.src}>
+        <a
+          target="blank"
+          class="text-blue-400"
+          href={programmering.img.src}
+          title="Bekijk het programma in een nieuw scherm"
+        >
           In nieuwe pagina openen
         </a>
       </div>
