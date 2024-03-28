@@ -49,23 +49,24 @@ export default function App() {
 function Nav() {
   return (
     <nav class="flex justify-center bg-gray-100 p-2 text-black">
-      <ul class="flex flex-wrap">
-        <li class="ml-1 mr-2">
+      <ul class="flex flex-wrap gap-x-8 gap-y-2">
+        <li>
           <A href="/" title="DinxperFM home page">
             Home page
           </A>
         </li>
-        <li class="ml-1 mr-2">
+        <li>
           <a
             href="https://www.facebook.com/DinxperFM"
             title="DinxperFM Facebook pagina"
+            class="flex flex-row items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-facebook inline"
+              class="bi bi-facebook mr-1"
               viewBox="0 0 16 16"
             >
               <title>DinxperFM Facebook pagina</title>
@@ -74,17 +75,18 @@ function Nav() {
             Facebook pagina
           </a>
         </li>
-        <li class="ml-1 mr-2">
+        <li>
           <a
             href="mailto:info@dinxperfm.nl"
             title="Stuur een email naar info@dinxperfm.nl"
+            class="flex flex-row items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-envelope-fill inline"
+              class="bi bi-envelope-fill mr-1"
               viewBox="0 0 16 16"
             >
               <title>Stuur een email naar info@dinxperfm.nl</title>
@@ -93,9 +95,7 @@ function Nav() {
             info@dinxperfm.nl
           </a>
         </li>
-        <li class="ml-1 mr-2">
-          Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo
-        </li>
+        <li>Bezoekadres: Europastraat 8, 7091 XC, Dinxperlo</li>
       </ul>
     </nav>
   );

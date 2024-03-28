@@ -10,7 +10,7 @@
     "@fontsource/cabin": "^5.0.17",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.3",
     "vite-imagetools": "^6.2.9"
   },
   "dependencies": {
