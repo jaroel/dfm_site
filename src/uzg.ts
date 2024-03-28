@@ -3,7 +3,14 @@ import { getFtpListing } from "./ftp";
 export async function fetchUzgListing() {
   "use server";
   // Current hour isn't uploaded fully yet
-  const threshold_timestamp = new Date().getTime() - 3600000;
+  // const now = new Date(
+  //   new Date().toLocaleString("en-US", { timeZone: "Europe/Amsterdam" })
+  // );
+  // const threshold_timestamp = now.getTime() - 3600000;
+  const now = new Date().toLocaleString("en-US", {
+    timeZone: "Europe/Amsterdam",
+  });
+  const threshold_timestamp = Date.parse(now) - 3600000;
   return (
     (await getFtpListing())
       .map((item) => item.name)
