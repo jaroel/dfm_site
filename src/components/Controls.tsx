@@ -23,7 +23,7 @@ export default function Controls(props: {
             playing: "",
             loading: "",
             stopped: props.src,
-          }[state()],
+          }[state()]
         );
       }}
       title={props.title}

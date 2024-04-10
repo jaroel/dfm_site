@@ -16,12 +16,10 @@ export default function Player() {
   });
 
   return (
-    // biome-ignore lint/a11y/useMediaCaption: <explanation>
     <audio
       ref={audio}
-      preload="none"
       autoplay={!!source()}
-      src={source() || undefined}
+      src={source()}
       onPlaying={() => setState("playing")}
       onPause={() => setState("stopped")}
       onError={({ currentTarget }) => {
