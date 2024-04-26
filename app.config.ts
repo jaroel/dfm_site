@@ -7,8 +7,8 @@ export default defineConfig({
     plugins: [
       imagetools(),
       devtools({
-        /* features options - all disabled by default */
-        autoname: true, // e.g. enable autoname
+        locator: true,
+        autoname: true,
       }),
     ],
     build: {
