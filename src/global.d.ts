@@ -6,7 +6,7 @@ declare module "*as=img" {
 }
 
 declare module "*as=picture" {
-  import { type Picture } from "imagetools-core/dist/types";
+  import type { Picture } from "imagetools-core/dist/types";
   const out: Picture;
   export default out;
 }

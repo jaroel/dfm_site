@@ -25,7 +25,9 @@ export default function App() {
       />
       <div
         class="h-screen bg-gray-600 bg-cover bg-fixed bg-center font-[Cabin] text-slate-50"
-        style={{ "background-image": `url(${bgImage.src})` }}
+        style={{
+          "background-image": `url(${bgImage.src})`,
+        }}
       >
         <div class="h-screen overflow-auto bg-black/75">
           <div class="mx-auto max-w-6xl">

@@ -1,7 +1,7 @@
 import { A } from "@solidjs/router";
 import Controls from "~/components/Controls";
+import Picture, { type TPicture } from "~/components/Picture";
 import Player from "~/components/Player";
-import Picture, { TPicture } from "~/components/Picture";
 
 import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
 import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
@@ -21,7 +21,7 @@ export default function Home() {
           <Picture
             logo={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
-          ></Picture>
+          />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
       </div>
@@ -46,10 +46,7 @@ export default function Home() {
         </ul>
       </nav>
       <div class="mt-10 flex justify-center">
-        <Picture
-          logo={programmering}
-          alt="Programmering van Dinxperlo FM"
-        ></Picture>
+        <Picture logo={programmering} alt="Programmering van Dinxperlo FM" />
       </div>
       <div class="text-center">
         <a
@@ -71,7 +68,7 @@ export default function Home() {
               <Picture
                 logo={sponsors["/src/assets/sponsors/makt.jpg"]}
                 alt="Logo van de markt van Dinxperlo"
-              ></Picture>
+              />
             </a>
           </div>
           <div class="mb-2 p-1">
@@ -79,7 +76,7 @@ export default function Home() {
               <Picture
                 logo={sponsors["/src/assets/sponsors/logo13.jpg"]}
                 alt="Logo van Naai Atelier Monique Harmsen"
-              ></Picture>
+              />
             </a>
           </div>
           <div class="mb-2 p-1">

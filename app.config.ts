@@ -1,6 +1,6 @@
 import { defineConfig } from "@solidjs/start/config";
-import { imagetools } from "vite-imagetools";
 import devtools from "solid-devtools/vite";
+import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
   vite: {

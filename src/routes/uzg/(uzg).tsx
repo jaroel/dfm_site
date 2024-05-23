@@ -1,5 +1,5 @@
-import { A, cache, createAsync } from "@solidjs/router";
 import { Meta, Title } from "@solidjs/meta";
+import { A, cache, createAsync } from "@solidjs/router";
 import { For, Show } from "solid-js";
 
 import { groupBy } from "~/groupby";
@@ -61,7 +61,7 @@ export default function UZG() {
                 logo={logo}
                 alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
                 class="mx-auto"
-              ></Picture>
+              />
             </A>
             <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
           </div>

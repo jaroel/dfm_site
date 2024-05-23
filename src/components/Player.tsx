@@ -16,6 +16,7 @@ export default function Player() {
   });
 
   return (
+    // biome-ignore lint/a11y/useMediaCaption: <explanation>
     <audio
       ref={audio}
       autoplay={!!source()}

@@ -1,8 +1,8 @@
 import { Dynamic } from "solid-js/web";
 import {
-  setSource,
   source as player_source,
   state as player_state,
+  setSource,
 } from "./Player";
 
 export default function Controls(props: {
@@ -23,7 +23,7 @@ export default function Controls(props: {
             playing: "",
             loading: "",
             stopped: props.src,
-          }[state()]
+          }[state()],
         );
       }}
       title={props.title}
