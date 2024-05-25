@@ -1,8 +1,7 @@
 import "@fontsource/cabin";
 import { Meta, MetaProvider, Title } from "@solidjs/meta";
-// @refresh reload
 import { A, Router } from "@solidjs/router";
-import { FileRoutes } from "@solidjs/start";
+import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&as=img";
 import "./app.css";
