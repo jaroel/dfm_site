@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.13.3",
-    "@solidjs/start": "^1.0.0",
+    "@solidjs/router": "^0.13.4",
+    "@solidjs/start": "^1.0.1",
     "ftp-ts": "^1.1.0",
     "imagetools-core": "^7.0.0",
     "solid-js": "^1.8.17",

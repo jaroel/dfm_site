@@ -1,4 +1,4 @@
-import type { Picture as TPicture } from "imagetools-core/dist/types";
+import type { Picture as TPicture } from "imagetools-core";
 export type { TPicture };
 
 export default function Picture(props: {
