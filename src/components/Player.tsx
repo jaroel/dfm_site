@@ -6,7 +6,13 @@ export const [state, setState] = createSignal<
 >("stopped");
 
 export default function Player() {
-  onCleanup(() => setSource(""));
+  onCleanup(() => {
+    if (audio) {
+      audio.pause();
+      audio.src = "";
+    }
+    setSource("");
+  });
   let audio: HTMLAudioElement | undefined;
 
   createEffect(() => {
