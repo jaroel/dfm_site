@@ -31,7 +31,7 @@ export default function Home() {
             <Controls
               title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
               label="Luister live!"
-              src="https://stream-dinxperfm-nl.toffe.site/1"
+              src="/++stream++/1"
             />
           </li>
           <li>
