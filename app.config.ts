@@ -34,5 +34,4 @@ export default defineConfig({
       },
     },
   },
-  middleware: "./src/middleware.ts",
 });
