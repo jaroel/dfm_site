@@ -7,20 +7,20 @@
     "start": "vinxi start"
   },
   "devDependencies": {
-    "@fontsource/cabin": "^5.0.18",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.40",
+    "@fontsource/cabin": "^5.0.19",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
     "solid-devtools": "^0.30.1",
-    "tailwindcss": "^3.4.7",
+    "tailwindcss": "^3.4.10",
     "vite-imagetools": "^7.0.4"
   },
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.1",
+    "@solidjs/router": "^0.14.3",
     "@solidjs/start": "^1.0.6",
     "ftp-ts": "^1.1.0",
     "imagetools-core": "^7.0.1",
-    "solid-js": "^1.8.19",
+    "solid-js": "^1.8.21",
     "vinxi": "^0.4.1"
   },
   "engines": {
