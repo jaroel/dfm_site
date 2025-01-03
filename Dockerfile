@@ -1,4 +1,4 @@
-FROM node:22 as builder
+FROM node:22 AS builder
 WORKDIR /app/
 COPY . /app/
 RUN npm install -g pnpm && pnpm install
