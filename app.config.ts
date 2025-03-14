@@ -1,16 +1,9 @@
 import { defineConfig } from "@solidjs/start/config";
-import devtools from "solid-devtools/vite";
 import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
   vite: {
-    plugins: [
-      imagetools(),
-      devtools({
-        locator: true,
-        autoname: true,
-      }),
-    ],
+    plugins: [imagetools()],
     build: {
       reportCompressedSize: false,
     },
