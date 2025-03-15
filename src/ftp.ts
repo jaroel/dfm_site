@@ -23,10 +23,14 @@ export async function getFtpStream(filename: string) {
   const listing = (await getFtpListing()).map((item) => item.name);
   if (listing.includes(filename)) {
     const connection = await getConnection();
+    const metadata = await connection.fileInfo(filename);
+    if (!metadata) {
+      return;
+    }
     const stream = await connection.get(filename);
     stream.addListener("close", () => {
       connection.destroy();
     });
-    return stream;
+    return { metadata, stream };
   }
 }
