@@ -1,5 +1,5 @@
 import { Meta, Title } from "@solidjs/meta";
-import { A, cache, createAsync } from "@solidjs/router";
+import { A, createAsync, query } from "@solidjs/router";
 import { For, Show } from "solid-js";
 
 import { groupBy } from "~/groupby";
@@ -11,7 +11,7 @@ import Player from "~/components/Player";
 import logo from "~/assets/logodinxperfm.png?w=128&format=avif;webp;png&as=picture";
 import Picture from "~/components/Picture";
 
-const getUzgListing = cache(async () => {
+const getUzgListing = query(async () => {
   return await fetchUzgListing();
 }, "uzglisting");
 
