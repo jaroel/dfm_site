@@ -11,12 +11,16 @@ export const getConnection = async () => {
 };
 
 export async function getFtpListing() {
-  const connection = await getConnection();
-  const listing = await connection.list();
-  connection.end();
-  return listing.filter(
-    (value): value is IListingElement => typeof value !== "string",
-  );
+  try {
+    const connection = await getConnection();
+    const listing = await connection.list();
+    connection.end();
+    return listing.filter(
+      (value): value is IListingElement => typeof value !== "string",
+    );
+  } catch {
+    return [];
+  }
 }
 
 export async function getFtpStream(filename: string) {
