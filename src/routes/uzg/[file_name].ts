@@ -22,7 +22,6 @@ export async function GET({ params, request }: APIEvent) {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
         "content-length": ftp_data.metadata.size,
-        "cache-control": "max-age=31536000, immutable",
       },
     });
   }
