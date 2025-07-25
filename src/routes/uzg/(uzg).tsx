@@ -1,15 +1,13 @@
 import { Meta, Title } from "@solidjs/meta";
 import { A, createAsync, query } from "@solidjs/router";
-import { For, Show } from "solid-js";
-
-import { groupBy } from "~/groupby";
-import { type Recording, fetchUzgListing } from "~/uzg";
-
-import Controls from "~/components/Controls";
-import Player from "~/components/Player";
-
+import { HttpHeader } from "@solidjs/start";
+import { For, Show, Suspense } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128&format=avif;webp;png&as=picture";
+import Controls from "~/components/Controls";
 import Picture from "~/components/Picture";
+import Player from "~/components/Player";
+import { groupBy } from "~/groupby";
+import { fetchUzgListing, type Recording } from "~/uzg";
 
 const getUzgListing = query(async () => {
   return await fetchUzgListing();
@@ -79,9 +77,16 @@ export default function UZG() {
           </p>
         </div>
         <hr class="my-8" />
-        <Show when={recordings()}>
-          {(accessor) => <Listing recordings={accessor()} />}
-        </Show>
+        <Suspense>
+          <Show
+            when={recordings()?.length}
+            fallback={
+              <p>Op dit moment zijn er geen uitzendingen beschikbaar.</p>
+            }
+          >
+            {<Listing recordings={recordings()!} />}
+          </Show>
+        </Suspense>
       </div>
     </>
   );
