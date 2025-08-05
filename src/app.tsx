@@ -1,5 +1,6 @@
 import "@fontsource/cabin";
-import { Meta, MetaProvider, Title } from "@solidjs/meta";
+import cabinWoff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2?url";
+import { Link, Meta, MetaProvider, Title } from "@solidjs/meta";
 import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
@@ -9,6 +10,13 @@ import "./app.css";
 export default function App() {
   return (
     <MetaProvider>
+      <Link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href={cabinWoff2}
+        crossorigin="anonymous"
+      />
       <Title>Dinxper FM - Het swingende geluid van Dinxperlo</Title>
       <Meta
         name="description"
