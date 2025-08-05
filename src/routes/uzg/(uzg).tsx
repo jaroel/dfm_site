@@ -84,7 +84,7 @@ export default function UZG() {
               <p>Op dit moment zijn er geen uitzendingen beschikbaar.</p>
             }
           >
-            {<Listing recordings={recordings()!} />}
+            {<Listing recordings={recordings() ?? []} />}
           </Show>
         </Suspense>
       </div>
