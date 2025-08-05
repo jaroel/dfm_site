@@ -1,6 +1,5 @@
 import { Meta, Title } from "@solidjs/meta";
 import { A, createAsync, query } from "@solidjs/router";
-import { HttpHeader } from "@solidjs/start";
 import { For, Show, Suspense } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128&format=avif;webp;png&as=picture";
 import Controls from "~/components/Controls";
