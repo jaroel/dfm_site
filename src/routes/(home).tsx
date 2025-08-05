@@ -1,11 +1,11 @@
 import { A } from "@solidjs/router";
+import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
+import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
+import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&as=picture";
 import Controls from "~/components/Controls";
 import Picture, { type TPicture } from "~/components/Picture";
 import Player from "~/components/Player";
 
-import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
-import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
-import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&as=picture";
 const sponsors = import.meta.glob<TPicture>("~/assets/sponsors/*", {
   eager: true,
   import: "default",
@@ -21,6 +21,7 @@ export default function Home() {
           <Picture
             logo={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
+            fetchpriority="high"
           />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
@@ -46,7 +47,11 @@ export default function Home() {
         </ul>
       </nav>
       <div class="mt-10 flex justify-center">
-        <Picture logo={programmering} alt="Programmering van Dinxperlo FM" />
+        <Picture
+          logo={programmering}
+          alt="Programmering van Dinxperlo FM"
+          fetchpriority="high"
+        />
       </div>
       <div class="text-center">
         <a

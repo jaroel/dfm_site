@@ -6,6 +6,7 @@ export default function Picture(props: {
   alt: string;
   class?: string;
   style?: string;
+  fetchpriority?: "high" | "low" | "auto";
 }) {
   return (
     <picture class={`inline-block ${props.class}`} style={props.style}>
@@ -17,6 +18,7 @@ export default function Picture(props: {
         alt={props.alt}
         width={props.logo.img.w}
         height={props.logo.img.h}
+        fetchpriority={props.fetchpriority}
       />
     </picture>
   );
