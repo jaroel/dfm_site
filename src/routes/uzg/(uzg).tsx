@@ -1,5 +1,5 @@
 import { Meta, Title } from "@solidjs/meta";
-import { A, createAsync, query } from "@solidjs/router";
+import { createAsync, query } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128&format=avif;webp;png&as=picture";
 import Controls from "~/components/Controls";
@@ -53,13 +53,13 @@ export default function UZG() {
       <div class="flex justify-evenly">
         <div class="flex flex-auto items-center">
           <div class="mx-12 my-8">
-            <A href="/">
+            <a href="/">
               <Picture
                 logo={logo}
                 alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
                 class="mx-auto"
               />
-            </A>
+            </a>
             <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
           </div>
           <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">

@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router";
 import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
 import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
 import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&as=picture";
@@ -36,13 +35,13 @@ export default function Home() {
             />
           </li>
           <li>
-            <A
+            <a
               class="inline-block px-4 py-3 text-blue-700 no-underline"
               href="/uzg/"
               title="Uitzending gemist? Luister ze terug!"
             >
               Uitzending gemist?
-            </A>
+            </a>
           </li>
         </ul>
       </nav>
