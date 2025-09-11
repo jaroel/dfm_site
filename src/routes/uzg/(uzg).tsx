@@ -42,7 +42,7 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(() => getUzgListing());
+  const recordings = createAsync(() => getUzgListing(), {initialValue: []});
   return (
     <>
       <Title>Dinxper FM - Uitzending gemist</Title>
@@ -78,12 +78,12 @@ export default function UZG() {
         <hr class="my-8" />
         <Suspense>
           <Show
-            when={recordings()?.length}
+            when={recordings().length}
             fallback={
               <p>Op dit moment zijn er geen uitzendingen beschikbaar.</p>
             }
           >
-            {<Listing recordings={recordings() ?? []} />}
+            {<Listing recordings={recordings()} />}
           </Show>
         </Suspense>
       </div>
