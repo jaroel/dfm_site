@@ -8,7 +8,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@fontsource/cabin": "^5.2.6",
+    "@fontsource/cabin": "^5.2.8",
     "@solidjs/testing-library": "^0.8.10",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/user-event": "^14.6.1",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.3",
-    "@solidjs/start": "^1.1.7",
+    "@solidjs/start": "^1.2.0",
     "@tailwindcss/vite": "^4.1.13",
     "ftp-ts": "^1.1.0",
     "imagetools-core": "^8.0.0",
