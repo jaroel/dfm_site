@@ -42,7 +42,7 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(() => getUzgListing(), {initialValue: []});
+  const recordings = createAsync(() => getUzgListing(), { initialValue: [] });
   return (
     <>
       <Title>Dinxper FM - Uitzending gemist</Title>
