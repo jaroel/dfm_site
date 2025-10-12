@@ -6,22 +6,22 @@ Everything you need to build a Solid project, powered by [`solid-start`](https:/
 
 ```bash
 # create a new project in the current directory
-npm init solid@latest
+bun create solid
 
 # create a new project in my-app
-npm init solid@latest my-app
+bun create solid my-app
 ```
 
 ## Developing
 
-Once you've created a project and installed dependencies with `pnpm install``, start a development server:
+Once you've created a project and installed dependencies with `bun install``, start a development server:
 
 ```bash
-pnpm run dev
+bun run dev
 ```
 
 ## Building
 
 ```bash
-pnpm run build
+bun run build
 ```
