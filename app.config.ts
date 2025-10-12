@@ -23,13 +23,7 @@ export default defineConfig({
       },
       "/assets/**": {
         headers: { "cache-control": "max-age=31536000, immutable" },
-      },
-      "/": {
-        headers: { "cache-control": "max-age=3600, must-revalidate" },
-      },
-      "/uzg/": {
-        headers: { "cache-control": "max-age=3600" },
-      },
+      }
     },
   },
 });
