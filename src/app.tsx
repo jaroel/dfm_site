@@ -1,4 +1,3 @@
-import "@fontsource/cabin";
 import cabinWoff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2?url";
 import { Link, Meta, MetaProvider, Title } from "@solidjs/meta";
 import { A, Router } from "@solidjs/router";
@@ -31,7 +30,7 @@ export default function App() {
         content="Dinxper FM - Het swingende geluid van Dinxperlo"
       />
       <div
-        class="h-screen bg-gray-600 bg-cover bg-fixed bg-center font-[Cabin] text-slate-50"
+        class="h-screen bg-gray-600 bg-cover bg-fixed bg-center text-slate-50"
         style={{
           "background-image": `url(${bgImage.src})`,
         }}
