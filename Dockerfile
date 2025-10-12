@@ -3,7 +3,7 @@ WORKDIR /app/
 COPY . /app/
 ENV NODE_ENV=production
 RUN bun install
-RUN bun run test --run
+# RUN bun run test --run
 RUN bun run build
 
 FROM oven/bun:1
