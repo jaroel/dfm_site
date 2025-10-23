@@ -1,5 +1,8 @@
 [application]
 
+[web]
+pre_compress = true
+
 [web.app]
 
 # HTML title tag content
@@ -19,3 +22,8 @@ script = []
 # Javascript code file
 # serve: [dev-server] only
 script = []
+
+[web.wasm_opt]
+level = "z"
+debug = false
+# extra_features = ["--strip-debug"]
