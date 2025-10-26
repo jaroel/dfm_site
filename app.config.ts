@@ -23,7 +23,7 @@ export default defineConfig({
       },
       "/assets/**": {
         headers: { "cache-control": "max-age=31536000, immutable" },
-      }
+      },
     },
   },
 });
