@@ -158,7 +158,7 @@ export default function Home() {
               <Picture
                 logo={tibatek_logo_web}
                 alt="Logo van Tibatek"
-                class="bg-white p-[4px]"
+                class="bg-white p-1"
               />
             </a>
           </div>
