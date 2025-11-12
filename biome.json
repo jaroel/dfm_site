@@ -1,8 +1,22 @@
 {
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "linter": {
-    "rules": { "recommended": true }
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": "error"
+      }
+    },
+    "domains": {
+      "solid": "all"
+    }
   },
   "formatter": {
     "indentStyle": "space"
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   }
 }

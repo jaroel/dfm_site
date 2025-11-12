@@ -27,7 +27,7 @@ export default function Controls(props: {
         );
       }}
       title={props.title}
-      class={`my-1 flex items-center cursor-pointer rounded-full border px-4 py-2 ${
+      class={`my-1 flex cursor-pointer items-center rounded-full border px-4 py-2 ${
         {
           error: "border-red-800 bg-red-100 text-red-800",
           playing: "border-green-800 bg-green-100 text-green-800",

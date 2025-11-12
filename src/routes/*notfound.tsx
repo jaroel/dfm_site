@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <>
       <HttpStatusCode code={404} />
-      <div class="mb-10 mt-10 flex justify-evenly">
+      <div class="mt-10 mb-10 flex justify-evenly">
         <div class="max-w-sm">
           <Picture
             logo={logo}
@@ -18,7 +18,7 @@ export default function NotFound() {
 
       <div class="bg-gray-100 p-9 text-black">
         <div class="max-w-7xl px-6 text-center">
-          <p class="mx-auto mt-5 max-w-5xl text-xl text-gray-500">
+          <p class="mx-auto mt-5 max-w-5xl text-gray-500 text-xl">
             404 - Pagina niet gevonden.
           </p>
         </div>

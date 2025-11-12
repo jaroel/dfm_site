@@ -30,7 +30,7 @@ export default function App() {
         content="Dinxper FM - Het swingende geluid van Dinxperlo"
       />
       <div
-        class="h-screen bg-gray-600 bg-cover bg-fixed bg-center text-slate-50"
+        class="h-screen bg-center bg-cover bg-gray-600 bg-fixed text-slate-50"
         style={{
           "background-image": `url(${bgImage.src})`,
         }}

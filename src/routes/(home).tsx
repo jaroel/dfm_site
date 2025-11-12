@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <Player />
-      <div class="mb-10 mt-10 flex justify-evenly">
+      <div class="mt-10 mb-10 flex justify-evenly">
         <div class="max-w-sm">
           <Picture
             logo={logo}
