@@ -1,12 +1,11 @@
-FROM oven/bun:1 AS builder
+FROM node:22 AS builder
 WORKDIR /app/
 COPY . /app/
 ENV NODE_ENV=production
-RUN bun install
-# RUN bun run test --run
-RUN bun run build
+RUN npm install -g pnpm && pnpm install
+RUN pnpm run build
 
-FROM oven/bun:1
+FROM gcr.io/distroless/nodejs22-debian12
 WORKDIR /app/
 COPY --from=builder /app/.output /app/
 CMD ["/app/server/index.mjs"]
