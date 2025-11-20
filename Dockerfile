@@ -8,4 +8,6 @@ RUN pnpm run build
 FROM gcr.io/distroless/nodejs22-debian12
 WORKDIR /app/
 COPY --from=builder /app/.output /app/
+ENV NODE_ENV=production
+ENV NITRO_CLUSTER_WORKERS=2
 CMD ["/app/server/index.mjs"]
