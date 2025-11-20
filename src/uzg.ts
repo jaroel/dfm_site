@@ -1,22 +1,23 @@
 import { getFtpListing } from "./ftp";
 
-export async function fetchUzgListing() {
+type FilenameDotMp3 = `${string}.mp3`
+
+export async function fetchUzgListing(){
   "use server";
-  // Current hour isn't uploaded fully yet
-  // const now = new Date(
-  //   new Date().toLocaleString("en-US", { timeZone: "Europe/Amsterdam" })
-  // );
-  // const threshold_timestamp = now.getTime() - 3600000;
-  const now = new Date().toLocaleString("en-US", {
-    timeZone: "Europe/Amsterdam",
-  });
-  const threshold_timestamp = Date.parse(now) - 3600000;
   return (
     (await getFtpListing())
       .map((item) => item.name)
       // .filter((file) => file.endsWith("-12-2023-19-00.mp3"))
       .filter((file) => file.endsWith(".mp3"))
-      .map((file_name) => {
+  ) as FilenameDotMp3[];
+}
+
+export function toRecordings(listing: FilenameDotMp3[]) {
+  const now = new Date().toLocaleString("en-US", {
+    timeZone: "Europe/Amsterdam",
+  });
+  const threshold_timestamp = Date.parse(now) - 3600000;
+  return listing.map((file_name) => {
         const [day, month, year, hour] = file_name.split(/[-.]/);
         const minute = "00";
         const datetime = new Date(`${year}-${month}-${day}T${hour}:${minute}`);
@@ -44,9 +45,8 @@ export async function fetchUzgListing() {
         };
       })
       .filter((el) => el.key <= threshold_timestamp)
-      .sort((a, b) => (a.key >= b.key ? -1 : 1))
-  );
+      .sort((a, b) => (a.key >= b.key ? -1 : 1));
 }
 
 // https://steveholgado.com/typescript-types-from-arrays/#getting-a-type-from-our-array
-export type Recording = Awaited<ReturnType<typeof fetchUzgListing>>[number];
+export type Recording = ReturnType<typeof toRecordings>[number];

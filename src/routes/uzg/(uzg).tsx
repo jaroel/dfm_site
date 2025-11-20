@@ -6,7 +6,7 @@ import Controls from "~/components/Controls";
 import Picture from "~/components/Picture";
 import Player from "~/components/Player";
 import { groupBy } from "~/groupby";
-import { fetchUzgListing, type Recording } from "~/uzg";
+import { fetchUzgListing, toRecordings, type Recording } from "~/uzg";
 
 const getUzgListing = query(async () => {
   return await fetchUzgListing();
@@ -42,7 +42,7 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(() => getUzgListing(), { initialValue: [] });
+  const recordings = createAsync(async () => toRecordings(await getUzgListing()), { initialValue: [] });
   return (
     <>
       <Title>Dinxper FM - Uitzending gemist</Title>
