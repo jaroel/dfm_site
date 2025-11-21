@@ -1,7 +1,7 @@
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync, query } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";
-import logo from "~/assets/logodinxperfm.png?w=128&format=avif;webp;png&as=picture";
+import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&as=picture";
 import Controls from "~/components/Controls";
 import Picture from "~/components/Picture";
 import Player from "~/components/Player";
@@ -50,19 +50,18 @@ export default function UZG() {
       <Meta property="og:title" content="Dinxper FM - Uitzending gemist" />
       <Meta property="og:description" content="Luister uitzendingen terug" />
       <Player />
-      <div class="flex justify-evenly">
-        <div class="flex flex-auto items-center">
-          <div class="mx-12 my-8">
-            <a href="/">
+      <div class="my-8">
+        <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
+          <a href="/" title="Terug naar homepage">
               <Picture
                 logo={logo}
                 alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
-                class="mx-auto"
-              />
-            </a>
+                class="max-w-32"
+                />
+                            
             <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
-          </div>
-          <h1 class="font-bold text-4xl text-gray-100 sm:text-5xl lg:text-6xl">
+          </a>
+          <h1 class="mx-12 font-bold text-4xl text-gray-100 lg:text-6xl">
             Uitzending gemist
           </h1>
         </div>
