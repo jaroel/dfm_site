@@ -1,4 +1,4 @@
-import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
+import logo from "~/assets/logodinxperfm.png?w=384;768&format=avif;webp;png&as=picture";
 import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
 import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&as=picture";
 import Controls from "~/components/Controls";
@@ -16,12 +16,12 @@ export default function Home() {
     <>
       <Player />
       <div class="mt-10 mb-10 flex justify-evenly">
-        <div class="max-w-sm">
+        <div class="max-w-xs md:max-w-sm">
           <Picture
             logo={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
             fetchpriority="high"
-          />
+            />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
       </div>
