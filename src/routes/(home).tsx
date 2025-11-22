@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       <nav class="flex justify-evenly bg-gray-100">
-        <ul class="my-1 flex list-none flex-wrap">
+        <ul class="my-1 flex list-none flex-wrap gap-4">
           <li>
             <Controls
               title="Luister naar Dinxper FM - Het swingende geluid van Dinxperlo!"
@@ -36,7 +36,7 @@ export default function Home() {
           </li>
           <li>
             <a
-              class="inline-block px-4 py-3 text-blue-700 no-underline"
+              class="my-1 flex cursor-pointer items-center rounded-full border border-gray-800 bg-gray-100 px-4 py-2 text-gray-800 no-underline hover:bg-gray-800 hover:text-white"
               href="/uzg/"
               title="Uitzending gemist? Luister ze terug!"
             >
