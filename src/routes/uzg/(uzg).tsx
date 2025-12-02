@@ -75,7 +75,7 @@ export default function UZG() {
           </p>
         </div>
         <hr class="my-8" />
-        <Suspense>
+        <Suspense fallback={<p>Uitzendingen worden opgehaald.</p>}>
           <Show
             when={recordings().length}
             fallback={
