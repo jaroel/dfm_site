@@ -1,6 +1,0 @@
-[env]
-NITRO_CLUSTER_WORKERS = "1"
-
-[tools]
-node = "22"
-pnpm = "latest"
