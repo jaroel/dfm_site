@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   server: {
-    preset: "node_cluster",
+    preset: "bun",
     prerender: {
       routes: ["/"],
     },
