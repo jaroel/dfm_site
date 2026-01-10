@@ -27,8 +27,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       imagetools-core:
-        specifier: ^9.1.0
-        version: 9.1.0
+        specifier: ^8
+        version: 8.0.0
       solid-js:
         specifier: ^1.9.10
         version: 1.9.10
@@ -61,8 +61,8 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18
       vite-imagetools:
-        specifier: ^9.0.2
-        version: 9.0.2(rollup@4.55.1)
+        specifier: ^8
+        version: 8.0.0(rollup@4.55.1)
       vite-plugin-solid:
         specifier: ^2.11.10
         version: 2.11.10(@testing-library/jest-dom@6.9.1)(solid-js@1.9.10)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1))
@@ -2087,9 +2087,9 @@ packages:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
 
-  imagetools-core@9.1.0:
-    resolution: {integrity: sha512-xQjs+2vrxLnAjCq+omuNkd5UQTld9/bP8+YT0LyYTlKfuSQtgUBvqhUwGugzSAh6sCdN+LnROMuLswn5hZ9Fhg==}
-    engines: {node: '>=20.0.0'}
+  imagetools-core@8.0.0:
+    resolution: {integrity: sha512-5i4Cx5vrBpVdvT3gvkSGAzzkUCrg/5Jm54UwWbDUSTMp4AjDI4IxiC6dI4+X1PRJYi6eKqWuE+684NJY2iOn3w==}
+    engines: {node: '>=18.0.0'}
 
   indent-string@4.0.0:
     resolution: {integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==}
@@ -3169,9 +3169,9 @@ packages:
     resolution: {integrity: sha512-qdxevpdm6ZhI4FPXyVpaMOnz0WfyeC0WWj4XUKjRetSNkPj0D45VHep5iv4nBxdc/2XLPBRMW3CNkn/yUMsYIg==}
     hasBin: true
 
-  vite-imagetools@9.0.2:
-    resolution: {integrity: sha512-FV5DXw4swU81t+g8JOLT+T7gKuBOXuVsZ0WGhi7y0R182+GfBYkcf6V9/T0Nweu/vn1X0DA2p5ePMnaGZlRl1A==}
-    engines: {node: '>=20.0.0'}
+  vite-imagetools@8.0.0:
+    resolution: {integrity: sha512-3bkkA0vQ57tMynsetY2j4QhCnZKrxFv0RScaZipzYgkjkkUBEmZL5UIVHOUHhVMfwCetAeM9e3DNwyPK1ff4xg==}
+    engines: {node: '>=18.0.0'}
 
   vite-plugin-solid@2.11.10:
     resolution: {integrity: sha512-Yr1dQybmtDtDAHkii6hXuc1oVH9CPcS/Zb2jN/P36qqcrkNnVPsMTzQ06jyzFPFjj3U1IYKMVt/9ZqcwGCEbjw==}
@@ -5254,7 +5254,7 @@ snapshots:
 
   ignore@7.0.5: {}
 
-  imagetools-core@9.1.0: {}
+  imagetools-core@8.0.0: {}
 
   indent-string@4.0.0: {}
 
@@ -6523,10 +6523,10 @@ snapshots:
       - xml2js
       - yaml
 
-  vite-imagetools@9.0.2(rollup@4.55.1):
+  vite-imagetools@8.0.0(rollup@4.55.1):
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.55.1)
-      imagetools-core: 9.1.0
+      imagetools-core: 8.0.0
       sharp: 0.34.5
     transitivePeerDependencies:
       - rollup
