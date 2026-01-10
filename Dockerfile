@@ -1,4 +1,4 @@
-FROM node:22 AS builder
+FROM node:24 AS builder
 WORKDIR /app/
 COPY . /app/
 ENV NODE_ENV=production
@@ -6,7 +6,7 @@ RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM gcr.io/distroless/nodejs22-debian12
+FROM gcr.io/distroless/nodejs24-debian12
 WORKDIR /app/
 COPY --from=builder /app/.output /app/
 ENV NODE_ENV=production
