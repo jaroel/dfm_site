@@ -2,7 +2,8 @@ FROM node:22 AS builder
 WORKDIR /app/
 COPY . /app/
 ENV NODE_ENV=production
-RUN npm install -g pnpm && pnpm install
+RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 RUN pnpm run build
 
 FROM gcr.io/distroless/nodejs22-debian12
