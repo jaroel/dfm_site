@@ -21,3 +21,10 @@ pnpm run build
 ```bash
 pnpm dlx esupgrade --write ./src/**/*.{ts,tsx}
 ```
+
+
+## Linting
+
+``bash
+pnpm run lint
+```

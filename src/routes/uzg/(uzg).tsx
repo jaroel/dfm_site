@@ -117,7 +117,7 @@ function Listing(props: { recordings: Recording[] }) {
                         {(days) => (
                           <li>
                             <div class="flex flex-start items-center pt-3">
-                              <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400" />
+                              <div class="mr-3 -ml-1 h-2 w-2 rounded-full bg-gray-400" />
                               <p class="text-gray-800 text-l">
                                 {`${days.head.weekday_c} ${days.head.day} ${days.head.month_l}`}
                               </p>

@@ -5,7 +5,8 @@
     "dev": "vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "biome lint"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.11",

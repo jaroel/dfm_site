@@ -16,7 +16,7 @@ export default function Player() {
   let audio: HTMLAudioElement | undefined;
 
   return (
-    // biome-ignore lint/a11y/useMediaCaption: <explanation>
+    // biome-ignore lint/a11y/useMediaCaption: no relevant
     <audio
       ref={audio}
       autoplay={!!source()}
