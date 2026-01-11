@@ -1,13 +1,13 @@
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
-export const getConnection = async () => {
+export async function getConnection() {
   return await FTP.connect({
     host: "dinxperfm.freeddns.org",
     user: "UZG",
     password: "4862KpZ2",
   });
-};
+}
 
 export async function getFtpListing() {
   try {

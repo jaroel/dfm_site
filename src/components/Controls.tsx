@@ -10,8 +10,9 @@ export default function Controls(props: {
   label: string;
   src: string;
 }) {
-  const state = () =>
-    player_source() === props.src ? player_state() : "stopped";
+  function state() {
+    return player_source() === props.src ? player_state() : "stopped";
+  }
 
   return (
     <button

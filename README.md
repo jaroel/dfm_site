@@ -15,3 +15,9 @@ pnpm run dev
 ```bash
 pnpm run build
 ```
+
+## esupgrade
+
+```bash
+pnpm dlx esupgrade --write ./src/**/*.{ts,tsx}
+```
