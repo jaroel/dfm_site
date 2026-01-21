@@ -6,7 +6,7 @@ import Controls from "~/components/Controls";
 import Picture from "~/components/Picture";
 import Player from "~/components/Player";
 import { groupBy } from "~/groupby";
-import { fetchUzgListing, toRecordings, type Recording } from "~/uzg";
+import { fetchUzgListing, type Recording, toRecordings } from "~/uzg";
 
 const getUzgListing = query(async () => {
   return await fetchUzgListing();
@@ -42,7 +42,10 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(async () => toRecordings(await getUzgListing()), { initialValue: [] });
+  const recordings = createAsync(
+    async () => toRecordings(await getUzgListing()),
+    { initialValue: [] },
+  );
   return (
     <>
       <Title>Dinxper FM - Uitzending gemist</Title>
@@ -53,12 +56,12 @@ export default function UZG() {
       <div class="my-8">
         <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
           <a href="/" title="Terug naar homepage">
-              <Picture
-                logo={logo}
-                alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
-                class="max-w-32"
-                />
-                            
+            <Picture
+              logo={logo}
+              alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
+              class="max-w-32"
+            />
+
             <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
           </a>
           <h1 class="mx-12 font-bold text-4xl text-gray-100 lg:text-6xl">
@@ -117,7 +120,7 @@ function Listing(props: { recordings: Recording[] }) {
                         {(days) => (
                           <li>
                             <div class="flex flex-start items-center pt-3">
-                              <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400" />
+                              <div class="mr-3 -ml-1 h-2 w-2 rounded-full bg-gray-400" />
                               <p class="text-gray-800 text-l">
                                 {`${days.head.weekday_c} ${days.head.day} ${days.head.month_l}`}
                               </p>
