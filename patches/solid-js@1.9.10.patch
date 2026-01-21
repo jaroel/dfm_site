@@ -1,0 +1,43 @@
+diff --git a/node_modules/solid-js/.bun-tag-1ba4dc5327a8fec2 b/.bun-tag-1ba4dc5327a8fec2
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/web/dist/server.cjs b/web/dist/server.cjs
+index bbca7ce8615e2764bf413296362c60fe87bbdc49..0aeec295950b5bc02d7f9ab1ee455f6fde04dcdc 100644
+--- a/web/dist/server.cjs
++++ b/web/dist/server.cjs
+@@ -415,13 +415,13 @@ function renderToStream(code, options = {}) {
+           writable = {
+             end() {
+               writer.releaseLock();
+-              w.close();
++              w.close().catch(() => {});
+               resolve();
+             }
+           };
+           buffer = {
+             write(payload) {
+-              writer.write(encoder.encode(payload));
++              writer.write(encoder.encode(payload)).catch(() => {});
+             }
+           };
+           buffer.write(tmp);
+diff --git a/web/dist/server.js b/web/dist/server.js
+index c7ebce45a8ece2f77aae13a9c95d17bd43036e5b..af7bad3ef6439a8bd7edc8e2519ab821485996c9 100644
+--- a/web/dist/server.js
++++ b/web/dist/server.js
+@@ -414,13 +414,13 @@ function renderToStream(code, options = {}) {
+           writable = {
+             end() {
+               writer.releaseLock();
+-              w.close();
++              w.close().catch(() => {});
+               resolve();
+             }
+           };
+           buffer = {
+             write(payload) {
+-              writer.write(encoder.encode(payload));
++              writer.write(encoder.encode(payload)).catch(() => {});
+             }
+           };
+           buffer.write(tmp);

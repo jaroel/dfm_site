@@ -18,7 +18,7 @@
     "tailwindcss": "^4.1.18",
     "vite-imagetools": "^8.0.0",
     "vite-plugin-solid": "^2.11.10",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.17"
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
@@ -29,6 +29,9 @@
     "ftp-ts": "^1.1.0",
     "imagetools-core": "^8.0.0",
     "solid-js": "^1.9.10",
-    "vinxi": "^0.5.10"
+    "vinxi": "^0.5.11"
+  },
+  "patchedDependencies": {
+    "solid-js@1.9.10": "patches/solid-js@1.9.10.patch"
   }
 }
