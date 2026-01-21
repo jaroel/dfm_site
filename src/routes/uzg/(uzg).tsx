@@ -90,66 +90,69 @@ export default function UZG() {
   );
 }
 
-const massage = (recordings: Recording[]) =>
-  recordings.map((item) => ({
+function massage(recordings: Recording[]) {
+  return recordings.map((item) => ({
     weekday_c: weekday_long_c[item.weekday],
     weekday_l: weekday_long_c[item.weekday].toLowerCase(),
     month_c: month_long_c[item.month],
     month_l: month_long_c[item.month].toLowerCase(),
     ...item,
   }));
+}
 
-const Listing = (props: { recordings: Recording[] }) => (
-  <For each={groupBy(massage(props.recordings), (item) => item.year)}>
-    {(years) => (
-      <>
-        <h2 class="text-gray-800 text-xl">{years.head.year}</h2>
-        <div class="mt-0.5 mb-6 ml-4">
-          <For each={groupBy(years.members, (item) => item.month)}>
-            {(months) => (
-              <>
-                <h3 class="text-gray-800 text-lg">{months.head.month_c}</h3>
-                <div class="mt-0.5 mb-6 ml-4">
-                  <ol>
-                    <For each={groupBy(months.members, (item) => item.day)}>
-                      {(days) => (
-                        <li>
-                          <div class="flex flex-start items-center pt-3">
-                            <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400" />
-                            <p class="text-gray-800 text-l">
-                              {`${days.head.weekday_c} ${days.head.day} ${days.head.month_l}`}
-                            </p>
-                          </div>
-                          <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
-                            <For each={days.members}>
-                              {(entry) => (
-                                <div class="flex-row text-center">
-                                  <Controls
-                                    title={`Uitzending Dinxper FM van ${entry.weekday_l} ${entry.day} ${entry.month_c} ${entry.year} om ${entry.hour} uur`}
-                                    label={`${entry.hour}:00`}
-                                    src={entry.src}
-                                  />
-                                  <a
-                                    class="text-gray-800 text-sm underline"
-                                    href={entry.src}
-                                    rel="external"
-                                  >
-                                    download
-                                  </a>
-                                </div>
-                              )}
-                            </For>
-                          </div>
-                        </li>
-                      )}
-                    </For>
-                  </ol>
-                </div>
-              </>
-            )}
-          </For>
-        </div>
-      </>
-    )}
-  </For>
-);
+function Listing(props: { recordings: Recording[] }) {
+  return (
+    <For each={groupBy(massage(props.recordings), (item) => item.year)}>
+      {(years) => (
+        <>
+          <h2 class="text-gray-800 text-xl">{years.head.year}</h2>
+          <div class="mt-0.5 mb-6 ml-4">
+            <For each={groupBy(years.members, (item) => item.month)}>
+              {(months) => (
+                <>
+                  <h3 class="text-gray-800 text-lg">{months.head.month_c}</h3>
+                  <div class="mt-0.5 mb-6 ml-4">
+                    <ol>
+                      <For each={groupBy(months.members, (item) => item.day)}>
+                        {(days) => (
+                          <li>
+                            <div class="flex flex-start items-center pt-3">
+                              <div class="-ml-1 mr-3 h-2 w-2 rounded-full bg-gray-400" />
+                              <p class="text-gray-800 text-l">
+                                {`${days.head.weekday_c} ${days.head.day} ${days.head.month_l}`}
+                              </p>
+                            </div>
+                            <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
+                              <For each={days.members}>
+                                {(entry) => (
+                                  <div class="flex-row text-center">
+                                    <Controls
+                                      title={`Uitzending Dinxper FM van ${entry.weekday_l} ${entry.day} ${entry.month_c} ${entry.year} om ${entry.hour} uur`}
+                                      label={`${entry.hour}:00`}
+                                      src={entry.src}
+                                    />
+                                    <a
+                                      class="text-gray-800 text-sm underline"
+                                      href={entry.src}
+                                      rel="external"
+                                    >
+                                      download
+                                    </a>
+                                  </div>
+                                )}
+                              </For>
+                            </div>
+                          </li>
+                        )}
+                      </For>
+                    </ol>
+                  </div>
+                </>
+              )}
+            </For>
+          </div>
+        </>
+      )}
+    </For>
+  );
+}

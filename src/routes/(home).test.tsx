@@ -39,7 +39,7 @@ test("renders sponsors", async () => {
 
   // Link href
   expect(
-    Array.from(links)
+    [...links]
       .map((item) => item.getAttribute("href"))
       .filter(Boolean).length,
   ).to.equal(links.length);
@@ -47,14 +47,14 @@ test("renders sponsors", async () => {
 
   // Image src
   expect(
-    Array.from(images)
+    [...images]
       .map((item) => item.getAttribute("src"))
       .filter(Boolean).length,
   ).to.equal(links.length);
 
   // Image alt text
   expect(
-    Array.from(images)
+    [...images]
       .map((item) => item.getAttribute("alt"))
       .filter(Boolean).length,
   ).to.equal(links.length);
