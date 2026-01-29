@@ -9,7 +9,7 @@
     "lint": "biome lint"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.11",
+    "@biomejs/biome": "^2.3.13",
     "@solidjs/testing-library": "^0.8.10",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/user-event": "^14.6.1",
@@ -19,7 +19,7 @@
     "tailwindcss": "^4.1.18",
     "vite-imagetools": "^8.0.0",
     "vite-plugin-solid": "^2.11.10",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
@@ -29,7 +29,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "ftp-ts": "^1.1.0",
     "imagetools-core": "^8.0.0",
-    "solid-js": "^1.9.10",
+    "solid-js": "^1.9.11",
     "vinxi": "^0.5.11"
   },
   "engines": {
