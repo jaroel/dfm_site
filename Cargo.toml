@@ -7,7 +7,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = { version = "0.7.0-rc.3", features = ["router", "fullstack"] }
+dioxus = { version = "0.7", features = ["router", "fullstack"] }
+chrono = "0"
+serde = { version = "1", features = ["derive"] }
+suppaftp = { version = "8", features = ["tokio"], optional = true }
+chrono-tz = "0"
 
 [features]
 default = ["web"]
@@ -18,7 +22,7 @@ desktop = ["dioxus/desktop"]
 # The feature that are only required for the mobile = ["dioxus/mobile"] build target should be optional and only enabled in the mobile = ["dioxus/mobile"] feature
 mobile = ["dioxus/mobile"]
 # The feature that are only required for the server = ["dioxus/server"] build target should be optional and only enabled in the server = ["dioxus/server"] feature
-server = ["dioxus/server"]
+server = ["dioxus/server", "dep:suppaftp"]
 
 [profile.release]
 opt-level = "z"
@@ -26,4 +30,4 @@ debug = false
 lto = true
 codegen-units = 1
 panic = "abort"
-incremental = false
+incremental = true

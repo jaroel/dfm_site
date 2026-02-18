@@ -26,4 +26,4 @@ script = []
 [web.wasm_opt]
 level = "z"
 debug = false
-# extra_features = ["--strip-debug"]
+extra_features = ["--strip-debug"]
