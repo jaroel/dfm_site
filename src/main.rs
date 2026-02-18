@@ -11,6 +11,14 @@ mod components;
 /// Define a views module that contains the UI for all Layouts and Routes for our app.
 mod views;
 
+#[cfg(feature = "server")]
+pub mod uzg;
+
+#[cfg(feature = "server")]
+use dioxus::server::axum::routing::get;
+#[cfg(feature = "server")]
+use uzg::stream_ftp_file;
+
 /// The Route enum is used to define the structure of internal routes in our app. All route enums need to derive
 /// the [`Routable`] trait, which provides the necessary methods for the router to work.
 /// 
@@ -43,6 +51,14 @@ const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 fn main() {
     // The `launch` function is the main entry point for a dioxus app. It takes a component and renders it with the platform feature
     // you have enabled
+    #[cfg(feature = "server")]    
+    dioxus::serve(|| async move {
+        let router = dioxus::server::router(App)
+            .route("/uzg_data/{filename}", get(stream_ftp_file));
+        Ok(router)
+    });
+
+    #[cfg(not(feature = "server"))]
     dioxus::launch(App);
 }
 
