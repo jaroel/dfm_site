@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::{controls::Controls, player::{Player, PlayerSrc}};
+use crate::components::{controls::Controls, player::Player};
 
 const LOGO: Asset = asset!(
     "/assets/logodinxperfm.png",
@@ -49,7 +49,7 @@ pub fn Home() -> Element {
                         href: "/uzg/",
                         title: "Uitzending gemist? Luister ze terug!",
                         class: "inline-block py-3 px-4 text-blue-700 no-underline",
-                        "\n                Uitzending gemist?\n              "
+                        "Uitzending gemist?"
                     }
                 }
             }
@@ -67,7 +67,7 @@ pub fn Home() -> Element {
                 href: PROGRAMERING,
                 title: "Bekijk het programma in een nieuw scherm",
                 class: "text-blue-400",
-                "\n            In nieuwe pagina openen\n          "
+                "In nieuwe pagina openen"
             }
         }
         Sponsors {}
@@ -148,9 +148,7 @@ const LOGO_LOGO23: Asset = asset!(
 fn Sponsors() -> Element {
     rsx! {
         div { class: "mt-10 text-center",
-            h2 { class: "mb-8 text-2xl",
-                "\n            Dinxper FM wordt mede mogelijk gemaakt door\n          "
-            }
+            h2 { class: "mb-8 text-2xl", "Dinxper FM wordt mede mogelijk gemaakt door" }
             div {
                 "data-testid": "sponsors",
                 class: "flex flex-row flex-wrap justify-evenly",

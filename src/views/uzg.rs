@@ -42,9 +42,6 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
 
 #[component]
 fn UzgListing(items: Vec<Recording>) -> Element {
-    // let mut _src = use_signal(|| "".to_string());
-    // let mut player_state = use_signal(|| PlayerState::Stopped);
-
     rsx! {
         Player {}
         {
