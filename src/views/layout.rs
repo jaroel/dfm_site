@@ -6,17 +6,15 @@ const BACKGROUND_IMAGE: Asset = asset!("/assets/dfm_studio-blurred.jpg");
 pub fn Layout() -> Element {
     rsx! {
 
-         div {
+        div {
             class: "h-screen bg-fixed bg-gray-60 bg-center bg-cover text-slate-50",
             background_image: format!("url({BACKGROUND_IMAGE})"),
-            div {
-                class: "overflow-auto h-full bg-black/75",
-                div {
-                    class: "mx-auto max-w-6xl",
+            div { class: "overflow-auto h-full bg-black/75",
+                div { class: "mx-auto max-w-6xl",
                     Outlet::<Route> {}
-                    Nav{}
+                    Nav {}
                 }
-
+            
             }
         }
     }
@@ -30,7 +28,7 @@ fn Nav() -> Element {
                 li {
                     Link {
                         to: Route::Home {},
-                        attributes: vec![Attribute{name: "title", value: "DinxperFM home page".into_value(), namespace: None, volatile: true}],
+                        title: "DinxperFM home page".into_value(),
                         "Home page"
                     }
                 }

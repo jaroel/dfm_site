@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::components::{controls::Controls, player::Player};
+use crate::{Route, components::{controls::Controls, player::Player}};
 
 const LOGO: Asset = asset!(
     "/assets/logodinxperfm.png",
@@ -45,8 +45,8 @@ pub fn Home() -> Element {
                     }
                 }
                 li {
-                    a {
-                        href: "/uzg/",
+                    Link {
+                        to: Route::UitzendingGemist {},
                         title: "Uitzending gemist? Luister ze terug!",
                         class: "inline-block py-3 px-4 text-blue-700 no-underline",
                         "Uitzending gemist?"
