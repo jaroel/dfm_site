@@ -1,16 +1,8 @@
 use dioxus::prelude::*;
 
-#[cfg(feature = "server")]
-use chrono::{Timelike, TimeZone, Utc};
-#[cfg(feature = "server")]
-use chrono_tz::Europe::Amsterdam;
-#[cfg(feature = "server")]
-use crate::components::recording::Recording;
-
 use crate::dioxus_fullstack::body::Body;
 use crate::dioxus_fullstack::extract::Path;
-use crate::dioxus_fullstack::response;
-use crate::uzg::response::IntoResponse;
+use crate::dioxus_fullstack::response::{Response,IntoResponse};
 
 use suppaftp::{types::FileType, tokio::AsyncFtpStream};
 use tokio_util::bytes;
@@ -28,7 +20,7 @@ impl From<suppaftp::FtpError> for AppError {
 }
 
 impl IntoResponse for AppError {
-    fn into_response(self) -> response::Response {
+    fn into_response(self) -> Response {
         (StatusCode::INTERNAL_SERVER_ERROR, String::from("Woopsie!")).into_response()
     }
 }
