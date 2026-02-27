@@ -94,7 +94,8 @@ impl Recording {
     }
 }
 
-#[server(FetchUZGEntries, "/api")]
+#[server]
+#[lazy]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
   use suppaftp::tokio::AsyncFtpStream;
   use chrono::{TimeZone, Utc};
@@ -119,9 +120,31 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
   Ok(names)
 }
 
+
+pub struct UitzendingGemist {
+    data: Resource<Result<Vec<Recording>, ServerFnError>>
+}
+
+#[lazy_route]
+impl LazyRoute for UitzendingGemist {
+    fn data() -> Self {
+        Self {
+            data: Resource::new(|| (), |_| async move { fetch_uzg_entries().await })
+        }
+    }
+
+    fn view(this: Self) -> AnyView {
+        
+        view! {
+            <UitzendingGemistView entries={this.data} />
+        }.into_any()
+
+    }
+}
+
 #[component]
-pub(crate) fn UitzendingGemist() -> impl IntoView {
-    let entries = Resource::new(|| (), |_| async move { fetch_uzg_entries().await });
+pub(crate) fn UitzendingGemistView(entries: Resource<Result<Vec<Recording>, ServerFnError>>) -> AnyView {
+    // let entries = Resource::new(|| (), |_| async move { fetch_uzg_entries().await });
     view! {
         <Title text="Dinxper FM - het gemiste geluid van Dinxperlo" />
         <div class="flex justify-evenly">
@@ -171,11 +194,11 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
                 }}
             </Transition>
         </div>
-    }
+    }.into_any()
 }
 
 #[component]
-fn UzgListing(items: Vec<Recording>) -> impl IntoView {
+fn UzgListing(items: Vec<Recording>) -> AnyView {
     let src = RwSignal::new("".into());
     let player_state = RwSignal::new(PlayerState::Stopped);
     view! {
@@ -241,5 +264,5 @@ fn UzgListing(items: Vec<Recording>) -> impl IntoView {
                 }
             })
             .collect_view()}
-    }
+    }.into_any()
 }

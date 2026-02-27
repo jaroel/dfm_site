@@ -8,6 +8,7 @@ use crate::uzg::UitzendingGemist;
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, Stylesheet, Title};
 use leptos_meta::{Meta, MetaTags};
+use leptos_router::Lazy;
 use leptos_router::{
     components::{Route, Router, Routes},
     StaticSegment,
@@ -56,7 +57,7 @@ pub fn App() -> impl IntoView {
                             <Route path=StaticSegment("") view=HomePage />
                             <Route
                                 path=StaticSegment("/uzg")
-                                view=UitzendingGemist
+                                view={Lazy::<UitzendingGemist>::new()}
                                 ssr=leptos_router::SsrMode::InOrder
                             />
                         </Routes>
