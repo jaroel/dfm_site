@@ -95,5 +95,5 @@ pub fn Controls(
             </svg>
 
         </button>
-    }
+    }.into_any()
 }
