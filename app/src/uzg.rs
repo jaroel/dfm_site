@@ -2,6 +2,7 @@ use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::prelude::*;
 // use leptos_image_optimizer::Image;
 use leptos_meta::Title;
+use leptos_router::{LazyRoute, components::A, lazy_route};
 use serde::{Deserialize, Serialize};
 use crate::{controls::Controls, player::{Player, PlayerState}};
 
@@ -126,7 +127,7 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
         <div class="flex justify-evenly">
             <div class="flex flex-auto items-center">
                 <div class="my-8 mx-12">
-                    <a href="/">
+                    <A href="/">
                         <img
                             src="/assets/logodinxperfm.png"
                             alt="DinxperFM logo"
@@ -137,7 +138,7 @@ pub(crate) fn UitzendingGemist() -> impl IntoView {
                             // priority=true
                             class="mx-auto"
                         />
-                    </a>
+                    </A>
                     <p class="mt-4 text-center">"Het swingende geluid van Dinxperlo!"</p>
                 </div>
                 <h1 class="text-4xl font-bold text-gray-100 sm:text-5xl lg:text-6xl">

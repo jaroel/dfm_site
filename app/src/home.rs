@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 use crate::{
     controls::Controls,
@@ -32,13 +33,14 @@ pub fn HomePage() -> impl IntoView {
                     />
                 </li>
                 <li>
-                    <a
-                        class="inline-block py-3 px-4 text-blue-700 no-underline"
-                        href="/uzg"
-                        title="Uitzending gemist? Luister ze terug!"
+                    <A
+                    href="/uzg"
+                    {..}
+                    class="inline-block py-3 px-4 text-blue-700 no-underline"
+                    title="Uitzending gemist? Luister ze terug!"
                     >
                         "Uitzending gemist?"
-                    </a>
+                    </A>
                 </li>
             </ul>
         </nav>
