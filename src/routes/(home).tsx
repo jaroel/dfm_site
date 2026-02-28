@@ -79,14 +79,6 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="http://www.naaiateliermoniqueharmsen.nl/" target="blank">
-              <Picture
-                logo={sponsors["/src/assets/sponsors/logo13.jpg"]}
-                alt="Logo van Naai Atelier Monique Harmsen"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
             <a href="https://podesta.nl/" target="blank">
               <Picture
                 logo={sponsors["/src/assets/sponsors/logo15.jpg"]}
@@ -114,42 +106,10 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="https://www.olddutchdinxperlo.nl/" target="blank">
-              <Picture
-                logo={sponsors["/src/assets/sponsors/olddutch.jpg"]}
-                alt="Logo van Old Dutch"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a href="https://www.ma-shops.nl/?ref=dinxperfm" target="blank">
-              <Picture
-                logo={sponsors["/src/assets/sponsors/mashops.jpg"]}
-                alt="Logo van MA-Shops"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
             <a href="https://harmtakke.nl" target="blank">
               <Picture
                 logo={sponsors["/src/assets/sponsors/logo-harmtakke.jpg"]}
                 alt="Logo van Harm Takke"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a href="https://etenbijrico.nl" target="blank">
-              <Picture
-                logo={sponsors["/src/assets/sponsors/etenbijrico.jpg"]}
-                alt="Logo van Eten bij Rico"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a href="https://hetblauwemeer.nl" target="blank">
-              <Picture
-                logo={sponsors["/src/assets/sponsors/logo-blauwe-meer.png"]}
-                alt="Logo van Het Blauwe Meer"
               />
             </a>
           </div>
