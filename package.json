@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
+    "@solid-primitives/resource": "^0.4.3",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.4",
     "@solidjs/start": "^1.3.2",

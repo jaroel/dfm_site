@@ -6,6 +6,7 @@
       "name": "solid-site",
       "dependencies": {
         "@fontsource/cabin": "^5.2.8",
+        "@solid-primitives/resource": "^0.4.3",
         "@solidjs/meta": "^0.29.4",
         "@solidjs/router": "^0.15.4",
         "@solidjs/start": "^1.3.2",
@@ -16,13 +17,13 @@
         "vinxi": "^0.5.11",
       },
       "devDependencies": {
-        "@biomejs/biome": "^2.4.4",
+        "@biomejs/biome": "^2.4.6",
         "@solidjs/testing-library": "^0.8.10",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/user-event": "^14.6.1",
         "autoprefixer": "^10.4.27",
         "jsdom": "^27.4.0",
-        "postcss": "^8.5.6",
+        "postcss": "^8.5.8",
         "tailwindcss": "^4.2.1",
         "vite-imagetools": "^8.0.0",
         "vite-plugin-solid": "^2.11.10",
@@ -387,6 +388,8 @@
     "@sindresorhus/is": ["@sindresorhus/is@7.1.1", "", {}, "sha512-rO92VvpgMc3kfiTjGT52LEtJ8Yc5kCWhZjLQ3LwlA4pSgPpQO7bVpYXParOD8Jwf+cVQECJo3yP/4I8aZtUQTQ=="],
 
     "@sindresorhus/merge-streams": ["@sindresorhus/merge-streams@4.0.0", "", {}, "sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ=="],
+
+    "@solid-primitives/resource": ["@solid-primitives/resource@0.4.3", "", { "peerDependencies": { "solid-js": "^1.6.0" } }, "sha512-bu9z9yORJLZPJzrPSuL+yfhq/8WFWNI4EPTz2j9NeMym1WlZFGH0j0hGULRJY3/1PeQeWayEc0bM+X/8ICHVBQ=="],
 
     "@solidjs/meta": ["@solidjs/meta@0.29.4", "", { "peerDependencies": { "solid-js": ">=1.8.4" } }, "sha512-zdIWBGpR9zGx1p1bzIPqF5Gs+Ks/BH8R6fWhmUa/dcK1L2rUC8BAcZJzNRYBQv74kScf1TSOs0EY//Vd/I0V8g=="],
 

@@ -1,3 +1,4 @@
+import { makeCache } from "@solid-primitives/resource";
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync, query } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";

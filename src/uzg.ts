@@ -1,15 +1,8 @@
-import { getFtpListing } from "./ftp.ts";
-
-type FilenameDotMp3 = `${string}.mp3`;
+import { type FilenameDotMp3, getFtpListingCached } from "./ftp.ts";
 
 export async function fetchUzgListing() {
   "use server";
-  return (
-    (await getFtpListing())
-      .map((item) => item.name)
-      // .filter((file) => file.endsWith("-12-2023-19-00.mp3"))
-      .filter((file) => file.endsWith(".mp3")) as FilenameDotMp3[]
-  );
+  return await getFtpListingCached();
 }
 
 export function toRecordings(listing: FilenameDotMp3[]) {
