@@ -8,7 +8,10 @@
       }
     },
     "domains": {
-      "solid": "all"
+      "solid": "all",
+      "project": "all",
+      "test": "all",
+      "types": "all"
     }
   },
   "formatter": {

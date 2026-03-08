@@ -2,11 +2,11 @@ import { Meta, Title } from "@solidjs/meta";
 import { createAsync, query } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&as=picture";
-import Controls from "~/components/Controls";
-import Picture from "~/components/Picture";
-import Player from "~/components/Player";
-import { groupBy } from "~/groupby";
-import { fetchUzgListing, type Recording, toRecordings } from "~/uzg";
+import Controls from "~/components/Controls.tsx";
+import Picture from "~/components/Picture.tsx";
+import Player from "~/components/Player.tsx";
+import { groupBy } from "~/groupby.ts";
+import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
 
 const getUzgListing = query(async () => {
   return await fetchUzgListing();

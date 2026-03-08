@@ -2,7 +2,6 @@ import { createHandler, StartServer } from "@solidjs/start/server";
 
 import favicon from "~/assets/favicon.ico";
 
-
 export default createHandler(() => (
   <StartServer
     document={({ assets, children, scripts }) => (

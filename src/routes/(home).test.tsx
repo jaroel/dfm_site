@@ -1,6 +1,6 @@
 import { render } from "@solidjs/testing-library";
 import { expect, test } from "vitest";
-import Home from "./(home)";
+import Home from "./(home).tsx";
 
 test("renders", async () => {
   const { getByRole, getByText } = render(() => <Home />);
@@ -39,23 +39,17 @@ test("renders sponsors", async () => {
 
   // Link href
   expect(
-    [...links]
-      .map((item) => item.getAttribute("href"))
-      .filter(Boolean).length,
+    [...links].map((item) => item.getAttribute("href")).filter(Boolean).length,
   ).to.equal(links.length);
   const images = container.getElementsByTagName("img");
 
   // Image src
   expect(
-    [...images]
-      .map((item) => item.getAttribute("src"))
-      .filter(Boolean).length,
+    [...images].map((item) => item.getAttribute("src")).filter(Boolean).length,
   ).to.equal(links.length);
 
   // Image alt text
   expect(
-    [...images]
-      .map((item) => item.getAttribute("alt"))
-      .filter(Boolean).length,
+    [...images].map((item) => item.getAttribute("alt")).filter(Boolean).length,
   ).to.equal(links.length);
 });

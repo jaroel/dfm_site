@@ -1,10 +1,11 @@
 // import userEvent from "@testing-library/user-event";
 import { render } from "@solidjs/testing-library";
 import { expect, test } from "vitest";
-import Picture from "./Picture";
+import Picture from "./Picture.tsx";
 // const user = userEvent.setup();
 
 import logo1 from "~/assets/logodinxperfm.png?w=200&as=picture";
+
 test("minimal", async () => {
   const { getByAltText } = render(() => (
     <Picture alt="some text" logo={logo1} />
@@ -36,6 +37,7 @@ test("full", async () => {
 });
 
 import logo2 from "~/assets/logodinxperfm.png?w=100&format=avif;png&as=picture";
+
 test("sources", async () => {
   const { container } = render(() => <Picture alt="some text" logo={logo2} />);
   const sources = container.getElementsByTagName("source");

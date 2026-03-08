@@ -3,7 +3,7 @@ import {
   source as player_source,
   state as player_state,
   setSource,
-} from "./Player";
+} from "./Player.tsx";
 
 export default function Controls(props: {
   title: string;

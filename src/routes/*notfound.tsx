@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "@solidjs/start";
 import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&as=picture";
-import Picture from "~/components/Picture";
+import Picture from "~/components/Picture.tsx";
 
 export default function NotFound() {
   return (

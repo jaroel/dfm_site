@@ -1,9 +1,9 @@
 import logo from "~/assets/logodinxperfm.png?w=384;768&format=avif;webp;png&as=picture";
 import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&as=picture";
 import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&as=picture";
-import Controls from "~/components/Controls";
-import Picture, { type TPicture } from "~/components/Picture";
-import Player from "~/components/Player";
+import Controls from "~/components/Controls.tsx";
+import Picture, { type TPicture } from "~/components/Picture.tsx";
+import Player from "~/components/Player.tsx";
 
 const sponsors = import.meta.glob<TPicture>("~/assets/sponsors/*", {
   eager: true,
@@ -21,7 +21,7 @@ export default function Home() {
             logo={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
             fetchpriority="high"
-            />
+          />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
       </div>
