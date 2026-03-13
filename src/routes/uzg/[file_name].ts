@@ -1,5 +1,5 @@
 import type { APIEvent } from "@solidjs/start/server";
-import { FilenameDotMp3, getFtpStream } from "~/ftp.ts";
+import { getFtpStream } from "~/ftp.ts";
 
 export async function GET({ params, request }: APIEvent) {
   const filename = params.file_name.trim();
