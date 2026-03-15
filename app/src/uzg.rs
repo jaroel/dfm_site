@@ -1,28 +1,32 @@
 use chrono::{Datelike, NaiveDateTime, Timelike};
 use leptos::prelude::*;
 // use leptos_image_optimizer::Image;
+use crate::{
+    controls::Controls,
+    player::{Player, PlayerState},
+};
 use leptos_meta::Title;
-use leptos_router::{LazyRoute, components::A, lazy_route};
+use leptos_router::{components::A, lazy_route, LazyRoute};
 use serde::{Deserialize, Serialize};
-use crate::{controls::Controls, player::{Player, PlayerState}};
 
 impl From<&String> for Recording {
-  fn from(file_name: &String) -> Self {
-    // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
-    let datetime = NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
-    let date = datetime.date();
-    let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
+    fn from(file_name: &String) -> Self {
+        // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
+        let datetime =
+            NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
+        let date = datetime.date();
+        let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
 
-    Recording {
-      day: date.day(),
-      month: date.month(),
-      year: date.year(),
-      weekday: date.weekday().number_from_monday(),
-      hour: datetime.time().hour(),
-      src: format!("{}/uzg_data/{}", public_url, file_name),
-      key: datetime.and_utc().timestamp(),
+        Recording {
+            day: date.day(),
+            month: date.month(),
+            year: date.year(),
+            weekday: date.weekday().number_from_monday(),
+            hour: datetime.time().hour(),
+            src: format!("{}/uzg_data/{}", public_url, file_name),
+            key: datetime.and_utc().timestamp(),
+        }
     }
-  }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -97,53 +101,53 @@ impl Recording {
 #[server]
 #[lazy]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-  use suppaftp::tokio::AsyncFtpStream;
-  use chrono::{TimeZone, Utc};
-  use chrono_tz::Europe::Amsterdam;
-  let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await?;
-  ftp_stream.login("UZG", "4862KpZ2").await?;
-  let items = ftp_stream.nlst(None).await?;
-  let _ = ftp_stream.quit().await;
+    use chrono::{TimeZone, Utc};
+    use chrono_tz::Europe::Amsterdam;
+    use suppaftp::tokio::AsyncFtpStream;
+    let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await?;
+    ftp_stream.login("UZG", "4862KpZ2").await?;
+    let items = ftp_stream.nlst(None).await?;
+    let _ = ftp_stream.quit().await;
 
-  let dt = Amsterdam.from_utc_datetime(&Utc::now().naive_utc());
-  let now_key = dt.with_minute(0).unwrap().timestamp() + 3600;
+    let dt = Amsterdam.from_utc_datetime(&Utc::now().naive_utc());
+    let now_key = dt.with_minute(0).unwrap().timestamp() + 3600;
 
-  let mut names = items
-    .iter()
-    // .filter(|filename| filename.ends_with("04-08-2023-11-00.mp3"))
-    .filter(|filename| filename.ends_with(".mp3"))
-    .map(Recording::from)
-    .filter(|recording| recording.key <= now_key)
-    .collect::<Vec<Recording>>();
-  names.sort_by_key(|k| k.key);
-  names.reverse();
-  Ok(names)
+    let mut names = items
+        .iter()
+        // .filter(|filename| filename.ends_with("04-08-2023-11-00.mp3"))
+        .filter(|filename| filename.ends_with(".mp3"))
+        .map(Recording::from)
+        .filter(|recording| recording.key <= now_key)
+        .collect::<Vec<Recording>>();
+    names.sort_by_key(|k| k.key);
+    names.reverse();
+    Ok(names)
 }
 
-
 pub struct UitzendingGemist {
-    data: Resource<Result<Vec<Recording>, ServerFnError>>
+    data: Resource<Result<Vec<Recording>, ServerFnError>>,
 }
 
 #[lazy_route]
 impl LazyRoute for UitzendingGemist {
     fn data() -> Self {
         Self {
-            data: Resource::new(|| (), |_| async move { fetch_uzg_entries().await })
+            data: Resource::new(|| (), |_| async move { fetch_uzg_entries().await }),
         }
     }
 
     fn view(this: Self) -> AnyView {
-        
         view! {
             <UitzendingGemistView entries={this.data} />
-        }.into_any()
-
+        }
+        .into_any()
     }
 }
 
 #[component]
-pub(crate) fn UitzendingGemistView(entries: Resource<Result<Vec<Recording>, ServerFnError>>) -> AnyView {
+pub(crate) fn UitzendingGemistView(
+    entries: Resource<Result<Vec<Recording>, ServerFnError>>,
+) -> AnyView {
     // let entries = Resource::new(|| (), |_| async move { fetch_uzg_entries().await });
     view! {
         <Title text="Dinxper FM - het gemiste geluid van Dinxperlo" />
@@ -194,7 +198,8 @@ pub(crate) fn UitzendingGemistView(entries: Resource<Result<Vec<Recording>, Serv
                 }}
             </Transition>
         </div>
-    }.into_any()
+    }
+    .into_any()
 }
 
 #[component]
@@ -248,7 +253,7 @@ fn UzgListing(items: Vec<Recording>) -> AnyView {
                                                                                 download
                                                                             </a>
                                                                         </div>
-                                                                    }
+                                                                    }.into_any()
                                                                 })
                                                                 .collect_view()}
                                                         </div>

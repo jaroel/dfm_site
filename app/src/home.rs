@@ -47,4 +47,5 @@ pub fn HomePage() -> impl IntoView {
         // <Picture logo=programmering alt="Programmering van Dinxperlo FM" />
         <div class="flex justify-center mt-10"></div>
     }
+    .into_any()
 }

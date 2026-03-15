@@ -6,7 +6,7 @@ pub mod uzg;
 use crate::home::HomePage;
 use crate::uzg::UitzendingGemist;
 use leptos::prelude::*;
-use leptos_meta::{provide_meta_context, Stylesheet, Title};
+use leptos_meta::{provide_meta_context, HashedStylesheet, Title};
 use leptos_meta::{Meta, MetaTags};
 use leptos_router::Lazy;
 use leptos_router::{
@@ -21,6 +21,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <HashedStylesheet id="leptos" options=options.clone() />
                 <AutoReload options=options.clone() />
                 <HydrationScripts options />
                 <MetaTags />
@@ -38,8 +39,6 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/start-axum-workspace.css" />
-
         // sets the document title
         <Title text="Dinxper FM - Het swingende geluid van Dinxperlo" />
         <Meta name="description" content="Dinxper FM - Het swingende geluid van Dinxperlo" />
