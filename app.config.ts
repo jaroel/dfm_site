@@ -1,10 +1,21 @@
 import { defineConfig } from "@solidjs/start/config";
 import tailwindcss from "@tailwindcss/vite";
+import devtools from "solid-devtools/vite";
 import { imagetools } from "vite-imagetools";
 
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss(), imagetools()],
+    plugins: [
+      devtools({
+        autoname: true,
+        locator: {
+          componentLocation: true,
+          jsxLocation: true,
+        },
+      }),
+      tailwindcss(),
+      imagetools(),
+    ],
     build: {
       reportCompressedSize: false,
     },

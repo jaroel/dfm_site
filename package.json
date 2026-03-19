@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.27",
     "jsdom": "^27.4.0",
     "postcss": "^8.5.8",
+    "solid-devtools": "^0.34.5",
     "tailwindcss": "^4.2.2",
     "vite-imagetools": "^8.0.0",
     "vite-plugin-solid": "^2.11.11",
