@@ -1,3 +1,4 @@
+import { createMemo } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import {
   source as player_source,
@@ -10,9 +11,9 @@ export default function Controls(props: {
   label: string;
   src: string;
 }) {
-  function state() {
-    return player_source() === props.src ? player_state() : "stopped";
-  }
+  const state = createMemo(() =>
+    player_source() === props.src ? player_state() : "stopped",
+  );
 
   return (
     <button
