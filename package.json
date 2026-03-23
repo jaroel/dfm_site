@@ -16,9 +16,10 @@
     "jsdom": "^27.4.0",
     "solid-devtools": "^0.34.5",
     "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
     "vite-imagetools": "^8.0.0",
     "vite-plugin-solid": "^2.11.11",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.1"
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
