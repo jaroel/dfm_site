@@ -5,22 +5,21 @@ export async function fetchUzgListing() {
   return await getFtpListingCached();
 }
 
+const formatter = new Intl.DateTimeFormat("nl-NL", {
+  timeZone: "Europe/Amsterdam",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  weekday: "long",
+  hour: "2-digit",
+});
+
 export function toRecordings(timestamps: number[]) {
   return timestamps.map((key) => {
-    const formatter = new Intl.DateTimeFormat("nl-NL", {
-      timeZone: "Europe/Amsterdam",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      weekday: "long",
-      hour: "2-digit",
-    });
     const parts = formatter.formatToParts(key);
     const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
     for (const { type, value } of parts) {
-      if (type !== "literal") {
-        result[type] = value;
-      }
+      result[type] = value;
     }
 
     return {
