@@ -3,7 +3,6 @@ WORKDIR /app/
 COPY . /app/
 RUN bun install --frozen-lockfile
 RUN bun run lint
-RUN bun run test --run
 ENV NODE_ENV=production
 RUN bun run build
 

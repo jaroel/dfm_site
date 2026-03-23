@@ -5,34 +5,31 @@ export async function fetchUzgListing() {
   return await getFtpListingCached();
 }
 
-function formatDate(key: number): string {
-  const d = new Date(key);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}-${pad(d.getHours())}-00.mp3`;
-}
-
 export function toRecordings(timestamps: number[]) {
   return timestamps.map((key) => {
-    const datetime = new Date(key);
+    const formatter = new Intl.DateTimeFormat("nl-NL", {
+      timeZone: "Europe/Amsterdam",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      weekday: "long",
+      hour: "2-digit",
+    });
+    const parts = formatter.formatToParts(key);
+    const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
+    for (const { type, value } of parts) {
+      if (type !== "literal") {
+        result[type] = value;
+      }
+    }
+
     return {
-      day: datetime.getDate(),
-      month: datetime.getMonth() as
-        | 0
-        | 1
-        | 2
-        | 3
-        | 4
-        | 5
-        | 6
-        | 7
-        | 8
-        | 9
-        | 10
-        | 11,
-      year: datetime.getFullYear(),
-      weekday: datetime.getDay() as 0 | 1 | 2 | 3 | 4 | 5 | 6,
-      hour: datetime.getHours(),
-      src: `/uzg/${formatDate(key)}`,
+      day: Number(result.day),
+      month: Number(result.month),
+      year: Number(result.year),
+      weekday: result.weekday,
+      hour: Number(result.hour),
+      src: `/uzg/${result.day}-${result.month}-${result.year}-${result.hour}-00.mp3`,
       key,
     };
   });

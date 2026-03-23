@@ -16,28 +16,29 @@ export async function getConnection() {
   });
 }
 
-async function getFtpListing(): Promise<number[]> {
-  const now = new Date().toLocaleString("en-US", {
-    timeZone: "Europe/Amsterdam",
-  });
-  const threshold = Date.parse(now) - 3600000;
+export async function getFtpListing(): Promise<number[]> {
+  const old_TZ = process.env.TZ;
+  process.env.TZ = "Europe/Amsterdam";
+  const now = new Date();
+  const threshold = now.getTime() - 3600000;
 
   try {
     const connection = await getConnection();
-    const listing = await connection.list();
-    connection.end();
-
-    return listing
+    const listing = (await connection.list())
       .filter((value): value is IListingElement => typeof value !== "string")
+      .sort((a, b) => b.date - a.date);
+    connection.end();
+    return listing
       .filter((item) => isDotMp3(item.name))
       .map((item) => {
         const [day, month, year, hour] = item.name.split(/[-.]/);
         return new Date(`${year}-${month}-${day}T${hour}:00`).getTime();
       })
-      .filter((key) => key <= threshold)
-      .sort((a, b) => b - a);
+      .filter((timestamp) => timestamp <= threshold);
   } catch {
     return [];
+  } finally {
+    process.env.TZ = old_TZ;
   }
 }
 

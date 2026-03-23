@@ -16,29 +16,19 @@ export const route = {
   load: () => getUzgListing(),
 };
 
-const weekday_long_c = {
-  0: "Zondag",
-  1: "Maandag",
-  2: "Dinsdag",
-  3: "Woensdag",
-  4: "Donderdag",
-  5: "Vrijdag",
-  6: "Zaterdag",
-};
-
 const month_long_c = {
-  0: "Januari",
-  1: "Februari",
-  2: "Maart",
-  3: "April",
-  4: "Mei",
-  5: "Juni",
-  6: "Juli",
-  7: "Augustus",
-  8: "September",
-  9: "Oktober",
-  10: "November",
-  11: "December",
+  1: "Januari",
+  2: "Februari",
+  3: "Maart",
+  4: "April",
+  5: "Mei",
+  6: "Juni",
+  7: "Juli",
+  8: "Augustus",
+  9: "September",
+  10: "Oktober",
+  11: "November",
+  12: "December",
 };
 
 export default function UZG() {
@@ -93,12 +83,15 @@ export default function UZG() {
   );
 }
 
+function toTitleCase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function massage(recordings: Recording[]) {
   return recordings.map((item) => ({
-    weekday_c: weekday_long_c[item.weekday],
-    weekday_l: weekday_long_c[item.weekday].toLowerCase(),
-    month_c: month_long_c[item.month],
+    weekday_c: toTitleCase(item.weekday),
     month_l: month_long_c[item.month].toLowerCase(),
+    month_c: month_long_c[item.month],
     ...item,
   }));
 }
@@ -130,7 +123,7 @@ function Listing(props: { recordings: Recording[] }) {
                                 {(entry) => (
                                   <div class="flex-row text-center">
                                     <Controls
-                                      title={`Uitzending Dinxper FM van ${entry.weekday_l} ${entry.day} ${entry.month_c} ${entry.year} om ${entry.hour} uur`}
+                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour} uur`}
                                       label={`${entry.hour}:00`}
                                       src={entry.src}
                                     />
@@ -138,6 +131,7 @@ function Listing(props: { recordings: Recording[] }) {
                                       class="text-gray-800 text-sm underline"
                                       href={entry.src}
                                       rel="external"
+                                      data-key={entry.key}
                                     >
                                       download
                                     </a>
