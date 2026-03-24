@@ -27,7 +27,7 @@
         "typescript": "^6.0.2",
         "vite-imagetools": "^8.0.0",
         "vite-plugin-solid": "^2.11.11",
-        "vitest": "^4.1.0",
+        "vitest": "^4.1.1",
       },
     },
   },
