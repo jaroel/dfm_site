@@ -14,7 +14,7 @@ export function groupBy<K, T>(
   for (const item of list) {
     const key = func(item);
 
-    if (!group || key !== group.key) {
+    if (key !== group?.key) {
       group = {
         key,
         head: item,
