@@ -19,8 +19,7 @@ export async function getConnection() {
 export async function getFtpListing(): Promise<number[]> {
   const old_TZ = process.env.TZ;
   process.env.TZ = "Europe/Amsterdam";
-  const now = new Date();
-  const threshold = now.getTime() - 3600000;
+  const threshold = Date.now() - 3600000;
 
   try {
     const connection = await getConnection();
@@ -49,13 +48,13 @@ export const [getFtpListingCached] = makeCache<FTPListing, void, unknown>(
   {
     expires: () => {
       // Cache up to 2 minutes after next hour. Audio processing needs some time
-      const now = new Date();
+      const now = Date.now();
       const end = new Date(now);
       end.setMinutes(2, 0, 0);
-      if (now.getTime() > end.getTime()) {
+      if (now > end.getTime()) {
         end.setHours(end.getHours() + 1);
       }
-      return end.getTime() - now.getTime();
+      return end.getTime() - now;
     },
   },
 );
