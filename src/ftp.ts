@@ -17,6 +17,7 @@ export async function getConnection() {
 }
 
 export async function getFtpListing(): Promise<number[]> {
+  // Cutoff datetime exists because the current hour's recording is not written fully yet.
   const old_TZ = process.env.TZ;
   process.env.TZ = "Europe/Amsterdam";
   const threshold = Date.now() - 3600000;
