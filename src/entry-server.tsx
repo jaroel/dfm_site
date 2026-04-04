@@ -1,4 +1,8 @@
+import "./tracing.ts";
 import { createHandler, StartServer } from "@solidjs/start/server";
+import { setupGlobalErrorHandlers } from "./error-handler.ts";
+
+setupGlobalErrorHandlers();
 
 import favicon from "~/assets/favicon.ico";
 

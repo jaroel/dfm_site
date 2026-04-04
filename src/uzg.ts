@@ -1,8 +1,23 @@
+import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { getFtpListingCached } from "./ftp.ts";
+
+const tracer = trace.getTracer("uzg");
 
 export async function fetchUzgListing() {
   "use server";
-  return await getFtpListingCached();
+  return await tracer.startActiveSpan("fetchUzgListing", async (span) => {
+    try {
+      span.setAttribute("operation", "fetch_listing");
+      const items = await getFtpListingCached();
+      span.setAttribute("recording.count", items.length);
+      return items;
+    } catch (e) {
+      span.setStatus({ code: SpanStatusCode.ERROR, message: String(e) });
+      return [];
+    } finally {
+      span.end();
+    }
+  });
 }
 
 const formatter = new Intl.DateTimeFormat("nl-NL", {

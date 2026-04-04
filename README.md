@@ -15,3 +15,10 @@ bun run dev
 ```bash
 bun run build
 ```
+
+
+## Run with OTEL
+
+```bash
+bun run --require ./src/tracing.ts .output/server/index.mjs
+```

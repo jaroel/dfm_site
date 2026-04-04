@@ -3,7 +3,7 @@
   "version": "0.1",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
+    "dev": "bun --require ./src/tracing.ts vinxi dev",
     "build": "vinxi build",
     "start": "vinxi start",
     "test": "vitest",
@@ -25,6 +25,12 @@
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.72.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.214.0",
+    "@opentelemetry/resources": "^2.6.1",
+    "@opentelemetry/sdk-node": "^0.214.0",
+    "@opentelemetry/semantic-conventions": "^1.40.0",
     "@solid-primitives/resource": "^0.4.3",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.4",
