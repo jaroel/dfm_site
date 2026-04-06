@@ -1,4 +1,3 @@
-import { makeCache } from "@solid-primitives/resource";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
@@ -6,6 +5,22 @@ export type FilenameDotMp3 = `${string}.mp3`;
 
 function isDotMp3(name: string): name is FilenameDotMp3 {
   return name.endsWith(".mp3");
+}
+
+let FTP_CACHE: { expiration_date: Date; items: FTPListing } | null = null;
+
+export function resetFTPCache() {
+  FTP_CACHE = null;
+}
+
+export function getExpirationDate() {
+  const now = Date.now();
+  const end = new Date(now);
+  end.setMinutes(2, 0, 0);
+  if (now > end.getTime()) {
+    end.setHours(end.getHours() + 1);
+  }
+  return end;
 }
 
 export async function getConnection() {
@@ -44,21 +59,18 @@ export async function getFtpListing(): Promise<number[]> {
 
 type FTPListing = Awaited<ReturnType<typeof getFtpListing>>;
 
-export const [getFtpListingCached] = makeCache<FTPListing, void, unknown>(
-  getFtpListing,
-  {
-    expires: () => {
-      // Cache up to 2 minutes after next hour. Audio processing needs some time
-      const now = Date.now();
-      const end = new Date(now);
-      end.setMinutes(2, 0, 0);
-      if (now > end.getTime()) {
-        end.setHours(end.getHours() + 1);
-      }
-      return end.getTime() - now;
-    },
-  },
-);
+export async function getFtpListingCached() {
+  const now = new Date();
+  if (FTP_CACHE && FTP_CACHE.expiration_date > now) {
+    return FTP_CACHE.items;
+  }
+  const items = await getFtpListing();
+  FTP_CACHE = {
+    expiration_date: getExpirationDate(),
+    items,
+  };
+  return items;
+}
 
 export async function getFtpStream(filename: string) {
   if (!isDotMp3(filename)) {
