@@ -1,6 +1,6 @@
 import logo from "~/assets/logodinxperfm.png?w=384;768&format=avif;webp;png&responsive";
-import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&responsive";
-import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&responsive";
+import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&lqip=inline&responsive";
+import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&lqip=inline&responsive";
 import Controls from "~/components/Controls.tsx";
 import { ResponsiveImage } from "@responsive-image/solid";
 import type { ImageData } from '@responsive-image/core';
@@ -9,7 +9,7 @@ import Player from "~/components/Player.tsx";
 const sponsors = import.meta.glob<ImageData>("~/assets/sponsors/*", {
   eager: true,
   import: "default",
-  query: "w=500&format=avif;webp;png&responsive",
+  query: "w=500&format=avif;webp;png&lqip=inline&responsive",
 });
 
 export default function Home() {
