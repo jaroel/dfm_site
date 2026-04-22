@@ -49,6 +49,8 @@ export default function UZG() {
             <ResponsiveImage
               src={logo}
               alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
+              width={128}
+              loading="eager"
               class="max-w-32"
             />
 

@@ -22,6 +22,7 @@ export default function Home() {
             src={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
             fetchpriority="high"
+            width={384}
           />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>
@@ -51,6 +52,8 @@ export default function Home() {
           src={programmering}
           alt="Programmering van Dinxperlo FM"
           fetchpriority="high"
+          loading="eager"
+          width={1084}
         />
       </div>
       <div class="text-center">
@@ -76,6 +79,7 @@ export default function Home() {
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/makt.jpg"]}
                 alt="Logo van de markt van Dinxperlo"
+                loading="eager"
                 width={250}
               />
             </a>
