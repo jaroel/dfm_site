@@ -1,9 +1,9 @@
 import { Meta, Title } from "@solidjs/meta";
 import { createAsync, query } from "@solidjs/router";
 import { For, Show, Suspense } from "solid-js";
-import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&as=picture";
+import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&responsive";
 import Controls from "~/components/Controls.tsx";
-import Picture from "~/components/Picture.tsx";
+import { ResponsiveImage } from "@responsive-image/solid";
 import Player from "~/components/Player.tsx";
 import { groupBy } from "~/groupby.ts";
 import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
@@ -46,8 +46,8 @@ export default function UZG() {
       <div class="my-8">
         <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
           <a href="/" title="Terug naar homepage">
-            <Picture
-              logo={logo}
+            <ResponsiveImage
+              src={logo}
               alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
               class="max-w-32"
             />

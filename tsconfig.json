@@ -12,7 +12,8 @@
     "types": [
       "bun",
       "vinxi/types/client",
-      "@testing-library/jest-dom"
+      "@testing-library/jest-dom",
+      "@responsive-image/vite-plugin/client"
     ],
     "isolatedModules": true,
     "paths": {

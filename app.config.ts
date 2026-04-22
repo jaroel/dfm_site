@@ -1,7 +1,7 @@
 import { defineConfig } from "@solidjs/start/config";
 import tailwindcss from "@tailwindcss/vite";
 import devtools from "solid-devtools/vite";
-import { imagetools } from "vite-imagetools";
+import { responsiveImage } from "@responsive-image/vite-plugin";
 
 export default defineConfig({
   vite: {
@@ -14,7 +14,7 @@ export default defineConfig({
         },
       }),
       tailwindcss(),
-      imagetools(),
+      responsiveImage(),
     ],
     build: {
       reportCompressedSize: false,

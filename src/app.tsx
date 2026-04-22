@@ -3,7 +3,7 @@ import { Link, Meta, MetaProvider, Title } from "@solidjs/meta";
 import { A, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&as=img";
+import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&url";
 import "./app.css";
 
 export default function App() {
@@ -32,7 +32,7 @@ export default function App() {
       <div
         class="h-screen bg-center bg-cover bg-gray-600 bg-fixed text-slate-50"
         style={{
-          "background-image": `url(${bgImage.src})`,
+          "background-image": `url(${bgImage})`,
         }}
       >
         <div class="h-screen overflow-auto bg-black/75">
