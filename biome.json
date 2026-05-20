@@ -9,9 +9,7 @@
     },
     "domains": {
       "solid": "all",
-      "project": "all",
-      "test": "all",
-      "types": "all"
+      "test": "all"
     }
   },
   "formatter": {
