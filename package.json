@@ -34,5 +34,8 @@
     "ftp-ts": "^1.1.0",
     "solid-js": "^1.9.13",
     "vinxi": "^0.5.11"
+  },
+  "patchedDependencies": {
+    "@responsive-image/build-utils@3.0.0": "patches/@responsive-image%2Fbuild-utils@3.0.0.patch"
   }
 }
