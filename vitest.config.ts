@@ -1,11 +1,11 @@
 import solid from "vite-plugin-solid";
 import { defineConfig } from "vitest/config";
 import path from "node:path";
-import { imagetools } from "vite-imagetools";
+import { responsiveImage } from "@responsive-image/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [tailwindcss(), imagetools(), solid()],
+  plugins: [tailwindcss(), solid(), responsiveImage()],
   resolve: {
     conditions: ["development", "browser"],
     alias: {
