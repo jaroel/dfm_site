@@ -53,7 +53,9 @@ export async function getFtpListing(): Promise<number[]> {
   } catch {
     return [];
   } finally {
-    process.env.TZ = old_TZ;
+    if (old_TZ) {
+      process.env.TZ = old_TZ;
+    }
   }
 }
 
