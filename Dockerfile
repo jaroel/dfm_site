@@ -6,8 +6,11 @@ RUN bun run lint
 ENV NODE_ENV=production
 RUN bun run build
 
-FROM oven/bun:1
+FROM gcr.io/distroless/cc-debian12
 WORKDIR /app/
+COPY --from=builder /usr/local/bin/bun /usr/local/bin/bun
 COPY --from=builder /app/.output /app/
 ENV NODE_ENV=production
-CMD ["/app/server/index.mjs"]
+USER nonroot:nonroot
+ENTRYPOINT ["/usr/local/bin/bun"]
+CMD ["run", "/app/server/index.mjs"]
