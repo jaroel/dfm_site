@@ -20,7 +20,7 @@
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "vite-plugin-solid": "^2.11.12",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "dependencies": {
     "@fontsource/cabin": "^5.2.8",
