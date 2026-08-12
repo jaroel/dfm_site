@@ -6,7 +6,7 @@ RUN bun run lint
 ENV NODE_ENV=production
 RUN bun run build
 
-FROM gcr.io/distroless/cc-debian12
+FROM gcr.io/distroless/cc-debian13
 WORKDIR /app/
 COPY --from=builder /usr/local/bin/bun /usr/local/bin/bun
 COPY --from=builder /app/.output /app/
