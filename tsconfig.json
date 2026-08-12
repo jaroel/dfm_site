@@ -8,10 +8,11 @@
     "allowJs": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
+    "skipLibCheck": true,
     "strict": true,
     "types": [
       "bun",
-      "vinxi/types/client",
+      "@solidjs/start/env",
       "@testing-library/jest-dom",
       "@responsive-image/vite-plugin/client"
     ],

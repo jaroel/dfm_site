@@ -1,26 +1,15 @@
-import { defineConfig } from "@solidjs/start/config";
-import tailwindcss from "@tailwindcss/vite";
-import devtools from "solid-devtools/vite";
 import { responsiveImage } from "@responsive-image/vite-plugin";
+import { solidStart } from "@solidjs/start/config";
+import tailwindcss from "@tailwindcss/vite";
+import { nitro } from "nitro/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  vite: {
-    plugins: [
-      devtools({
-        autoname: true,
-        locator: {
-          componentLocation: true,
-          jsxLocation: true,
-        },
-      }),
-      tailwindcss(),
-      responsiveImage(),
-    ],
-    build: {
-      reportCompressedSize: false,
-    },
+  plugins: [solidStart(), nitro(), tailwindcss(), responsiveImage()],
+  build: {
+    reportCompressedSize: false,
   },
-  server: {
+  nitro: {
     preset: "bun",
     prerender: {
       routes: ["/"],
