@@ -1,3 +1,4 @@
+import { isServer } from "@solidjs/web";
 import { createSignal, onCleanup } from "solid-js";
 
 export const [source, setSource] = createSignal("");
@@ -7,6 +8,7 @@ export const [state, setState] = createSignal<
 
 export default function Player() {
   onCleanup(() => {
+    if (isServer) return;
     if (audio) {
       audio.pause();
       audio.src = "";

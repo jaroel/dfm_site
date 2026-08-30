@@ -1,8 +1,10 @@
-import type { APIEvent } from "@solidjs/start/server";
+import type { APIHandler } from "filesystem-routing/api";
+import { Readable } from "node:stream";
+
 import { getFtpStream } from "~/ftp.ts";
 
-export async function GET({ params, request }: APIEvent) {
-  const filename = params.file_name.trim();
+export const GET: APIHandler = async ({ params, request }) => {
+  const filename = params?.file_name?.trim() ?? "";
   const ftp_data = await getFtpStream(filename);
 
   if (ftp_data) {
@@ -17,11 +19,14 @@ export async function GET({ params, request }: APIEvent) {
       });
     }
 
-    return new Response(ftp_data.stream, {
+    const body = Readable.toWeb(
+      ftp_data.stream as unknown as import("node:stream").Readable,
+    ) as unknown as ReadableStream;
+    return new Response(body, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
-        "content-length": ftp_data.metadata.size,
+        "content-length": String(ftp_data.metadata.size),
       },
     });
   }
@@ -30,4 +35,4 @@ export async function GET({ params, request }: APIEvent) {
     status: 404,
     statusText: "Not found",
   });
-}
+};

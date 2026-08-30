@@ -4,7 +4,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "preserve",
-    "jsxImportSource": "solid-js",
+    "jsxImportSource": "@solidjs/web",
     "allowJs": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
@@ -12,9 +12,8 @@
     "strict": true,
     "types": [
       "bun",
-      "@solidjs/start/env",
       "@testing-library/jest-dom",
-      "@responsive-image/vite-plugin/client"
+      "vite/client"
     ],
     "isolatedModules": true,
     "paths": {

@@ -1,16 +1,16 @@
-import { HttpStatusCode } from "@solidjs/start";
-import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&responsive";
-import { ResponsiveImage } from "@responsive-image/solid";
+import { httpStatus } from "@solidjs/web";
+import logo from "~/assets/logodinxperfm.png?url";
 
 export default function NotFound() {
   return (
     <>
-      <HttpStatusCode code={404} />
+      {httpStatus(404)}
       <div class="mt-10 mb-10 flex justify-evenly">
         <div class="max-w-sm">
-          <ResponsiveImage
+          <img
             src={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
+            class="w-full"
           />
           <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
         </div>

@@ -9,8 +9,11 @@ RUN bun run build
 FROM gcr.io/distroless/cc-debian13
 WORKDIR /app/
 COPY --from=builder /usr/local/bin/bun /usr/local/bin/bun
-COPY --from=builder /app/.output /app/
+COPY --from=builder /app/package.json /app/
+COPY --from=builder /app/server.js /app/
+COPY --from=builder /app/dist /app/dist
+COPY --from=builder /app/node_modules /app/node_modules
 ENV NODE_ENV=production
 USER nonroot:nonroot
 ENTRYPOINT ["/usr/local/bin/bun"]
-CMD ["run", "/app/server/index.mjs"]
+CMD ["run", "/app/server.js"]

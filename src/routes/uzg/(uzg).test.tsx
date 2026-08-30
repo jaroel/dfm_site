@@ -1,4 +1,3 @@
-import { MetaProvider } from "@solidjs/meta";
 import { render, waitFor } from "@solidjs/testing-library";
 import { beforeEach, expect, test, vi } from "vitest";
 import UZG from "./(uzg).tsx";
@@ -17,7 +16,9 @@ vi.mock("@solidjs/router", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@solidjs/router")>();
   return {
     ...actual,
-    query: () => async () => mockFetchUzgListing(),
+    // Bypass the query cache: resolve the read straight through the mocked
+    // server function.
+    query: <T,>(fn: T) => fn,
   };
 });
 
@@ -29,9 +30,7 @@ test("renders header elements", async () => {
   mockFetchUzgListing.mockResolvedValue([]);
 
   const { getByRole, getByText, getByTitle, getByAltText } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
+    <UZG />
   ));
 
   await waitFor(() => {
@@ -61,11 +60,7 @@ test("renders recordings", async () => {
     new Date("2024-01-15T12:00:00").getTime(),
   ]);
 
-  const { getAllByRole, container } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
-  ));
+  const { getAllByRole, container } = render(() => <UZG />);
 
   await waitFor(() => {
     const buttons = getAllByRole("button");
@@ -104,11 +99,7 @@ test("renders recordings", async () => {
 test("renders empty state", async () => {
   mockFetchUzgListing.mockResolvedValue([]);
 
-  const { getByText } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
-  ));
+  const { getByText } = render(() => <UZG />);
 
   await waitFor(() => {
     expect(

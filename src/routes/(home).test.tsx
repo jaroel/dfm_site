@@ -19,7 +19,7 @@ test("renders programmering", async () => {
   const { getByText, getByAltText } = render(() => <Home />);
   expect(
     getByAltText("Programmering van Dinxperlo FM").getAttribute(
-      "fetchPriority",
+      "fetchpriority",
     ),
   ).toBe("high");
 
