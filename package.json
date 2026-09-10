@@ -14,13 +14,13 @@
     "bun": ">=1.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.11",
-    "@solidjs/testing-library": "^1.0.0-beta.2",
-    "@solidjs/vite-plugin": "^3.0.0-next.35",
+    "@biomejs/biome": "^2.5.13",
+    "@solidjs/testing-library": "^1.0.0-beta.3",
+    "@solidjs/vite-plugin": "^3.0.0-next.42",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^6.10.0",
-    "@testing-library/user-event": "^14.6.6",
-    "@types/bun": "^1.4.0",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/bun": "^1.4.2",
     "jsdom": "^27.4.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
@@ -30,10 +30,10 @@
   },
   "dependencies": {
     "@solidjs/meta": "^1.0.0-next.2",
-    "@solidjs/router": "^2.0.0-next.19",
-    "@solidjs/web": "^2.0.0-rc.4",
+    "@solidjs/router": "^2.0.0-next.23",
+    "@solidjs/web": "^2.0.0-rc.7",
     "filesystem-routing": "0.2.1",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^2.0.0-rc.4"
+    "solid-js": "^2.0.0-rc.7"
   }
 }
