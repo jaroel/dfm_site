@@ -39,25 +39,16 @@ export default function App() {
             }}
           >
             <div class="h-screen overflow-auto bg-black/75">
-            <div class="mx-auto max-w-6xl">
-              <RouteStatus />
-              <Loading>{props.children}</Loading>
-              <Nav />
-            </div>
+              <div class="mx-auto max-w-6xl">
+                <Loading>{props.children}</Loading>
+                <Nav />
+              </div>
             </div>
           </div>
         </>
       )}
     </Router>
   );
-}
-
-function RouteStatus() {
-  const matches = useRouteMatches()();
-  if (isServer && matches.some((m) => m.route.originalPath === "/*404")) {
-    httpStatus(404);
-  }
-  return null;
 }
 
 function Nav() {
