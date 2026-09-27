@@ -1,10 +1,11 @@
+import { responsiveImage } from "@responsive-image/vite-plugin";
 import solid from "@solidjs/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { fileRoutes } from "filesystem-routing/vite";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     solid({
       start: {
@@ -20,11 +21,24 @@ export default defineConfig({
       extensions: [".jsx", ".tsx"],
     }),
     tailwindcss(),
+    // @responsive-image/vite-plugin: resizes local images (§responsive imports) in
+    // dev and at build time, and serves the generated variants in dev.
+    responsiveImage(),
     // `httpMethods` also scans route modules for GET/POST/... exports (API
     // routes). One router serves both sides.
     fileRoutes({ httpMethods: true, types: true }),
   ],
   resolve: {
+    // Keep bun's node_modules symlink IDs (don't resolve to the realpath):
+    // the linked @responsive-image packages import deps (@solidjs/web,
+    // solid-js, @responsive-image/core) that only exist in our node_modules.
+    preserveSymlinks: true,
+    // The linked @responsive-image packages keep their OWN node_modules with
+    // their own (Solid 1.x) solid-js, so `preserveSymlinks` makes their
+    // `solid-js` imports resolve to a SECOND copy of the runtime. Two copies =
+    // two `sharedConfig`s = two hydration-id counters = key collisions and
+    // "Cannot read properties of null" during hydration. Force one copy.
+    dedupe: ["solid-js", "solid-js/web", "@solidjs/web", "@solidjs/signals"],
     alias: {
       "~": fileURLToPath(new URL("./src", import.meta.url)),
     },
@@ -59,4 +73,4 @@ export default defineConfig({
       },
     ],
   },
-});
+}));

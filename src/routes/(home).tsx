@@ -1,13 +1,16 @@
-import logo from "~/assets/logodinxperfm.png?url";
-import programmering from "~/assets/programmering.jpg?url";
-import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?url";
+import type { ImageData } from "@responsive-image/core";
+import { ResponsiveImage } from "@responsive-image/solid";
+import logo from "~/assets/logodinxperfm.png?responsive";
+import programmering from "~/assets/programmering.jpg?lqip=inline&responsive";
+import programmeringUrl from "~/assets/programmering.jpg?url";
+import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?responsive";
 import Controls from "~/components/Controls.tsx";
 import Player from "~/components/Player.tsx";
 
-const sponsors = import.meta.glob<string>("~/assets/sponsors/*", {
+const sponsors = import.meta.glob<ImageData>("~/assets/sponsors/*", {
   eager: true,
   import: "default",
-  query: "?url",
+  query: "?responsive&lqip=inline",
 });
 
 export default function Home() {
@@ -16,7 +19,7 @@ export default function Home() {
       <Player />
       <div class="mt-10 mb-10 flex justify-evenly">
         <div class="max-w-xs md:max-w-sm">
-          <img
+          <ResponsiveImage
             src={logo}
             alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
             fetchpriority="high"
@@ -46,7 +49,7 @@ export default function Home() {
         </ul>
       </nav>
       <div class="mt-10 flex justify-center">
-        <img
+        <ResponsiveImage
           src={programmering}
           alt="Programmering van Dinxperlo FM"
           fetchpriority="high"
@@ -58,7 +61,7 @@ export default function Home() {
         <a
           target="blank"
           class="text-blue-400"
-          href={programmering}
+          href={programmeringUrl}
           title="Bekijk het programma in een nieuw scherm"
         >
           In nieuwe pagina openen
@@ -74,7 +77,7 @@ export default function Home() {
         >
           <div class="mb-2 p-1">
             <a href="https://www.facebook.com/markt.dinxperlo/" target="blank">
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/makt.jpg"]}
                 alt="Logo van de markt van Dinxperlo"
                 loading="eager"
@@ -84,7 +87,7 @@ export default function Home() {
           </div>
           <div class="mb-2 p-1">
             <a href="https://podesta.nl/" target="blank">
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo15.jpg"]}
                 alt="Logo van Podesta"
                 width={250}
@@ -96,7 +99,7 @@ export default function Home() {
               href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
               target="blank"
             >
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo16.jpg"]}
                 alt="Logo van Adviesbureau Roenhorst"
                 width={250}
@@ -105,7 +108,7 @@ export default function Home() {
           </div>
           <div class="mb-2 p-1">
             <a href="http://www.vvnf.nl/home" target="blank">
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo23.jpg"]}
                 alt="Logo van VVNF"
                 width={250}
@@ -114,7 +117,7 @@ export default function Home() {
           </div>
           <div class="mb-2 p-1">
             <a href="https://harmtakke.nl" target="blank">
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo-harmtakke.jpg"]}
                 alt="Logo van Harm Takke"
                 width={250}
@@ -123,7 +126,7 @@ export default function Home() {
           </div>
           <div class="mb-2 p-1">
             <a href="https://tibatek.de" target="blank">
-              <img
+              <ResponsiveImage
                 src={tibatek_logo_web}
                 alt="Logo van Tibatek"
                 width={250}
@@ -136,7 +139,7 @@ export default function Home() {
               href="https://www.facebook.com/CafetariadeDriesprongDinxperlo/?locale=nl_NL"
               target="blank"
             >
-              <img
+              <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/dedriesprong.jpg"]}
                 alt="Logo van Cafetaria de Driesprong"
                 width={250}

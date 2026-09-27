@@ -13,7 +13,8 @@
     "types": [
       "bun",
       "@testing-library/jest-dom",
-      "vite/client"
+      "vite/client",
+      "@responsive-image/vite-plugin/client"
     ],
     "isolatedModules": true,
     "paths": {

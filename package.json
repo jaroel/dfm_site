@@ -13,10 +13,17 @@
   "engines": {
     "bun": ">=1.4"
   },
+  "workspaces": [
+    "/Users/roel/Develop/responsive-image/packages/solid",
+    "/Users/roel/Develop/responsive-image/packages/core",
+    "/Users/roel/Develop/responsive-image/packages/vite-plugin",
+    "/Users/roel/Develop/responsive-image/packages/build-utils",
+    "/Users/roel/Develop/responsive-image/packages/-internals"
+  ],
   "devDependencies": {
-    "@biomejs/biome": "^2.5.13",
+    "@biomejs/biome": "^2.5.14",
     "@solidjs/testing-library": "^1.0.0-beta.3",
-    "@solidjs/vite-plugin": "^3.0.0-next.42",
+    "@solidjs/vite-plugin": "^3.0.0-next.46",
     "@tailwindcss/vite": "^4.3.3",
     "@testing-library/jest-dom": "^6.10.0",
     "@testing-library/user-event": "^14.6.7",
@@ -29,11 +36,18 @@
     "@fontsource/cabin": "^5.3.0"
   },
   "dependencies": {
+    "@responsive-image/core": "workspace:^",
+    "@responsive-image/solid": "workspace:^",
+    "@responsive-image/vite-plugin": "workspace:^",
     "@solidjs/meta": "^1.0.0-next.2",
-    "@solidjs/router": "^2.0.0-next.23",
-    "@solidjs/web": "^2.0.0-rc.7",
-    "filesystem-routing": "0.2.1",
+    "@solidjs/router": "^2.0.0-next.30",
+    "@solidjs/signals": "^2.0.0-rc.10",
+    "@solidjs/web": "^2.0.0-rc.10",
+    "csstype": "^3.2.3",
+    "filesystem-routing": "^0.4.0",
     "ftp-ts": "^1.1.0",
-    "solid-js": "^2.0.0-rc.7"
+    "seroval": "~1.5.6",
+    "seroval-plugins": "~1.5.6",
+    "solid-js": "^2.0.0-rc.10"
   }
 }
