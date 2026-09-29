@@ -1,0 +1,7 @@
+# `--split` is not sticky: cargo-leptos always compiles the wasm with `-Zwasm-split`
+# (so `#[lazy]` split points get placeholder imports) but only emits the chunk
+# files + `__wasm_split.*.js` loader when the flag is passed. Build without it and
+# the base module imports `__wasm_split_placeholder` at runtime -> 404.
+[alias]
+build-split = "leptos build --release --split"
+watch-split = "leptos watch --release --split"

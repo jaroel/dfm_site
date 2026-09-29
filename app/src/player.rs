@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 
-#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug)]
 pub enum PlayerState {
     Error(String),
     Playing(String),

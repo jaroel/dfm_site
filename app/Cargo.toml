@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-leptos.workspace = true
+leptos = { workspace = true, features = ["postcard"] }
 leptos_meta.workspace = true
 leptos_router.workspace = true
 leptos_axum = { workspace = true, optional = true }
@@ -14,11 +14,10 @@ leptos_axum = { workspace = true, optional = true }
 http.workspace = true
 cfg-if.workspace = true
 thiserror.workspace = true
-serde_json = "1"
-chrono = "0"
+# serde_json = "1"
 serde = { version = "1", features = ["derive"] }
-suppaftp = { version = "8", features = ["tokio"], optional = true }
-chrono-tz = "0"
+suppaftp = { workspace = true, optional = true }
+jiff = { version = "0.2", optional = true }
 
 [features]
 default = []
@@ -29,6 +28,7 @@ ssr = [
     "leptos_router/ssr",
     "dep:leptos_axum",
     "dep:suppaftp",
+    "dep:jiff",
 ]
 async-stream = []
 leptos_image = []

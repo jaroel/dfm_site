@@ -2,17 +2,23 @@
 resolver = "2"
 members = ["app", "frontend", "server"]
 
-# need to be applied only to wasm build
+# Server profile - optimized for speed
 [profile.release]
 codegen-units = 1
 lto = true
 opt-level = 'z'
 
+# WASM profile - optimized for size (used by cargo-leptos)
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"
+strip = true
+
 [workspace.dependencies]
-leptos = { version = "0.8.17", features = ["nightly"] }
-leptos_meta = { version = "0.8.6" }
-leptos_router = { version = "0.8.12", features = ["nightly"] }
-leptos_axum = { version = "0.8.8" }
+leptos = { version = "0.8", features = ["nightly"] }
+leptos_meta = { version = "0.8" }
+leptos_router = { version = "0.8", features = ["nightly"] }
+leptos_axum = { version = "0.8" }
 
 axum = "0.8"
 cfg-if = "1"
@@ -21,10 +27,11 @@ console_log = "1"
 http = "1"
 log = "0"
 simple_logger = "5"
+suppaftp = { version = "12", features = ["tokio"] }
 thiserror = "2"
 tokio = { version = "1", features = ["full"] }
 tower = { version = "0.5", features = ["full"] }
-tower-http = { version = "0.6", features = ["full"] }
+tower-http = { version = "0.7", features = ["full"] }
 wasm-bindgen = "0.2"
 
 # See https://github.com/leptos-rs/cargo-leptos for documentation of all the parameters.
@@ -34,6 +41,9 @@ wasm-bindgen = "0.2"
 [[workspace.metadata.leptos]]
 # this name is used for the wasm, js and css file names
 name = "start-axum-workspace"
+
+# Use dedicated wasm profile for size optimization
+lib-profile-release = "wasm-release"
 
 # the package in the workspace that contains the server binary (binary crate)
 bin-package = "server"

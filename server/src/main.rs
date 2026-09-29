@@ -1,15 +1,12 @@
 use std::str::FromStr;
 
 use app::{shell, App};
-use axum::{body::Body, extract::Path, http::StatusCode, response::IntoResponse, routing::get, Router};
+use axum::{body::{Body, Bytes}, extract::Path, http::StatusCode, response::IntoResponse, routing::get, Router};
 use leptos::prelude::*;
 use leptos_axum::{generate_route_list, LeptosRoutes};
 use leptos::logging::log;
 use suppaftp::{types::FileType, tokio::AsyncFtpStream};
-use tokio_util::{bytes, };
-use tokio_util::compat::TokioAsyncReadCompatExt;
-// use tokio::io::AsyncReadExt;
-use futures_util::io::AsyncReadExt;
+use tokio::io::AsyncReadExt;
 
 pub enum AppError {
     FtpError(suppaftp::FtpError)
@@ -63,17 +60,21 @@ async fn stream_ftp_file(
 
     let stream = async_stream::stream! {
         let mut ftp_stream = ftp_stream;
-        let mut data_stream_compat = data_stream.compat();
+        let mut data_stream = data_stream;
         let mut buf = [0u8; 8192]; // 8KB buffer
         loop {
-            match data_stream_compat.read(&mut buf).await {
+            match data_stream.read(&mut buf).await {
                 Ok(0) => break, // EOF
-                Ok(n) => yield Ok::<_, std::io::Error>(bytes::Bytes::copy_from_slice(&buf[..n])),
+                Ok(n) => yield Ok::<_, std::io::Error>(Bytes::copy_from_slice(&buf[..n])),
                 Err(e) => {
                     eprintln!("Stream error: {}", e);
                     break;
                 }
             }
+        }
+        // Reads the 226 reply. Must run before any other control-connection command.
+        if let Err(e) = data_stream.finish().await {
+            eprintln!("Transfer finalize error: {}", e);
         }
         let _ = ftp_stream.quit().await;
     };

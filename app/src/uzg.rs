@@ -1,41 +1,56 @@
-use chrono::{Datelike, NaiveDateTime, Timelike};
-use leptos::prelude::*;
-// use leptos_image_optimizer::Image;
+use crate::server_fn::codec::Postcard;
 use crate::{
     controls::Controls,
     player::{Player, PlayerState},
 };
+use leptos::prelude::*;
 use leptos_meta::Title;
 use leptos_router::{components::A, lazy_route, LazyRoute};
 use serde::{Deserialize, Serialize};
 
+#[cfg(feature = "ssr")]
+fn parse_recording(file_name: &str) -> jiff::civil::DateTime {
+    let stem = file_name.trim_end_matches(".mp3");
+    let parts: Vec<&str> = stem.split('-').collect();
+    let day: i8 = parts[0].parse().unwrap();
+    let month: i8 = parts[1].parse().unwrap();
+    let year: i16 = parts[2].parse().unwrap();
+    let hour: i8 = parts[3].parse().unwrap();
+    jiff::civil::date(year, month, day).at(hour, 0, 0, 0)
+}
+
+#[cfg(feature = "ssr")]
 impl From<&String> for Recording {
     fn from(file_name: &String) -> Self {
-        // Examples: '10-07-2023-22-00.mp3', '19-06-2023-21-00.mp3'
-        let datetime =
-            NaiveDateTime::parse_from_str(file_name, "%d-%m-%Y-%H-%M.mp3").expect(file_name);
-        let date = datetime.date();
+        let dt = parse_recording(file_name);
+        let weekday = dt.weekday().to_monday_one_offset();
         let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
 
+        let key = dt
+            .to_zoned(jiff::tz::TimeZone::UTC)
+            .unwrap()
+            .timestamp()
+            .as_second();
+
         Recording {
-            day: date.day(),
-            month: date.month(),
-            year: date.year(),
-            weekday: date.weekday().number_from_monday(),
-            hour: datetime.time().hour(),
+            day: dt.day() as u8,
+            month: dt.month() as u8,
+            year: dt.year() as i32,
+            weekday: weekday as u8,
+            hour: dt.hour() as u8,
             src: format!("{}/uzg_data/{}", public_url, file_name),
-            key: datetime.and_utc().timestamp(),
+            key,
         }
     }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Recording {
-    day: u32,
-    month: u32,
+    day: u8,
+    month: u8,
     year: i32,
-    weekday: u32,
-    hour: u32,
+    weekday: u8,
+    hour: u8,
     src: String,
     key: i64,
 }
@@ -98,29 +113,60 @@ impl Recording {
     }
 }
 
-#[server]
+#[cfg(feature = "ssr")]
+static CACHE: std::sync::LazyLock<std::sync::RwLock<Option<(std::time::Instant, Vec<Recording>)>>> =
+    std::sync::LazyLock::new(|| std::sync::RwLock::new(None));
+
+#[cfg(feature = "ssr")]
+use jiff::{tz::TimeZone, ToSpan, Unit, ZonedRound};
+
+#[server(input = Postcard, output = Postcard)]
 #[lazy]
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
-    use chrono::{TimeZone, Utc};
-    use chrono_tz::Europe::Amsterdam;
-    use suppaftp::tokio::AsyncFtpStream;
-    let mut ftp_stream = AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await?;
+    const CACHE_TTL_SECS: u64 = 3600;
+
+    let cached = {
+        let cache_read = CACHE.read().unwrap();
+        cache_read.clone()
+    };
+
+    if let Some((instant, data)) = cached {
+        if instant.elapsed().as_secs() < CACHE_TTL_SECS {
+            return Ok(data);
+        }
+    }
+
+    let mut ftp_stream =
+        suppaftp::tokio::AsyncFtpStream::connect("dinxperfm.freeddns.org:21").await?;
     ftp_stream.login("UZG", "4862KpZ2").await?;
     let items = ftp_stream.nlst(None).await?;
     let _ = ftp_stream.quit().await;
 
-    let dt = Amsterdam.from_utc_datetime(&Utc::now().naive_utc());
-    let now_key = dt.with_minute(0).unwrap().timestamp() + 3600;
+    #[cfg(feature = "ssr")]
+    let now_key = {
+        let tz = TimeZone::get("Europe/Amsterdam").unwrap();
+        let zdt = jiff::Timestamp::now().to_zoned(tz);
+        let hour = zdt.round(ZonedRound::new().smallest(Unit::Hour)).unwrap();
+        hour.checked_add(1.hours()).unwrap().timestamp().as_second()
+    };
 
-    let mut names = items
+    #[cfg(not(feature = "ssr"))]
+    let now_key = i64::MAX;
+
+    let mut names: Vec<Recording> = items
         .iter()
-        // .filter(|filename| filename.ends_with("04-08-2023-11-00.mp3"))
         .filter(|filename| filename.ends_with(".mp3"))
         .map(Recording::from)
         .filter(|recording| recording.key <= now_key)
-        .collect::<Vec<Recording>>();
+        .collect();
     names.sort_by_key(|k| k.key);
     names.reverse();
+
+    {
+        let mut cache_write = CACHE.write().unwrap();
+        *cache_write = Some((std::time::Instant::now(), names.clone()));
+    }
+
     Ok(names)
 }
 
