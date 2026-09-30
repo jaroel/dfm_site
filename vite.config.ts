@@ -6,6 +6,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [solidStart(), nitro(), tailwindcss(), responsiveImage()],
+  optimizeDeps: {
+    include: ["@jridgewell/resolve-uri"],
+  },
   build: {
     reportCompressedSize: false,
   },
