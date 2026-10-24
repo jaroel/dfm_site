@@ -2,14 +2,14 @@
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "linter": {
     "rules": {
-      "recommended": true,
       "nursery": {
-        "useSortedClasses": "error"
+        "useTailwindShorthandClasses": "error",
+        "useTailwindSortedClasses": "error"
       }
     },
     "domains": {
       "solid": "all",
-      "test": "all"
+      "test": "recommended"
     }
   },
   "formatter": {
