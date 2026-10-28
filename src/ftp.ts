@@ -1,3 +1,4 @@
+import type { Readable } from "node:stream";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
@@ -151,10 +152,29 @@ export async function getFtpStream(filename: string) {
       connection.end();
       return;
     }
-    const stream = await connection.get(filename);
-    // The connection lives until the response body is consumed.
-    stream.addListener("close", () => {
-      connection.destroy();
+    const stream = (await connection.get(filename)) as Readable;
+    // A client that stops playback cancels the response body, which closes
+    // this stream early. `destroy()` is not an option: ftp-ts clears its
+    // parser immediately, so a late response on the control socket would
+    // throw inside the socket handler and kill the process. ABOR first, then
+    // close the control connection once the server has answered.
+    let completed = false;
+    stream.once("end", () => {
+      completed = true;
+    });
+    stream.once("error", () => {
+      // Consumed by the caller through the response body; without a listener
+      // node treats it as an unhandled 'error' and exits.
+    });
+    stream.once("close", () => {
+      if (completed) {
+        connection.end();
+        return;
+      }
+      connection
+        .abort()
+        .catch(() => {})
+        .then(() => connection.end());
     });
     return { metadata, stream };
   } catch (error) {

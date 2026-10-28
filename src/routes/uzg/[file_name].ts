@@ -8,6 +8,9 @@ export const GET: APIHandler = async ({ params, request }) => {
 
   if (ftp_data) {
     if (request.headers.get("range") === "bytes=0-1") {
+      // Safari probes with a 2-byte range; don't leave the data transfer
+      // running for a response that ignores it.
+      ftp_data.stream.destroy();
       return new Response("ID", {
         status: 206,
         headers: {
