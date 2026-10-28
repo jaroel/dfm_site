@@ -1,3 +1,4 @@
+import { isServer } from "@solidjs/web";
 import { createSignal, onCleanup } from "solid-js";
 
 export const [source, setSource] = createSignal("");
@@ -7,6 +8,7 @@ export const [state, setState] = createSignal<
 
 export default function Player() {
   onCleanup(() => {
+    if (isServer) return;
     if (audio) {
       audio.pause();
       audio.src = "";
@@ -18,7 +20,7 @@ export default function Player() {
   return (
     // biome-ignore lint/a11y/useMediaCaption: not relevant
     <audio
-      ref={audio}
+      ref={(el) => (audio = el)}
       autoplay={!!source()}
       src={source()}
       onPlaying={() => setState("playing")}

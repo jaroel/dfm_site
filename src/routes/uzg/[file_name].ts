@@ -1,8 +1,8 @@
-import type { APIEvent } from "@solidjs/start/server";
+import type { APIHandler } from "filesystem-routing/api";
 import { getFtpStream } from "~/ftp.ts";
 
-export async function GET({ params, request }: APIEvent) {
-  const filename = params.file_name.trim();
+export const GET: APIHandler = async ({ params, request }) => {
+  const filename = (params?.file_name ?? "").trim();
   const ftp_data = await getFtpStream(filename);
 
   if (ftp_data) {
@@ -30,4 +30,4 @@ export async function GET({ params, request }: APIEvent) {
     status: 404,
     statusText: "Not found",
   });
-}
+};

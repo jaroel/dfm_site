@@ -1,6 +1,6 @@
 import { Meta, Title } from "@solidjs/meta";
-import { createAsync, query } from "@solidjs/router";
-import { For, Show, Suspense } from "solid-js";
+import { query, type RouteDefinition } from "@solidjs/router";
+import { createMemo, For, Loading, Show } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&responsive";
 import Controls from "~/components/Controls.tsx";
 import { ResponsiveImage } from "@responsive-image/solid";
@@ -8,13 +8,11 @@ import Player from "~/components/Player.tsx";
 import { groupBy } from "~/groupby.ts";
 import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
 
-const getUzgListing = query(async () => {
-  return await fetchUzgListing();
-}, "uzglisting");
+const getUzgListing = query(fetchUzgListing, "uzglisting");
 
 export const route = {
-  load: () => getUzgListing(),
-};
+  preload: () => void getUzgListing(),
+} satisfies RouteDefinition;
 
 const month_long_c = {
   1: "Januari",
@@ -32,9 +30,8 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(
-    async () => toRecordings(await getUzgListing()),
-    { initialValue: [] },
+  const recordings = createMemo(async () =>
+    toRecordings(await getUzgListing()),
   );
   return (
     <>
@@ -70,7 +67,7 @@ export default function UZG() {
           </p>
         </div>
         <hr class="my-8" />
-        <Suspense fallback={<p>Uitzendingen worden opgehaald.</p>}>
+        <Loading fallback={<p>Uitzendingen worden opgehaald.</p>}>
           <Show
             when={recordings().length}
             fallback={
@@ -79,7 +76,7 @@ export default function UZG() {
           >
             {<Listing recordings={recordings()} />}
           </Show>
-        </Suspense>
+        </Loading>
       </div>
     </>
   );

@@ -1,32 +1,29 @@
+import { fileURLToPath } from "node:url";
 import { responsiveImage } from "@responsive-image/vite-plugin";
-import { solidStart } from "@solidjs/start/config";
+import solid from "@solidjs/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
-import { nitro } from "nitro/vite";
+import { fileRoutes } from "filesystem-routing/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [solidStart(), nitro(), tailwindcss(), responsiveImage()],
-  optimizeDeps: {
-    include: ["@jridgewell/resolve-uri"],
+  plugins: [
+    solid({
+      start: { middleware: "./src/middleware.ts" },
+      ssr: true,
+      serverFunctions: true,
+      extensions: [".jsx", ".tsx"],
+    }),
+    tailwindcss(),
+    fileRoutes({ httpMethods: true, types: true }),
+    responsiveImage(),
+  ],
+  resolve: {
+    alias: {
+      "~": fileURLToPath(new URL("./src", import.meta.url)),
+    },
   },
   build: {
     reportCompressedSize: false,
-  },
-  nitro: {
-    preset: "bun",
-    prerender: {
-      routes: ["/"],
-    },
-    routeRules: {
-      "/_build/assets/**": {
-        headers: { "cache-control": "max-age=31536000, immutable" },
-      },
-      "/_server/assets/**": {
-        headers: { "cache-control": "max-age=31536000, immutable" },
-      },
-      "/assets/**": {
-        headers: { "cache-control": "max-age=31536000, immutable" },
-      },
-    },
+    target: "esnext",
   },
 });

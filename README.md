@@ -1,17 +1,24 @@
-# SolidStart
+# Dinxper FM site
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+Solid 2 app in start mode (`@solidjs/vite-plugin`), streaming SSR, bun server.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `bun install``, start a development server:
-
 ```bash
+bun install
 bun run dev
 ```
 
 ## Building
 
 ```bash
-bun run build
+bun run build   # dist/client + dist/server
+bun run start   # bun server.bun.ts
+bun run preview # vite preview
+```
+
+## Testing
+
+```bash
+bun run test
 ```

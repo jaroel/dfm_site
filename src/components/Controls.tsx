@@ -1,5 +1,5 @@
 import { createMemo } from "solid-js";
-import { Dynamic } from "solid-js/web";
+import { Dynamic } from "@solidjs/web";
 import {
   source as player_source,
   state as player_state,
@@ -18,7 +18,7 @@ export default function Controls(props: {
   return (
     <button
       type="button"
-      onclick={() => {
+      onClick={() => {
         setSource(
           {
             error: "",
