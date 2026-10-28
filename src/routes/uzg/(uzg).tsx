@@ -123,8 +123,8 @@ function Listing(props: { recordings: Recording[] }) {
                                 {(entry) => (
                                   <div class="flex-row text-center">
                                     <Controls
-                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour} uur`}
-                                      label={`${entry.hour}:00`}
+                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour}:${String(entry.minute).padStart(2, "0")} uur`}
+                                      label={`${entry.hour}:${String(entry.minute).padStart(2, "0")}`}
                                       src={entry.src}
                                     />
                                     <a

@@ -53,9 +53,9 @@ test("renders header elements", async () => {
 
 test("renders recordings", async () => {
   mockFetchUzgListing.mockResolvedValue([
-    { key: new Date("2024-01-15T10:00:00").getTime(), name: "15-01-2024-10-00.mp3" },
-    { key: new Date("2024-01-15T11:00:00").getTime(), name: "15-01-2024-11-00.mp3" },
-    { key: new Date("2024-01-15T12:00:00").getTime(), name: "15-01-2024-12-00.mp3" },
+    new Date("2024-01-15T10:00:00").getTime(),
+    new Date("2024-01-15T11:00:00").getTime(),
+    new Date("2024-01-15T12:00:00").getTime(),
   ]);
 
   const { getAllByRole, container } = render(() => <UZG />);
@@ -66,7 +66,7 @@ test("renders recordings", async () => {
 
     buttons.forEach((button, index) => {
       const hour = 10 + index;
-      expect(button.title).toContain(`${hour} uur`);
+      expect(button.title).toContain(`${hour}:00 uur`);
     });
   });
 

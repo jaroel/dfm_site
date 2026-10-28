@@ -41,21 +41,23 @@ function zoneOffsetMs(timestamp: number) {
 }
 
 /**
- * Timestamp of a wall-clock hour in Europe/Amsterdam. Two passes: the first
+ * Timestamp of a wall-clock time in Europe/Amsterdam. Two passes: the first
  * guess uses the offset at the UTC instant, which is off by the DST hour for
- * hours on the other side of a transition.
+ * times on the other side of a transition.
  */
 function amsterdamTimestamp(
   day: string,
   month: string,
   year: string,
   hour: string,
+  minute: string,
 ) {
   const wall = Date.UTC(
     Number(year),
     Number(month) - 1,
     Number(day),
     Number(hour),
+    Number(minute),
   );
   return wall - zoneOffsetMs(wall - zoneOffsetMs(wall));
 }
@@ -106,9 +108,9 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
     return listing
       .filter((item) => isDotMp3(item.name))
       .map((item) => {
-        const [day, month, year, hour] = item.name.split(/[-.]/);
+        const [day, month, year, hour, minute] = item.name.split(/[-.]/);
         return {
-          key: amsterdamTimestamp(day, month, year, hour),
+          key: amsterdamTimestamp(day, month, year, hour, minute),
           name: item.name as FilenameDotMp3,
         };
       })
