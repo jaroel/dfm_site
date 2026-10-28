@@ -22,5 +22,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest-setup.ts"],
+    env: {
+      FTP_HOST: "ftp.test",
+      FTP_USER: "test",
+      FTP_PASSWORD: "test",
+    },
   },
 });

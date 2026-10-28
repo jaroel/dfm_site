@@ -1,4 +1,4 @@
-import { getFtpListingCached } from "./ftp.ts";
+import { getFtpListingCached, type FTPRecording } from "./ftp.ts";
 
 export async function fetchUzgListing() {
   "use server";
@@ -14,8 +14,8 @@ const formatter = new Intl.DateTimeFormat("nl-NL", {
   hour: "2-digit",
 });
 
-export function toRecordings(timestamps: number[]) {
-  return timestamps.map((key) => {
+export function toRecordings(recordings: FTPRecording[]) {
+  return recordings.map(({ key, name }) => {
     const parts = formatter.formatToParts(key);
     const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
     for (const { type, value } of parts) {
@@ -26,9 +26,9 @@ export function toRecordings(timestamps: number[]) {
       day: Number(result.day),
       month: Number(result.month),
       year: Number(result.year),
-      weekday: result.weekday,
+      weekday: result.weekday ?? "",
       hour: Number(result.hour),
-      src: `/uzg/${result.day}-${result.month}-${result.year}-${result.hour}-00.mp3`,
+      src: `/uzg/${name}`,
       key,
     };
   });

@@ -7,6 +7,11 @@ import { handleRequest } from "./dist/server/server.js";
 const port = Number(process.env.PORT) || 3000;
 const clientRoot = `${import.meta.dir}/dist/client`;
 
+const SECURITY_HEADERS = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+};
+
 Bun.serve({
   port,
   async fetch(req) {
@@ -21,18 +26,29 @@ Bun.serve({
         const immutable = url.pathname.startsWith("/assets/");
         return new Response(file, {
           headers: immutable
-            ? { "cache-control": "max-age=31536000, immutable" }
-            : {},
+            ? {
+                ...SECURITY_HEADERS,
+                "cache-control": "max-age=31536000, immutable",
+              }
+            : SECURITY_HEADERS,
         });
       }
     }
 
     try {
-      return await handleRequest(req, { event: { nativeEvent: req } });
+      const response = await handleRequest(req, {
+        event: { nativeEvent: req },
+      });
+      for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+        response.headers.set(name, value);
+      }
+      return response;
     } catch (e) {
+      // The detail goes to the server log; the client gets nothing usable.
       console.error(e);
-      return new Response(e instanceof Error ? e.message : String(e), {
+      return new Response("Internal Server Error", {
         status: 500,
+        headers: SECURITY_HEADERS,
       });
     }
   },

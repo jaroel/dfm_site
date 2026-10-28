@@ -1,6 +1,6 @@
 import cabinWoff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2?url";
 import { Link, Meta, Title } from "@solidjs/meta";
-import { Loading } from "solid-js";
+import { Errored, Loading } from "solid-js";
 import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&url";
 import { Router } from "~/router";
 import "./app.css";
@@ -38,9 +38,15 @@ export default function App() {
           >
             <div class="h-screen overflow-auto bg-black/75">
               <div class="mx-auto max-w-6xl">
-                <Loading fallback={<main>Laden…</main>}>
-                  {props.children}
-                </Loading>
+                <Errored
+                  fallback={() => (
+                    <main class="p-8 text-center">
+                      Er ging iets mis. Probeer het later opnieuw.
+                    </main>
+                  )}
+                >
+                  <Loading fallback={null}>{props.children}</Loading>
+                </Errored>
                 <Nav />
               </div>
             </div>
@@ -56,7 +62,7 @@ function Nav() {
     <nav class="flex justify-center bg-gray-100 p-2 text-black">
       <ul class="flex flex-wrap gap-x-8 gap-y-2">
         <li>
-          <a href="/" title="DinxperFM home page">
+          <a href={Router.paths()} title="DinxperFM home page">
             Home page
           </a>
         </li>

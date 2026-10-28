@@ -7,6 +7,7 @@ import { ResponsiveImage } from "@responsive-image/solid";
 import Player from "~/components/Player.tsx";
 import { groupBy } from "~/groupby.ts";
 import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
+import { Router } from "~/router";
 
 const getUzgListing = query(fetchUzgListing, "uzglisting");
 
@@ -14,7 +15,7 @@ export const route = {
   preload: () => void getUzgListing(),
 } satisfies RouteDefinition;
 
-const month_long_c = {
+const month_long_c: Record<number, string> = {
   1: "Januari",
   2: "Februari",
   3: "Maart",
@@ -42,7 +43,7 @@ export default function UZG() {
       <Player />
       <div class="my-8">
         <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
-          <a href="/" title="Terug naar homepage">
+          <a href={Router.paths()} title="Terug naar homepage">
             <ResponsiveImage
               src={logo}
               alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
@@ -74,7 +75,7 @@ export default function UZG() {
               <p>Op dit moment zijn er geen uitzendingen beschikbaar.</p>
             }
           >
-            {<Listing recordings={recordings()} />}
+            <Listing recordings={recordings()} />
           </Show>
         </Loading>
       </div>

@@ -24,4 +24,13 @@
       ]
     },
   },
+  "include": [
+    "src",
+    "*.ts",
+    "*.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
 }

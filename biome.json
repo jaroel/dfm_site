@@ -12,6 +12,26 @@
       "test": "recommended"
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/App.tsx", "src/components/**", "src/routes/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedGlobals": {
+              "level": "error",
+              "options": {
+                "deniedGlobals": {
+                  "Bun": "Bun is server-only; keep it in server.bun.ts or src/ftp.ts",
+                  "process": "process is server-only; keep it out of client components"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "formatter": {
     "indentStyle": "space"
   },

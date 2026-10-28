@@ -1,3 +1,4 @@
+import { Readable } from "node:stream";
 import type { APIHandler } from "filesystem-routing/api";
 import { getFtpStream } from "~/ftp.ts";
 
@@ -17,11 +18,14 @@ export const GET: APIHandler = async ({ params, request }) => {
       });
     }
 
-    return new Response(ftp_data.stream, {
+    // node:stream's ReadableStream type is structurally distinct from the DOM
+    // one BodyInit expects, though the runtime object is the same.
+    const body = Readable.toWeb(ftp_data.stream) as unknown as BodyInit;
+    return new Response(body, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
-        "content-length": ftp_data.metadata.size,
+        "content-length": String(ftp_data.metadata.size),
       },
     });
   }
