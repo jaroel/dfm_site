@@ -20,16 +20,12 @@ bun run preview # vite preview
 
 ## Environment
 
-Server-only, read at runtime by `src/ftp.ts`:
+FTP credentials are hardcoded in `src/ftp.ts` (the container gets no env).
+Only `PORT` is read from the environment:
 
 | Variable | Purpose |
 |---|---|
-| `FTP_HOST` | recordings FTP host |
-| `FTP_USER` | FTP user |
-| `FTP_PASSWORD` | FTP password |
 | `PORT` | HTTP port for `server.bun.ts` (default 3000) |
-
-Bun loads `.env` automatically; Docker needs them passed with `-e`.
 
 ## Checks
 

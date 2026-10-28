@@ -62,13 +62,10 @@ function amsterdamTimestamp(
   return wall - zoneOffsetMs(wall - zoneOffsetMs(wall));
 }
 
-function requiredEnv(name: string) {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Missing environment variable ${name}`);
-  }
-  return value;
-}
+// ponytail: credentials hardcoded on purpose, the container gets no env.
+const FTP_HOST = "dinxperfm.freeddns.org";
+const FTP_USER = "UZG";
+const FTP_PASSWORD = "4862KpZ2";
 
 let FTP_CACHE: { expiration_date: Date; items: FTPListing } | null = null;
 
@@ -88,9 +85,9 @@ export function getExpirationDate() {
 
 export async function getConnection() {
   return await FTP.connect({
-    host: requiredEnv("FTP_HOST"),
-    user: requiredEnv("FTP_USER"),
-    password: requiredEnv("FTP_PASSWORD"),
+    host: FTP_HOST,
+    user: FTP_USER,
+    password: FTP_PASSWORD,
   });
 }
 
@@ -99,9 +96,10 @@ export type FTPRecording = { key: number; name: FilenameDotMp3 };
 export async function getFtpListing(): Promise<FTPRecording[]> {
   // Cutoff datetime exists because the current hour's recording is not written fully yet.
   const threshold = Date.now() - 3600000;
-  const connection = await getConnection();
+  let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
 
   try {
+    connection = await getConnection();
     const listing = (await connection.list())
       .filter((value): value is IListingElement => typeof value !== "string")
       .sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
@@ -115,10 +113,13 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
         };
       })
       .filter((recording) => recording.key <= threshold);
-  } catch {
+  } catch (error) {
+    // Missing credentials or an unreachable host must not take the server
+    // down: an unhandled rejection from the SSR preload would exit Bun.
+    console.error("FTP listing failed:", error);
     return [];
   } finally {
-    connection.end();
+    connection?.end();
   }
 }
 
