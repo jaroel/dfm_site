@@ -1,11 +1,15 @@
-import { HttpStatusCode } from "@solidjs/start";
-import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&responsive";
 import { ResponsiveImage } from "@responsive-image/solid";
+import type { RouteDefinition } from "@solidjs/router";
+import { httpStatus } from "@solidjs/web";
+import logo from "~/assets/logodinxperfm.png?w=768&format=avif;webp;png&responsive";
+
+export const route = {
+  preload: () => httpStatus(404),
+} satisfies RouteDefinition;
 
 export default function NotFound() {
   return (
     <>
-      <HttpStatusCode code={404} />
       <div class="my-10 flex justify-evenly">
         <div class="max-w-sm">
           <ResponsiveImage

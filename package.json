@@ -3,25 +3,27 @@
   "version": "0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "bun node_modules/vite/bin/vite.js",
     "build": "vite build",
-    "preview": "vite preview",
+    "start": "bun server.bun.ts",
+    "preview": "bun node_modules/vite/bin/vite.js preview",
     "test": "vitest",
-    "lint": "biome lint src"
+    "lint": "biome lint src server.bun.ts vite.config.ts vitest.config.ts",
+    "typecheck": "tsc -p tsconfig.client.json --noEmit && tsc --noEmit"
   },
   "engines": {
     "bun": ">=1.4.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.3",
-    "@solidjs/testing-library": "^0.8.10",
+    "@solidjs/testing-library": "1.0.0-rc.2",
+    "@solidjs/vite-plugin": "3.0.0-next.52",
     "@testing-library/jest-dom": "^6.10.0",
     "@testing-library/user-event": "^14.6.8",
     "@types/bun": "^1.4.4",
     "jsdom": "^27.4.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "vite-plugin-solid": "^2.11.14",
     "vitest": "^4.1.12"
   },
   "dependencies": {
@@ -29,13 +31,13 @@
     "@responsive-image/core": "^2.1.1",
     "@responsive-image/solid": "^2.1.0",
     "@responsive-image/vite-plugin": "^3.0.1",
-    "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.15.4",
-    "@solidjs/start": "^2.1.0",
+    "@solidjs/meta": "1.0.0-next.2",
+    "@solidjs/router": "2.0.0-next.43",
+    "@solidjs/web": "2.0.0-rc.19",
     "@tailwindcss/vite": "^4.3.3",
+    "filesystem-routing": "0.4.2",
     "ftp-ts": "^1.1.0",
-    "nitro": "^3.0.260610-beta",
-    "solid-js": "^1.9.17",
+    "solid-js": "2.0.0-rc.19",
     "vite": "8"
   }
 }

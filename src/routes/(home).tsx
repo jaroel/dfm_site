@@ -58,7 +58,7 @@ export default function Home() {
       </div>
       <div class="text-center">
         <a
-          target="blank"
+          target="_blank" rel="noopener noreferrer"
           class="text-blue-400"
           href={programmering.imageUrlFor(1084)}
           title="Bekijk het programma in een nieuw scherm"
@@ -75,7 +75,7 @@ export default function Home() {
           data-testid="sponsors"
         >
           <div class="mb-2 p-1">
-            <a href="https://www.facebook.com/markt.dinxperlo/" target="blank">
+            <a href="https://www.facebook.com/markt.dinxperlo/" target="_blank" rel="noopener noreferrer">
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/makt.jpg"]}
                 alt="Logo van de markt van Dinxperlo"
@@ -85,7 +85,7 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="https://podesta.nl/" target="blank">
+            <a href="https://podesta.nl/" target="_blank" rel="noopener noreferrer">
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo15.jpg"]}
                 alt="Logo van Podesta"
@@ -96,7 +96,7 @@ export default function Home() {
           <div class="mb-2 p-1">
             <a
               href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
-              target="blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo16.jpg"]}
@@ -106,7 +106,7 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="http://www.vvnf.nl/home" target="blank">
+            <a href="http://www.vvnf.nl/home" target="_blank" rel="noopener noreferrer">
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo23.jpg"]}
                 alt="Logo van VVNF"
@@ -115,7 +115,7 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="https://harmtakke.nl" target="blank">
+            <a href="https://harmtakke.nl" target="_blank" rel="noopener noreferrer">
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/logo-harmtakke.jpg"]}
                 alt="Logo van Harm Takke"
@@ -124,7 +124,7 @@ export default function Home() {
             </a>
           </div>
           <div class="mb-2 p-1">
-            <a href="https://tibatek.de" target="blank">
+            <a href="https://tibatek.de" target="_blank" rel="noopener noreferrer">
               <ResponsiveImage
                 src={tibatek_logo_web}
                 alt="Logo van Tibatek"
@@ -136,7 +136,7 @@ export default function Home() {
           <div class="mb-2 p-1">
             <a
               href="https://www.facebook.com/CafetariadeDriesprongDinxperlo/?locale=nl_NL"
-              target="blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <ResponsiveImage
                 src={sponsors["/src/assets/sponsors/dedriesprong.jpg"]}

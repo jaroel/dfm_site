@@ -1,4 +1,3 @@
-import { MetaProvider } from "@solidjs/meta";
 import { render, waitFor } from "@solidjs/testing-library";
 import { beforeEach, expect, test, vi } from "vitest";
 import UZG from "./(uzg).tsx";
@@ -17,7 +16,7 @@ vi.mock("@solidjs/router", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@solidjs/router")>();
   return {
     ...actual,
-    query: () => async () => mockFetchUzgListing(),
+    query: <T,>(fn: T) => fn,
   };
 });
 
@@ -28,11 +27,9 @@ beforeEach(() => {
 test("renders header elements", async () => {
   mockFetchUzgListing.mockResolvedValue([]);
 
-  const { getByRole, getByText, getByTitle, getByAltText } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
-  ));
+  const { getByRole, getByText, getByTitle, getByAltText } = render(
+    () => <UZG />,
+  );
 
   await waitFor(() => {
     expect(getByRole("heading", { name: "Uitzending gemist" })).toBeTruthy();
@@ -61,11 +58,7 @@ test("renders recordings", async () => {
     new Date("2024-01-15T12:00:00").getTime(),
   ]);
 
-  const { getAllByRole, container } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
-  ));
+  const { getAllByRole, container } = render(() => <UZG />);
 
   await waitFor(() => {
     const buttons = getAllByRole("button");
@@ -73,7 +66,7 @@ test("renders recordings", async () => {
 
     buttons.forEach((button, index) => {
       const hour = 10 + index;
-      expect(button.title).toContain(`${hour} uur`);
+      expect(button.title).toContain(`${hour}:00 uur`);
     });
   });
 
@@ -104,11 +97,7 @@ test("renders recordings", async () => {
 test("renders empty state", async () => {
   mockFetchUzgListing.mockResolvedValue([]);
 
-  const { getByText } = render(() => (
-    <MetaProvider>
-      <UZG />
-    </MetaProvider>
-  ));
+  const { getByText } = render(() => <UZG />);
 
   await waitFor(() => {
     expect(
