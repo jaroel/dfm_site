@@ -3,10 +3,10 @@
   "version": "0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "bun node_modules/vite/bin/vite.js",
     "build": "vite build",
     "start": "bun server.bun.ts",
-    "preview": "vite preview",
+    "preview": "bun node_modules/vite/bin/vite.js preview",
     "test": "vitest",
     "lint": "biome lint src server.bun.ts vite.config.ts vitest.config.ts",
     "typecheck": "tsc -p tsconfig.client.json --noEmit && tsc --noEmit"
