@@ -14,6 +14,10 @@ export default defineConfig({
   },
   nitro: {
     preset: "bun",
+    // Nitro's fastResponse polyfill swaps globalThis.Response with srvx's
+    // NodeResponse during prerender. Bun.serve rejects that class, breaking
+    // `bun run build` inside Docker.
+    features: { fastResponse: false },
     prerender: {
       routes: ["/"],
     },
