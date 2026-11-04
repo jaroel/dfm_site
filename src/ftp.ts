@@ -39,9 +39,9 @@ export async function getFtpListing(): Promise<number[]> {
 
   try {
     const connection = await getConnection();
-    const listing = (await connection.list())
-      .filter((value): value is IListingElement => typeof value !== "string")
-      .sort((a, b) => b.date - a.date);
+    const listing = (await connection.list()).filter(
+      (value): value is IListingElement => typeof value !== "string",
+    );
     connection.end();
     return listing
       .filter((item) => isDotMp3(item.name))
@@ -49,6 +49,7 @@ export async function getFtpListing(): Promise<number[]> {
         const [day, month, year, hour] = item.name.split(/[-.]/);
         return new Date(`${year}-${month}-${day}T${hour}:00`).getTime();
       })
+      .sort((a, b) => b - a)
       .filter((timestamp) => timestamp <= threshold);
   } catch {
     return [];
