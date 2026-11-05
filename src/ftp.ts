@@ -99,10 +99,11 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
   let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
 
   try {
-    connection = await getConnection();
-    const listing = (await connection.list())
-      .filter((value): value is IListingElement => typeof value !== "string")
-      .sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0));
+    const connection = await getConnection();
+    const listing = (await connection.list()).filter(
+      (value): value is IListingElement => typeof value !== "string",
+    );
+    connection.end();
     return listing
       .filter((item) => isDotMp3(item.name))
       .map((item) => {
@@ -112,7 +113,8 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
           name: item.name as FilenameDotMp3,
         };
       })
-      .filter((recording) => recording.key <= threshold);
+      .filter((recording) => recording.key <= threshold)
+      .sort((a, b) => b.key - a.key)
   } catch (error) {
     // Missing credentials or an unreachable host must not take the server
     // down: an unhandled rejection from the SSR preload would exit Bun.
