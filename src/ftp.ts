@@ -12,9 +12,8 @@ function isDotMp3(name: string): name is FilenameDotMp3 {
   return FILENAME_PATTERN.test(name);
 }
 
-const AMSTERDAM = "Europe/Amsterdam";
 const zoneFormatter = new Intl.DateTimeFormat("en-US", {
-  timeZone: AMSTERDAM,
+  timeZone: "Europe/Amsterdam",
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
