@@ -17,10 +17,10 @@ const BUTTON_CLASS: Record<PlayerState, string> = {
 };
 
 const ICON_CLASS: Record<PlayerState, string> = {
-  error: "stop-circle",
-  playing: "stop-circle",
-  loading: "hourglass-split",
-  stopped: "play",
+  error: "bi-stop-circle",
+  playing: "bi-stop-circle",
+  loading: "bi-hourglass-split",
+  stopped: "bi-play",
 };
 
 const LABEL: Record<PlayerState, string> = {
@@ -87,7 +87,7 @@ export default function Controls(props: {
         width="16"
         height="16"
         fill="currentColor"
-        class={["bi", `bi-${ICON_CLASS[state()]}`, "inline"]}
+        class={["bi", ICON_CLASS[state()], "inline"]}
         viewBox="0 0 16 16"
       >
         <title>{LABEL[state()]}</title>
