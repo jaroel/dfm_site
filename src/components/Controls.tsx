@@ -73,7 +73,14 @@ export default function Controls(props: {
     <button
       type="button"
       onClick={() => {
-        setSource(state() === "stopped" ? props.src : "");
+        setSource(
+          {
+            error: "",
+            playing: "",
+            loading: "",
+            stopped: props.src,
+          }[state()],
+        );
       }}
       title={props.title}
       class={[
