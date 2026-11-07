@@ -1,0 +1,6 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "sortTailwindcss": true,
+  "ignorePatterns": ["dist", ".output", "node_modules", "public", "file-routes.d.ts"]
+}

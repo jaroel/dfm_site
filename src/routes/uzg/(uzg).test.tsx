@@ -27,9 +27,9 @@ beforeEach(() => {
 test("renders header elements", async () => {
   mockFetchUzgListing.mockResolvedValue([]);
 
-  const { getByRole, getByText, getByTitle, getByAltText } = render(
-    () => <UZG />,
-  );
+  const { getByRole, getByText, getByTitle, getByAltText } = render(() => (
+    <UZG />
+  ));
 
   await waitFor(() => {
     expect(getByRole("heading", { name: "Uitzending gemist" })).toBeTruthy();

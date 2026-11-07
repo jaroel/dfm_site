@@ -33,15 +33,14 @@ export default function Player() {
   );
 
   return (
-    // biome-ignore lint/a11y/useMediaCaption: not relevant
     <audio
       ref={(el) => (audio = el)}
       src={source()}
       onPlaying={() => setState("playing")}
       onPause={() => setState("stopped")}
-      onError={({ currentTarget }) => {
-        currentTarget.currentSrc ? setState("error") : setState("stopped");
-      }}
+      onError={({ currentTarget }) =>
+        setState(currentTarget.currentSrc ? "error" : "stopped")
+      }
       onLoadStart={() => setState("loading")}
     />
   );
