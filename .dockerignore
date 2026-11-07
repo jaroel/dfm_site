@@ -1,6 +1,7 @@
 node_modules
 .solid
 dist
+server.bundle.js
 .vscode
 .git
 .env
