@@ -9,20 +9,20 @@
     "preview": "bun node_modules/vite/bin/vite.js preview",
     "test": "vitest",
     "lint": "biome lint src server.bun.ts vite.config.ts vitest.config.ts",
-    "typecheck": "tsc -p tsconfig.client.json --noEmit && tsc --noEmit"
+    "typecheck": "bun check --no-script && bun check -p tsconfig.client.json --no-script"
   },
   "engines": {
     "bun": ">=1.4.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.6.5",
+    "@biomejs/biome": "^2.6.6",
     "@solidjs/testing-library": "1.0.0-rc.2",
     "@solidjs/vite-plugin": "3.0.0-next.52",
     "@testing-library/jest-dom": "^6.10.0",
     "@testing-library/user-event": "^14.6.8",
     "@types/bun": "^1.4.4",
     "jsdom": "^27.4.0",
-    "tailwindcss": "^4.3.4",
+    "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
     "vitest": "^4.1.12"
   },
@@ -34,7 +34,7 @@
     "@solidjs/meta": "1.0.0-next.2",
     "@solidjs/router": "2.0.0-next.43",
     "@solidjs/web": "2.0.0-rc.19",
-    "@tailwindcss/vite": "^4.3.4",
+    "@tailwindcss/vite": "^4.3.5",
     "filesystem-routing": "0.4.2",
     "ftp-ts": "^1.1.0",
     "solid-js": "2.0.0-rc.19",
