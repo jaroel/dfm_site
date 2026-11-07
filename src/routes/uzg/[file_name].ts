@@ -1,12 +1,16 @@
-import type { APIEvent } from "@solidjs/start/server";
+import { Readable } from "node:stream";
+import type { APIHandler } from "filesystem-routing/api";
 import { getFtpStream } from "~/ftp.ts";
 
-export async function GET({ params, request }: APIEvent) {
-  const filename = params.file_name.trim();
+export const GET: APIHandler = async ({ params, request }) => {
+  const filename = (params?.file_name ?? "").trim();
   const ftp_data = await getFtpStream(filename);
 
   if (ftp_data) {
     if (request.headers.get("range") === "bytes=0-1") {
+      // Safari probes with a 2-byte range; don't leave the data transfer
+      // running for a response that ignores it.
+      ftp_data.stream.destroy();
       return new Response("ID", {
         status: 206,
         headers: {
@@ -17,11 +21,14 @@ export async function GET({ params, request }: APIEvent) {
       });
     }
 
-    return new Response(ftp_data.stream, {
+    // node:stream's ReadableStream type is structurally distinct from the DOM
+    // one BodyInit expects, though the runtime object is the same.
+    const body = Readable.toWeb(ftp_data.stream) as unknown as BodyInit;
+    return new Response(body, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
-        "content-length": ftp_data.metadata.size,
+        "content-length": String(ftp_data.metadata.size),
       },
     });
   }
@@ -30,4 +37,4 @@ export async function GET({ params, request }: APIEvent) {
     status: 404,
     statusText: "Not found",
   });
-}
+};

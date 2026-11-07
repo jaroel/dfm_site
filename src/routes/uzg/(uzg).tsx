@@ -1,22 +1,21 @@
 import { Meta, Title } from "@solidjs/meta";
-import { createAsync, query } from "@solidjs/router";
-import { For, Show, Suspense } from "solid-js";
+import { query, type RouteDefinition } from "@solidjs/router";
+import { createMemo, For, Loading, Show } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&responsive";
 import Controls from "~/components/Controls.tsx";
 import { ResponsiveImage } from "@responsive-image/solid";
 import Player from "~/components/Player.tsx";
 import { groupBy } from "~/groupby.ts";
 import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
+import { Router } from "~/router";
 
-const getUzgListing = query(async () => {
-  return await fetchUzgListing();
-}, "uzglisting");
+const getUzgListing = query(fetchUzgListing, "uzglisting");
 
 export const route = {
-  load: () => getUzgListing(),
-};
+  preload: () => void getUzgListing(),
+} satisfies RouteDefinition;
 
-const month_long_c = {
+const month_long_c: Record<number, string> = {
   1: "Januari",
   2: "Februari",
   3: "Maart",
@@ -32,9 +31,8 @@ const month_long_c = {
 };
 
 export default function UZG() {
-  const recordings = createAsync(
-    async () => toRecordings(await getUzgListing()),
-    { initialValue: [] },
+  const recordings = createMemo(async () =>
+    toRecordings(await getUzgListing()),
   );
   return (
     <>
@@ -45,7 +43,7 @@ export default function UZG() {
       <Player />
       <div class="my-8">
         <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
-          <a href="/" title="Terug naar homepage">
+          <a href={Router.paths()} title="Terug naar homepage">
             <ResponsiveImage
               src={logo}
               alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
@@ -70,16 +68,16 @@ export default function UZG() {
           </p>
         </div>
         <hr class="my-8" />
-        <Suspense fallback={<p>Uitzendingen worden opgehaald.</p>}>
+        <Loading fallback={<p>Uitzendingen worden opgehaald.</p>}>
           <Show
             when={recordings().length}
             fallback={
               <p>Op dit moment zijn er geen uitzendingen beschikbaar.</p>
             }
           >
-            {<Listing recordings={recordings()} />}
+            <Listing recordings={recordings()} />
           </Show>
-        </Suspense>
+        </Loading>
       </div>
     </>
   );
@@ -125,8 +123,8 @@ function Listing(props: { recordings: Recording[] }) {
                                 {(entry) => (
                                   <div class="flex-row text-center">
                                     <Controls
-                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour} uur`}
-                                      label={`${entry.hour}:00`}
+                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour}:${String(entry.minute).padStart(2, "0")} uur`}
+                                      label={`${entry.hour}:${String(entry.minute).padStart(2, "0")}`}
                                       src={entry.src}
                                     />
                                     <a

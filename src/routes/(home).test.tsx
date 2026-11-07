@@ -24,7 +24,7 @@ test("renders programmering", async () => {
   ).toBe("high");
 
   const link = getByText("In nieuwe pagina openen");
-  expect(link.getAttribute("target")).toBe("blank");
+  expect(link.getAttribute("target")).toBe("_blank");
   expect(link.getAttribute("href")).not.empty;
 });
 

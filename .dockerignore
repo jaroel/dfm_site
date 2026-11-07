@@ -1,5 +1,8 @@
 node_modules
-.vinxi
-.output
+.solid
+dist
+server.bundle.js
 .vscode
 .git
+.env
+.env*.local

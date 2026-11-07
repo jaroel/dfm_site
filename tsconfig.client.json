@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "vite/client",
+      "filesystem-routing/types",
+      "@testing-library/jest-dom",
+      "@responsive-image/vite-plugin/client"
+    ],
+  },
+  "include": [
+    "src/App.tsx",
+    "src/router.ts",
+    "src/components",
+    "src/routes",
+    "src/uzg.ts",
+    "src/recordings.ts",
+    "src/groupby.ts",
+    "src/global.d.ts",
+    "file-routes.d.ts"
+  ],
+}

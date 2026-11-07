@@ -1,8 +1,11 @@
 import { getFtpListingCached } from "./ftp.ts";
 
-export async function fetchUzgListing() {
+export type UzgListing = number[];
+
+export async function fetchUzgListing(): Promise<UzgListing> {
   "use server";
-  return await getFtpListingCached();
+  const listing = await getFtpListingCached();
+  return listing.map((recording) => recording.key);
 }
 
 const formatter = new Intl.DateTimeFormat("nl-NL", {
@@ -12,23 +15,34 @@ const formatter = new Intl.DateTimeFormat("nl-NL", {
   day: "2-digit",
   weekday: "long",
   hour: "2-digit",
+  minute: "2-digit",
 });
 
-export function toRecordings(timestamps: number[]) {
-  return timestamps.map((key) => {
-    const parts = formatter.formatToParts(key);
-    const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
-    for (const { type, value } of parts) {
-      result[type] = value;
-    }
+function partsOf(key: number) {
+  const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
+  for (const { type, value } of formatter.formatToParts(key)) {
+    result[type] = value;
+  }
+  return result;
+}
 
+/** `dd-mm-yyyy-hh-mm.mp3`, the only naming the FTP host uses. */
+function nameOf(key: number) {
+  const parts = partsOf(key);
+  return `${parts.day}-${parts.month}-${parts.year}-${parts.hour}-${parts.minute}.mp3`;
+}
+
+export function toRecordings(keys: UzgListing) {
+  return keys.map((key) => {
+    const result = partsOf(key);
     return {
       day: Number(result.day),
       month: Number(result.month),
       year: Number(result.year),
-      weekday: result.weekday,
+      weekday: result.weekday ?? "",
       hour: Number(result.hour),
-      src: `/uzg/${result.day}-${result.month}-${result.year}-${result.hour}-00.mp3`,
+      minute: Number(result.minute),
+      src: `/uzg/${nameOf(key)}`,
       key,
     };
   });

@@ -1,56 +1,59 @@
 import cabinWoff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2?url";
-import { Link, Meta, MetaProvider, Title } from "@solidjs/meta";
-import { A, Router } from "@solidjs/router";
-import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
+import { Link, Meta, Title } from "@solidjs/meta";
+import { Errored, Loading } from "solid-js";
 import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&url";
+import { Router } from "~/router";
 import "./app.css";
 
 export default function App() {
   return (
-    <MetaProvider>
-      <Link
-        rel="preload"
-        as="font"
-        type="font/woff2"
-        href={cabinWoff2}
-        crossorigin="anonymous"
-      />
-      <Title>Dinxper FM - Het swingende geluid van Dinxperlo</Title>
-      <Meta
-        name="description"
-        content="Dinxper FM - Het swingende geluid van Dinxperlo"
-      />
-      <Meta
-        property="og:title"
-        content="Dinxper FM - Het swingende geluid van Dinxperlo"
-      />
-      <Meta
-        property="og:description"
-        content="Dinxper FM - Het swingende geluid van Dinxperlo"
-      />
-      <div
-        class="h-screen bg-gray-600 bg-cover bg-fixed bg-center text-slate-50"
-        style={{
-          "background-image": `url(${bgImage})`,
-        }}
-      >
-        <div class="h-screen overflow-auto bg-black/75">
-          <div class="mx-auto max-w-6xl">
-            <Router
-              root={(props) => (
-                <>
-                  <Suspense>{props.children}</Suspense>
-                  <Nav />
-                </>
-              )}
-            >
-              <FileRoutes />
-            </Router>
+    <Router>
+      {(props) => (
+        <>
+          <Link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            href={cabinWoff2}
+            crossorigin="anonymous"
+          />
+          <Title>Dinxper FM - Het swingende geluid van Dinxperlo</Title>
+          <Meta
+            name="description"
+            content="Dinxper FM - Het swingende geluid van Dinxperlo"
+          />
+          <Meta
+            property="og:title"
+            content="Dinxper FM - Het swingende geluid van Dinxperlo"
+          />
+          <Meta
+            property="og:description"
+            content="Dinxper FM - Het swingende geluid van Dinxperlo"
+          />
+          <div
+            class="h-screen bg-gray-600 bg-cover bg-fixed bg-center text-slate-50"
+            style={{
+              "background-image": `url(${bgImage})`,
+            }}
+          >
+            <div class="h-screen overflow-auto bg-black/75">
+              <div class="mx-auto max-w-6xl">
+                <Errored
+                  fallback={() => (
+                    <main class="p-8 text-center">
+                      Er ging iets mis. Probeer het later opnieuw.
+                    </main>
+                  )}
+                >
+                  <Loading fallback={null}>{props.children}</Loading>
+                </Errored>
+                <Nav />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </MetaProvider>
+        </>
+      )}
+    </Router>
   );
 }
 
@@ -59,9 +62,9 @@ function Nav() {
     <nav class="flex justify-center bg-gray-100 p-2 text-black">
       <ul class="flex flex-wrap gap-x-8 gap-y-2">
         <li>
-          <A href="/" title="DinxperFM home page">
+          <a href={Router.paths()} title="DinxperFM home page">
             Home page
-          </A>
+          </a>
         </li>
         <li>
           <a
