@@ -1,16 +1,12 @@
-import type { Readable } from "node:stream";
+import { Readable } from "node:stream";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
-export type FilenameDotMp3 = `${string}.mp3`;
-
 // dd-mm-yyyy-hh-mm.mp3 — strict, so a crafted segment can never reach
-// connection.get() as an FTP path.
-const FILENAME_PATTERN = /^\d{2}-\d{2}-\d{4}-\d{2}-\d{2}\.mp3$/;
-
-function isDotMp3(name: string): name is FilenameDotMp3 {
-  return FILENAME_PATTERN.test(name);
-}
+// connection.get() as an FTP path. Keep it non-global: it is used with exec(),
+// and a /g flag would make lastIndex stateful across calls.
+const FILENAME_PATTERN =
+  /^(?<day>\d{2})-(?<month>\d{2})-(?<year>\d{4})-(?<hour>\d{2})-(?<minute>\d{2})\.mp3$/;
 
 const zoneFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "Europe/Amsterdam",
@@ -90,7 +86,19 @@ export async function getConnection() {
   });
 }
 
-export type FTPRecording = { key: number; name: FilenameDotMp3 };
+/** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
+export type FTPRecording = { key: number; name: string };
+
+/**
+ * ftp-ts declares get() as NodeJS.ReadableStream but returns a node Readable
+ * (needs destroy() / Readable.toWeb()). Runtime-check once instead of casting.
+ */
+function asNodeReadable(stream: NodeJS.ReadableStream): Readable {
+  if (!(stream instanceof Readable)) {
+    throw new TypeError("ftp-ts returned a non-node readable stream");
+  }
+  return stream;
+}
 
 export async function getFtpListing(): Promise<FTPRecording[]> {
   // Cutoff datetime exists because the current hour's recording is not written fully yet.
@@ -103,13 +111,16 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
       (value): value is IListingElement => typeof value !== "string",
     );
     return listing
-      .filter((item) => isDotMp3(item.name))
-      .map((item) => {
-        const [day, month, year, hour, minute] = item.name.split(/[-.]/);
-        return {
-          key: amsterdamTimestamp(day, month, year, hour, minute),
-          name: item.name as FilenameDotMp3,
-        };
+      .flatMap((item) => {
+        const { groups } = FILENAME_PATTERN.exec(item.name) ?? {};
+        if (!groups) return [];
+        const { day, month, year, hour, minute } = groups;
+        return [
+          {
+            key: amsterdamTimestamp(day, month, year, hour, minute),
+            name: item.name,
+          },
+        ];
       })
       .filter((recording) => recording.key <= threshold)
       .sort((a, b) => b.key - a.key);
@@ -139,23 +150,24 @@ export async function getFtpListingCached() {
 }
 
 export async function getFtpStream(filename: string) {
-  if (!isDotMp3(filename)) {
-    return;
+  // Cheap reject before touching FTP; the listing below is the real allow-list.
+  if (!FILENAME_PATTERN.test(filename)) {
+    return undefined;
   }
   const listing = await getFtpListingCached();
   // Exact filename match: the listing is the allow-list, so a crafted name
   // never reaches connection.get().
   if (!listing.some((recording) => recording.name === filename)) {
-    return;
+    return undefined;
   }
   const connection = await getConnection();
   try {
     const metadata = await connection.fileInfo(filename);
     if (!metadata) {
       connection.end();
-      return;
+      return undefined;
     }
-    const stream = await connection.get(filename);
+    const stream = asNodeReadable(await connection.get(filename));
     // A client that stops playback cancels the response body, which closes
     // this stream early. `destroy()` is not an option: ftp-ts clears its
     // parser immediately, so a late response on the control socket would

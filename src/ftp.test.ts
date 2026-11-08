@@ -44,4 +44,21 @@ describe("getFtpListingCached", () => {
 
     expect(mockList).toHaveBeenCalledTimes(2);
   });
+
+  test("skips non-mp3/malformed names and future recordings, newest first", async () => {
+    mockList.mockResolvedValueOnce([
+      { name: "readme.txt" },
+      { name: "1-01-2024-10-00.mp3" },
+      { name: "15-01-2024-10-00.mp3" },
+      { name: "16-01-2024-10-00.mp3" },
+      { name: "01-01-2030-00-00.mp3" },
+    ]);
+
+    const result = await getFtpListingCached();
+
+    expect(result.map((recording) => recording.name)).toEqual([
+      "16-01-2024-10-00.mp3",
+      "15-01-2024-10-00.mp3",
+    ]);
+  });
 });

@@ -23,8 +23,9 @@ export const GET: APIHandler = async ({ params, request }) => {
 
     // node:stream's ReadableStream type is structurally distinct from the DOM
     // one BodyInit expects, though the runtime object is the same.
-    const body = Readable.toWeb(ftp_data.stream) as unknown as BodyInit;
-    return new Response(body, {
+    const body = Readable.toWeb(ftp_data.stream);
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+    return new Response(body as unknown as BodyInit, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
