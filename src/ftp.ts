@@ -155,7 +155,7 @@ export async function getFtpStream(filename: string) {
       connection.end();
       return;
     }
-    const stream = (await connection.get(filename)) as Readable;
+    const stream = await connection.get(filename);
     // A client that stops playback cancels the response body, which closes
     // this stream early. `destroy()` is not an option: ftp-ts clears its
     // parser immediately, so a late response on the control socket would
@@ -174,7 +174,7 @@ export async function getFtpStream(filename: string) {
         connection.end();
         return;
       }
-      connection
+      void connection
         .abort()
         .catch(() => {})
         .then(() => connection.end());
