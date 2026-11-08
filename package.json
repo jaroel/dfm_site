@@ -2,6 +2,7 @@
   "name": "solid-site",
   "version": "0.1",
   "type": "module",
+  "packageManager": "bun@1.4.4",
   "scripts": {
     "dev": "bun node_modules/vite/bin/vite.js",
     "build": "vite build",
