@@ -1,8 +1,8 @@
-import type { IListingElement } from "ftp-ts";
-import { FTP } from "ftp-ts";
+import { PassThrough, Readable } from "node:stream";
+import { Client, FTPError } from "basic-ftp";
 
 // dd-mm-yyyy-hh-mm.mp3 — strict, so a crafted segment can never reach
-// connection.get() as an FTP path. Keep it non-global: it is used with exec(),
+// downloadTo() as an FTP path. Keep it non-global: it is used with exec(),
 // and a /g flag would make lastIndex stateful across calls.
 const FILENAME_PATTERN =
   /^(?<day>\d{2})-(?<month>\d{2})-(?<year>\d{4})-(?<hour>\d{2})-(?<minute>\d{2})\.mp3$/;
@@ -78,26 +78,31 @@ export function getExpirationDate() {
 }
 
 export async function getConnection() {
-  return await FTP.connect({
-    host: FTP_HOST,
-    user: FTP_USER,
-    password: FTP_PASSWORD,
-  });
+  const client = new Client(10_000);
+  try {
+    await client.access({
+      host: FTP_HOST,
+      user: FTP_USER,
+      password: FTP_PASSWORD,
+    });
+    return client;
+  } catch (error) {
+    client.close();
+    throw error;
+  }
 }
 
 /** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
 export type FTPRecording = { key: number; name: string };
 
-export async function getFtpListing(): Promise<FTPRecording[]> {
+export async function getFtpListing(): Promise<FTPRecording[] | null> {
   // Cutoff datetime exists because the current hour's recording is not written fully yet.
   const threshold = Date.now() - 3600000;
   let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
 
   try {
     connection = await getConnection();
-    const listing = (await connection.list()).filter(
-      (value): value is IListingElement => typeof value !== "string",
-    );
+    const listing = await connection.list();
     return listing
       .flatMap((item) => {
         const { groups } = FILENAME_PATTERN.exec(item.name) ?? {};
@@ -116,20 +121,25 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
     // Missing credentials or an unreachable host must not take the server
     // down: an unhandled rejection from the SSR preload would exit Bun.
     console.error("FTP listing failed:", error);
-    return [];
+    return null;
   } finally {
-    connection?.end();
+    connection?.close();
   }
 }
 
-type FTPListing = Awaited<ReturnType<typeof getFtpListing>>;
+type FTPListing = FTPRecording[];
 
-export async function getFtpListingCached() {
+export async function getFtpListingCached(): Promise<FTPListing> {
   const now = new Date();
   if (FTP_CACHE && FTP_CACHE.expiration_date > now) {
     return FTP_CACHE.items;
   }
   const items = await getFtpListing();
+  if (!items) {
+    // Don't cache a failed fetch: a transient FTP error must not blank the
+    // listing until the next cache window. Serve stale data when we have it.
+    return FTP_CACHE?.items ?? [];
+  }
   FTP_CACHE = {
     expiration_date: getExpirationDate(),
     items,
@@ -137,51 +147,58 @@ export async function getFtpListingCached() {
   return items;
 }
 
-export async function getFtpStream(filename: string) {
+export async function getFtpStream(filename: string, startAt = 0) {
   // Cheap reject before touching FTP; the listing below is the real allow-list.
   if (!FILENAME_PATTERN.test(filename)) {
     return undefined;
   }
+  if (!Number.isSafeInteger(startAt) || startAt < 0) {
+    return undefined;
+  }
   const listing = await getFtpListingCached();
   // Exact filename match: the listing is the allow-list, so a crafted name
-  // never reaches connection.get().
+  // never reaches downloadTo().
   if (!listing.some((recording) => recording.name === filename)) {
     return undefined;
   }
   const connection = await getConnection();
   try {
-    const metadata = await connection.fileInfo(filename);
-    if (!metadata) {
-      connection.end();
-      return undefined;
+    let size: number;
+    try {
+      size = await connection.size(filename);
+    } catch (error) {
+      // The listing is the allow-list, but the file can disappear between the
+      // cached listing and this request. Anything else is a real failure.
+      if (error instanceof FTPError && error.code === 550) {
+        connection.close();
+        return undefined;
+      }
+      throw error;
     }
-    const stream = await connection.get(filename);
-    // A client that stops playback cancels the response body, which closes
-    // this stream early. `destroy()` is not an option: ftp-ts clears its
-    // parser immediately, so a late response on the control socket would
-    // throw inside the socket handler and kill the process. ABOR first, then
-    // close the control connection once the server has answered.
-    let completed = false;
-    stream.once("end", () => {
-      completed = true;
-    });
+
+    const stream = new PassThrough();
     stream.once("error", () => {
       // Consumed by the caller through the response body; without a listener
       // node treats it as an unhandled 'error' and exits.
     });
-    stream.once("close", () => {
-      if (completed) {
-        connection.end();
-        return;
-      }
-      void connection
-        .abort()
-        .catch(() => {})
-        .then(() => connection.end());
-    });
-    return { metadata, stream };
+    // A client that stops playback cancels the response body, which destroys
+    // this stream. Close the control and data sockets; basic-ftp does not
+    // abort reliably when only the destination is destroyed.
+    stream.once("close", () => connection.close());
+    const transfer =
+      startAt > 0
+        ? connection.downloadTo(stream, filename, startAt)
+        : connection.downloadTo(stream, filename);
+    void transfer
+      .catch((error: Error) => stream.destroy(error))
+      .finally(() => connection.close());
+
+    return {
+      size,
+      stream: Readable.toWeb(stream),
+    };
   } catch (error) {
-    connection.destroy();
+    connection.close();
     throw error;
   }
 }
