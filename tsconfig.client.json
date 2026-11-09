@@ -16,6 +16,7 @@
     "src/uzg.ts",
     "src/recordings.ts",
     "src/groupby.ts",
+    "src/ftp-ts.d.ts",
     "src/global.d.ts",
     "file-routes.d.ts"
   ],

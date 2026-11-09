@@ -1,4 +1,3 @@
-import { Readable } from "node:stream";
 import type { IListingElement } from "ftp-ts";
 import { FTP } from "ftp-ts";
 
@@ -89,17 +88,6 @@ export async function getConnection() {
 /** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
 export type FTPRecording = { key: number; name: string };
 
-/**
- * ftp-ts declares get() as NodeJS.ReadableStream but returns a node Readable
- * (needs destroy() / Readable.toWeb()). Runtime-check once instead of casting.
- */
-function asNodeReadable(stream: NodeJS.ReadableStream): Readable {
-  if (!(stream instanceof Readable)) {
-    throw new TypeError("ftp-ts returned a non-node readable stream");
-  }
-  return stream;
-}
-
 export async function getFtpListing(): Promise<FTPRecording[]> {
   // Cutoff datetime exists because the current hour's recording is not written fully yet.
   const threshold = Date.now() - 3600000;
@@ -167,7 +155,7 @@ export async function getFtpStream(filename: string) {
       connection.end();
       return undefined;
     }
-    const stream = asNodeReadable(await connection.get(filename));
+    const stream = await connection.get(filename);
     // A client that stops playback cancels the response body, which closes
     // this stream early. `destroy()` is not an option: ftp-ts clears its
     // parser immediately, so a late response on the control socket would
