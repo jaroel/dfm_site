@@ -95,7 +95,7 @@ export async function getConnection() {
 /** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
 export type FTPRecording = { key: number; name: string };
 
-export async function getFtpListing(): Promise<FTPRecording[]> {
+export async function getFtpListing(): Promise<FTPRecording[] | null> {
   // Cutoff datetime exists because the current hour's recording is not written fully yet.
   const threshold = Date.now() - 3600000;
   let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
@@ -121,20 +121,25 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
     // Missing credentials or an unreachable host must not take the server
     // down: an unhandled rejection from the SSR preload would exit Bun.
     console.error("FTP listing failed:", error);
-    return [];
+    return null;
   } finally {
     connection?.close();
   }
 }
 
-type FTPListing = Awaited<ReturnType<typeof getFtpListing>>;
+type FTPListing = FTPRecording[];
 
-export async function getFtpListingCached() {
+export async function getFtpListingCached(): Promise<FTPListing> {
   const now = new Date();
   if (FTP_CACHE && FTP_CACHE.expiration_date > now) {
     return FTP_CACHE.items;
   }
   const items = await getFtpListing();
+  if (!items) {
+    // Don't cache a failed fetch: a transient FTP error must not blank the
+    // listing until the next cache window. Serve stale data when we have it.
+    return FTP_CACHE?.items ?? [];
+  }
   FTP_CACHE = {
     expiration_date: getExpirationDate(),
     items,
@@ -142,14 +147,17 @@ export async function getFtpListingCached() {
   return items;
 }
 
-export async function getFtpStream(filename: string) {
+export async function getFtpStream(filename: string, startAt = 0) {
   // Cheap reject before touching FTP; the listing below is the real allow-list.
   if (!FILENAME_PATTERN.test(filename)) {
     return undefined;
   }
+  if (!Number.isSafeInteger(startAt) || startAt < 0) {
+    return undefined;
+  }
   const listing = await getFtpListingCached();
   // Exact filename match: the listing is the allow-list, so a crafted name
-  // never reaches connection.get().
+  // never reaches downloadTo().
   if (!listing.some((recording) => recording.name === filename)) {
     return undefined;
   }
@@ -177,8 +185,11 @@ export async function getFtpStream(filename: string) {
     // this stream. Close the control and data sockets; basic-ftp does not
     // abort reliably when only the destination is destroyed.
     stream.once("close", () => connection.close());
-    void connection
-      .downloadTo(stream, filename)
+    const transfer =
+      startAt > 0
+        ? connection.downloadTo(stream, filename, startAt)
+        : connection.downloadTo(stream, filename);
+    void transfer
       .catch((error: Error) => stream.destroy(error))
       .finally(() => connection.close());
 

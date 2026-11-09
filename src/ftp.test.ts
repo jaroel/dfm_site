@@ -78,6 +78,15 @@ describe("getFtpListingCached", () => {
       "15-01-2024-10-00.mp3",
     ]);
   });
+
+  test("does not cache a failed listing", async () => {
+    mockList.mockRejectedValueOnce(new Error("ftp down"));
+
+    await expect(getFtpListingCached()).resolves.toEqual([]);
+    await getFtpListingCached();
+
+    expect(mockList).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe("getFtpStream", () => {
@@ -110,6 +119,22 @@ describe("getFtpStream", () => {
     expect(mockDownloadTo).toHaveBeenCalledWith(
       expect.anything(),
       "15-01-2024-11-00.mp3",
+    );
+  });
+
+  test("starts the download at the requested offset", async () => {
+    mockDownloadTo.mockImplementationOnce(async (destination: Writable) => {
+      destination.end();
+    });
+
+    const result = await getFtpStream("15-01-2024-11-00.mp3", 100);
+    if (!result) throw new Error("expected a stream");
+    await result.stream.cancel();
+
+    expect(mockDownloadTo).toHaveBeenCalledWith(
+      expect.anything(),
+      "15-01-2024-11-00.mp3",
+      100,
     );
   });
 

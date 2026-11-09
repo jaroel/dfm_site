@@ -12,4 +12,5 @@ export declare function getFtpListingCached(): Promise<FTPRecording[]>;
 
 export declare function getFtpStream(
   filename: string,
+  startAt?: number,
 ): Promise<{ size: number; stream: ReadableStream<Uint8Array> } | undefined>;
