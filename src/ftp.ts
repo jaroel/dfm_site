@@ -1,8 +1,8 @@
-import type { IListingElement } from "ftp-ts";
-import { FTP } from "ftp-ts";
+import { PassThrough, Readable } from "node:stream";
+import { Client, FTPError } from "basic-ftp";
 
 // dd-mm-yyyy-hh-mm.mp3 — strict, so a crafted segment can never reach
-// connection.get() as an FTP path. Keep it non-global: it is used with exec(),
+// downloadTo() as an FTP path. Keep it non-global: it is used with exec(),
 // and a /g flag would make lastIndex stateful across calls.
 const FILENAME_PATTERN =
   /^(?<day>\d{2})-(?<month>\d{2})-(?<year>\d{4})-(?<hour>\d{2})-(?<minute>\d{2})\.mp3$/;
@@ -78,11 +78,18 @@ export function getExpirationDate() {
 }
 
 export async function getConnection() {
-  return await FTP.connect({
-    host: FTP_HOST,
-    user: FTP_USER,
-    password: FTP_PASSWORD,
-  });
+  const client = new Client(10_000);
+  try {
+    await client.access({
+      host: FTP_HOST,
+      user: FTP_USER,
+      password: FTP_PASSWORD,
+    });
+    return client;
+  } catch (error) {
+    client.close();
+    throw error;
+  }
 }
 
 /** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
@@ -95,9 +102,7 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
 
   try {
     connection = await getConnection();
-    const listing = (await connection.list()).filter(
-      (value): value is IListingElement => typeof value !== "string",
-    );
+    const listing = await connection.list();
     return listing
       .flatMap((item) => {
         const { groups } = FILENAME_PATTERN.exec(item.name) ?? {};
@@ -118,7 +123,7 @@ export async function getFtpListing(): Promise<FTPRecording[]> {
     console.error("FTP listing failed:", error);
     return [];
   } finally {
-    connection?.end();
+    connection?.close();
   }
 }
 
@@ -150,38 +155,39 @@ export async function getFtpStream(filename: string) {
   }
   const connection = await getConnection();
   try {
-    const metadata = await connection.fileInfo(filename);
-    if (!metadata) {
-      connection.end();
-      return undefined;
+    let size: number;
+    try {
+      size = await connection.size(filename);
+    } catch (error) {
+      // The listing is the allow-list, but the file can disappear between the
+      // cached listing and this request. Anything else is a real failure.
+      if (error instanceof FTPError && error.code === 550) {
+        connection.close();
+        return undefined;
+      }
+      throw error;
     }
-    const stream = await connection.get(filename);
-    // A client that stops playback cancels the response body, which closes
-    // this stream early. `destroy()` is not an option: ftp-ts clears its
-    // parser immediately, so a late response on the control socket would
-    // throw inside the socket handler and kill the process. ABOR first, then
-    // close the control connection once the server has answered.
-    let completed = false;
-    stream.once("end", () => {
-      completed = true;
-    });
+
+    const stream = new PassThrough();
     stream.once("error", () => {
       // Consumed by the caller through the response body; without a listener
       // node treats it as an unhandled 'error' and exits.
     });
-    stream.once("close", () => {
-      if (completed) {
-        connection.end();
-        return;
-      }
-      void connection
-        .abort()
-        .catch(() => {})
-        .then(() => connection.end());
-    });
-    return { metadata, stream };
+    // A client that stops playback cancels the response body, which destroys
+    // this stream. Close the control and data sockets; basic-ftp does not
+    // abort reliably when only the destination is destroyed.
+    stream.once("close", () => connection.close());
+    void connection
+      .downloadTo(stream, filename)
+      .catch((error: Error) => stream.destroy(error))
+      .finally(() => connection.close());
+
+    return {
+      size,
+      stream: Readable.toWeb(stream),
+    };
   } catch (error) {
-    connection.destroy();
+    connection.close();
     throw error;
   }
 }

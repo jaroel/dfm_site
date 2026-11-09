@@ -1,4 +1,4 @@
-import { getFtpListingCached } from "./ftp.ts";
+import { getFtpListingCached } from "~/ftp.ts";
 
 export type UzgListing = number[];
 

@@ -9,9 +9,9 @@
     "start": "bun server.bun.ts",
     "preview": "bun node_modules/vite/bin/vite.js preview",
     "test": "vitest",
-    "lint": "oxlint src server.bun.ts vite.config.ts vitest.config.ts",
-    "format": "oxfmt src server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
-    "format:check": "oxfmt --check src server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
+    "lint": "oxlint src types server.bun.ts vite.config.ts vitest.config.ts",
+    "format": "oxfmt src types server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
+    "format:check": "oxfmt --check src types server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
     "typecheck": "bun check --no-script && bun check -p tsconfig.client.json --no-script"
   },
   "engines": {
@@ -41,8 +41,8 @@
     "@solidjs/meta": "1.0.0-next.2",
     "@solidjs/router": "2.0.0-next.43",
     "@solidjs/web": "2.0.0-rc.19",
+    "basic-ftp": "^6.2.6",
     "filesystem-routing": "0.4.2",
-    "ftp-ts": "^1.1.0",
     "solid-js": "2.0.0-rc.19"
   }
 }

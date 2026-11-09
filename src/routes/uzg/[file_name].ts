@@ -1,4 +1,3 @@
-import { Readable } from "node:stream";
 import type { APIHandler } from "filesystem-routing/api";
 import { getFtpStream } from "~/ftp.ts";
 
@@ -10,12 +9,12 @@ export const GET: APIHandler = async ({ params, request }) => {
     if (request.headers.get("range") === "bytes=0-1") {
       // Safari probes with a 2-byte range; don't leave the data transfer
       // running for a response that ignores it.
-      ftp_data.stream.destroy();
+      void ftp_data.stream.cancel().catch(() => {});
       return new Response("ID", {
         status: 206,
         headers: {
           "content-type": "audio/mpeg",
-          "content-range": `bytes 0-1/${ftp_data.metadata.size}`,
+          "content-range": `bytes 0-1/${ftp_data.size}`,
           "content-length": "2",
         },
       });
@@ -23,13 +22,12 @@ export const GET: APIHandler = async ({ params, request }) => {
 
     // node:stream's ReadableStream type is structurally distinct from the DOM
     // one BodyInit expects, though the runtime object is the same.
-    const body = Readable.toWeb(ftp_data.stream);
     // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    return new Response(body as unknown as BodyInit, {
+    return new Response(ftp_data.stream as unknown as BodyInit, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
-        "content-length": String(ftp_data.metadata.size),
+        "content-length": String(ftp_data.size),
       },
     });
   }

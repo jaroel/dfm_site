@@ -7,6 +7,14 @@
       "@testing-library/jest-dom",
       "@responsive-image/vite-plugin/client"
     ],
+    "paths": {
+      "~/ftp.ts": [
+        "./types/ftp.d.ts"
+      ],
+      "~/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "src/App.tsx",
@@ -16,7 +24,6 @@
     "src/uzg.ts",
     "src/recordings.ts",
     "src/groupby.ts",
-    "src/ftp-ts.d.ts",
     "src/global.d.ts",
     "file-routes.d.ts"
   ],
