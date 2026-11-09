@@ -31,7 +31,7 @@
     "eslint-plugin-solid": "^0.18.1",
     "jsdom": "^27.4.0",
     "oxfmt": "^0.77.0",
-    "oxlint": "^1.92.0",
+    "oxlint": "^1.93.0",
     "tailwindcss": "^4.3.5",
     "tsrs": "^0.23.0-ts7.1.0-beta",
     "vite": "8",
