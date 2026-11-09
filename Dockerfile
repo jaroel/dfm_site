@@ -2,10 +2,10 @@ FROM oven/bun:1 AS builder
 WORKDIR /app/
 COPY . /app/
 RUN bun install --frozen-lockfile
-RUN bun run lint
 ENV NODE_ENV=production
 RUN bun run build
-# typecheck after build: server.bun.ts imports dist/server/server.js
+# lint + typecheck after build: server.bun.ts imports dist/server/server.js
+RUN bun run lint
 RUN bun run typecheck
 # Bundle the Bun server so the runtime image needs no node_modules.
 RUN bun build server.bun.ts --target=bun --outfile=/app/server.bundle.js
