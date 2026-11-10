@@ -1,5 +1,5 @@
 import type { APIHandler } from "filesystem-routing/api";
-import { getFtpStream } from "~/ftp.ts";
+import { openRecording } from "~/uzg.ts";
 
 /**
  * Parse a single `bytes=start-` / `bytes=start-end` range. Multi-range and
@@ -24,10 +24,10 @@ export const GET: APIHandler = async ({ params, request }) => {
   // than Safari's probe, below) falls back to a full 200: serving it from the
   // start would over-serve a 206.
   const startAt = range?.end === undefined ? (range?.start ?? 0) : 0;
-  const ftp_data = await getFtpStream(filename, startAt);
+  const recording = await openRecording(filename, startAt);
 
-  if (ftp_data) {
-    const { size, stream } = ftp_data;
+  if (recording) {
+    const { size, stream } = recording;
 
     if (range) {
       if (range.start >= size) {

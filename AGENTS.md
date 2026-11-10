@@ -41,8 +41,9 @@ Do not edit it by hand.
 ## Data flow
 
 ```text
-src/ftp.ts        FTP listing + stream, server-only
-  -> src/uzg.ts   fetchUzgListing ("use server"), toRecordings
+src/ftp.ts          raw FTP listing + download, server-only
+  -> src/uzg.ts     fetchUzgListing / openRecording ("use server")
+  -> src/recordings.ts  filename parsing, formatting, grouping (client-safe)
   -> src/routes/uzg/(uzg).tsx  query(fetchUzgListing)
   -> Player.tsx + Controls.tsx
 ```

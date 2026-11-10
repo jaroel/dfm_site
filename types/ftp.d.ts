@@ -6,11 +6,11 @@
  * program. The server program (`tsconfig.json`) checks the real module.
  */
 
-export type FTPRecording = { key: number; name: string };
+export declare function listNamesCached(): Promise<string[]>;
 
-export declare function getFtpListingCached(): Promise<FTPRecording[]>;
-
-export declare function getFtpStream(
-  filename: string,
+export declare function download(
+  name: string,
   startAt?: number,
-): Promise<{ size: number; stream: ReadableStream<Uint8Array> } | undefined>;
+): Promise<
+  { size: number; stream: ReadableStream<Uint8Array> } | undefined
+>;

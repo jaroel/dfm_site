@@ -1,34 +1,22 @@
 import { Meta, Title } from "@solidjs/meta";
 import { query, type RouteDefinition } from "@solidjs/router";
+import { ResponsiveImage } from "@responsive-image/solid";
 import { createMemo, For, Loading, Show } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&responsive";
 import Controls from "~/components/Controls.tsx";
-import { ResponsiveImage } from "@responsive-image/solid";
 import Player from "~/components/Player.tsx";
-import { groupBy } from "~/groupby.ts";
-import { fetchUzgListing, type Recording, toRecordings } from "~/uzg.ts";
-import { Router } from "~/router";
+import { fetchUzgListing } from "~/uzg.ts";
+import {
+  groupRecordings,
+  toRecordings,
+  type Recording,
+} from "~/recordings.ts";
 
 const getUzgListing = query(fetchUzgListing, "uzglisting");
 
 export const route = {
   preload: () => void getUzgListing(),
 } satisfies RouteDefinition;
-
-const month_long_c: Record<number, string> = {
-  1: "Januari",
-  2: "Februari",
-  3: "Maart",
-  4: "April",
-  5: "Mei",
-  6: "Juni",
-  7: "Juli",
-  8: "Augustus",
-  9: "September",
-  10: "Oktober",
-  11: "November",
-  12: "December",
-};
 
 export default function UZG() {
   const recordings = createMemo(async () =>
@@ -43,7 +31,7 @@ export default function UZG() {
       <Player />
       <div class="my-8">
         <div class="flex flex-auto flex-wrap items-center justify-center gap-y-4">
-          <a href={Router.paths()} title="Terug naar homepage">
+          <a href="/" title="Terug naar homepage">
             <ResponsiveImage
               src={logo}
               alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
@@ -83,48 +71,33 @@ export default function UZG() {
   );
 }
 
-function toTitleCase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function massage(recordings: Recording[]) {
-  return recordings.map((item) => ({
-    weekday_c: toTitleCase(item.weekday),
-    month_l: month_long_c[item.month].toLowerCase(),
-    month_c: month_long_c[item.month],
-    ...item,
-  }));
-}
-
 function Listing(props: { recordings: Recording[] }) {
   return (
-    <For each={groupBy(massage(props.recordings), (item) => item.year)}>
-      {(years) => (
+    <For each={groupRecordings(props.recordings)}>
+      {(year) => (
         <>
-          <h2 class="text-xl text-gray-800">{years.head.year}</h2>
+          <h2 class="text-xl text-gray-800">{year.year}</h2>
           <div class="mt-0.5 mb-6 ml-4">
-            <For each={groupBy(years.members, (item) => item.month)}>
-              {(months) => (
+            <For each={year.months}>
+              {(month) => (
                 <>
-                  <h3 class="text-lg text-gray-800">{months.head.month_c}</h3>
+                  <h3 class="text-lg text-gray-800">{month.label}</h3>
                   <div class="mt-0.5 mb-6 ml-4">
                     <ol>
-                      <For each={groupBy(months.members, (item) => item.day)}>
-                        {(days) => (
+                      <For each={month.days}>
+                        {(day) => (
                           <li>
                             <div class="flex-start flex items-center pt-3">
                               <div class="mr-3 -ml-1 size-2 rounded-full bg-gray-400" />
-                              <p class="text-gray-800">
-                                {`${days.head.weekday_c} ${days.head.day} ${days.head.month_l}`}
-                              </p>
+                              <p class="text-gray-800">{day.label}</p>
                             </div>
                             <div class="mt-0.5 ml-4 flex flex-wrap gap-4">
-                              <For each={days.members}>
+                              <For each={day.recordings}>
                                 {(entry) => (
                                   <div class="flex-row text-center">
                                     <Controls
-                                      title={`Uitzending Dinxper FM van ${entry.weekday} ${entry.day} ${entry.month_l} ${entry.year} om ${entry.hour}:${String(entry.minute).padStart(2, "0")} uur`}
-                                      label={`${entry.hour}:${String(entry.minute).padStart(2, "0")}`}
+                                      title={`Uitzending Dinxper FM van ${entry.weekdayLabel} ${entry.day} ${entry.monthLabel} ${entry.year} om ${entry.time} uur`}
+                                      label={entry.time}
                                       src={entry.src}
                                     />
                                     <a

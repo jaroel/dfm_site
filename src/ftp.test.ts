@@ -1,6 +1,6 @@
 import type { Writable } from "node:stream";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { getFtpListingCached, getFtpStream, resetFTPCache } from "./ftp.ts";
+import { download, listNamesCached, resetFTPCache } from "./ftp.ts";
 
 const { mockList, mockSize, mockDownloadTo, mockClose, MockFTPError } =
   vi.hoisted(() => {
@@ -34,64 +34,51 @@ vi.mock("basic-ftp", () => ({
   },
 }));
 
-describe("getFtpListingCached", () => {
+describe("listNamesCached", () => {
   beforeEach(() => {
     resetFTPCache();
     mockList.mockClear();
   });
 
-  test("cache miss - FTP_CACHE is null, calls FTP", async () => {
-    const result = await getFtpListingCached();
+  test("cache miss - calls FTP and returns the raw names", async () => {
+    const result = await listNamesCached();
 
-    expect(result.length).toBe(2);
+    expect(result).toEqual([
+      "15-01-2024-10-00.mp3",
+      "15-01-2024-11-00.mp3",
+    ]);
     expect(mockList).toHaveBeenCalledTimes(1);
   });
 
-  test("cache hit - returns cached items without calling FTP again", async () => {
-    await getFtpListingCached();
-    await getFtpListingCached();
+  test("cache hit - returns cached names without calling FTP again", async () => {
+    await listNamesCached();
+    await listNamesCached();
 
     expect(mockList).toHaveBeenCalledTimes(1);
   });
 
   test("after resetFTPCache, cache misses and fetches again", async () => {
-    await getFtpListingCached();
+    await listNamesCached();
     resetFTPCache();
-    await getFtpListingCached();
+    await listNamesCached();
 
     expect(mockList).toHaveBeenCalledTimes(2);
-  });
-
-  test("skips non-mp3/malformed names and future recordings, newest first", async () => {
-    mockList.mockResolvedValueOnce([
-      { name: "readme.txt" },
-      { name: "1-01-2024-10-00.mp3" },
-      { name: "15-01-2024-10-00.mp3" },
-      { name: "16-01-2024-10-00.mp3" },
-      { name: "01-01-2030-00-00.mp3" },
-    ]);
-
-    const result = await getFtpListingCached();
-
-    expect(result.map((recording) => recording.name)).toEqual([
-      "16-01-2024-10-00.mp3",
-      "15-01-2024-10-00.mp3",
-    ]);
   });
 
   test("does not cache a failed listing", async () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     mockList.mockRejectedValueOnce(new Error("ftp down"));
 
-    await expect(getFtpListingCached()).resolves.toEqual([]);
-    await getFtpListingCached();
+    await expect(listNamesCached()).resolves.toEqual([]);
+    await listNamesCached();
 
     expect(mockList).toHaveBeenCalledTimes(2);
+    consoleError.mockRestore();
   });
 });
 
-describe("getFtpStream", () => {
+describe("download", () => {
   beforeEach(() => {
-    resetFTPCache();
     mockSize.mockClear();
     mockDownloadTo.mockClear();
     mockClose.mockClear();
@@ -103,7 +90,7 @@ describe("getFtpStream", () => {
       destination.end();
     });
 
-    const result = await getFtpStream("15-01-2024-11-00.mp3");
+    const result = await download("15-01-2024-11-00.mp3");
     if (!result) throw new Error("expected a stream");
     expect(result.size).toBe(2048);
 
@@ -127,7 +114,7 @@ describe("getFtpStream", () => {
       destination.end();
     });
 
-    const result = await getFtpStream("15-01-2024-11-00.mp3", 100);
+    const result = await download("15-01-2024-11-00.mp3", 100);
     if (!result) throw new Error("expected a stream");
     await result.stream.cancel();
 
@@ -143,7 +130,7 @@ describe("getFtpStream", () => {
       new MockFTPError({ code: 550, message: "550 File unavailable" }),
     );
 
-    await expect(getFtpStream("15-01-2024-11-00.mp3")).resolves.toBeUndefined();
+    await expect(download("15-01-2024-11-00.mp3")).resolves.toBeUndefined();
     expect(mockClose).toHaveBeenCalled();
   });
 });

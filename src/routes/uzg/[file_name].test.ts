@@ -1,9 +1,9 @@
 import { beforeEach, expect, test, vi } from "vitest";
 import { GET } from "./[file_name].ts";
 
-const { mockGetFtpStream } = vi.hoisted(() => ({ mockGetFtpStream: vi.fn() }));
+const { mockOpenRecording } = vi.hoisted(() => ({ mockOpenRecording: vi.fn() }));
 
-vi.mock("~/ftp.ts", () => ({ getFtpStream: mockGetFtpStream }));
+vi.mock("~/uzg.ts", () => ({ openRecording: mockOpenRecording }));
 
 const FILENAME = "15-01-2024-11-00.mp3";
 const SIZE = 2048;
@@ -29,8 +29,8 @@ async function get(range?: string) {
 }
 
 beforeEach(() => {
-  mockGetFtpStream.mockReset();
-  mockGetFtpStream.mockImplementation(async () => ({
+  mockOpenRecording.mockReset();
+  mockOpenRecording.mockImplementation(async () => ({
     size: SIZE,
     ...fakeStream(),
   }));
@@ -42,7 +42,7 @@ test("streams from the requested offset for an open-ended range", async () => {
   expect(response.status).toBe(206);
   expect(response.headers.get("content-range")).toBe(`bytes 500-${SIZE - 1}/${SIZE}`);
   expect(response.headers.get("content-length")).toBe(String(SIZE - 500));
-  expect(mockGetFtpStream).toHaveBeenCalledWith(FILENAME, 500);
+  expect(mockOpenRecording).toHaveBeenCalledWith(FILENAME, 500);
   await response.body?.cancel();
 });
 
@@ -57,7 +57,7 @@ test("falls back to a full 200 for a bounded range", async () => {
   const response = await get("bytes=100-200");
 
   expect(response.status).toBe(200);
-  expect(mockGetFtpStream).toHaveBeenCalledWith(FILENAME, 0);
+  expect(mockOpenRecording).toHaveBeenCalledWith(FILENAME, 0);
   await response.body?.cancel();
 });
 

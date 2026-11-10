@@ -1,52 +1,47 @@
-import { getFtpListingCached } from "~/ftp.ts";
+import { download, listNamesCached } from "~/ftp.ts";
+import {
+  isRecordingName,
+  parseRecordingKey,
+  type UzgListing,
+} from "~/recordings.ts";
 
-export type UzgListing = number[];
+/** Valid recordings, newest first. The current hour is not fully written yet. */
+async function listRecordings() {
+  const threshold = Date.now() - 3_600_000;
+  const names = await listNamesCached();
+  return names
+    .flatMap((name) => {
+      const key = parseRecordingKey(name);
+      return key === undefined || key > threshold ? [] : [{ key, name }];
+    })
+    .sort((a, b) => b.key - a.key);
+}
 
 export async function fetchUzgListing(): Promise<UzgListing> {
   "use server";
-  const listing = await getFtpListingCached();
-  return listing.map((recording) => recording.key);
+  return (await listRecordings()).map((recording) => recording.key);
 }
 
-const formatter = new Intl.DateTimeFormat("nl-NL", {
-  timeZone: "Europe/Amsterdam",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  weekday: "long",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-function partsOf(key: number) {
-  const result: Partial<Record<Intl.DateTimeFormatPartTypes, string>> = {};
-  for (const { type, value } of formatter.formatToParts(key)) {
-    result[type] = value;
+// `"use server"` is load-bearing for the bundle, not just RPC: it makes the
+// client see a server reference, so the `~/ftp.ts` import (basic-ftp,
+// node:stream) never reaches the browser. Removing it adds ~60 kB to the
+// client chunk.
+export async function openRecording(filename: string, startAt = 0) {
+  "use server";
+  // Cheap reject before touching FTP; the listing below is the real allow-list.
+  if (!isRecordingName(filename)) {
+    return undefined;
   }
-  return result;
+  if (!Number.isSafeInteger(startAt) || startAt < 0) {
+    return undefined;
+  }
+  // Exact filename match: the listing is the allow-list, so a crafted name
+  // never reaches downloadTo().
+  const allowed = (await listRecordings()).some(
+    (recording) => recording.name === filename,
+  );
+  if (!allowed) {
+    return undefined;
+  }
+  return download(filename, startAt);
 }
-
-/** `dd-mm-yyyy-hh-mm.mp3`, the only naming the FTP host uses. */
-function nameOf(key: number) {
-  const parts = partsOf(key);
-  return `${parts.day}-${parts.month}-${parts.year}-${parts.hour}-${parts.minute}.mp3`;
-}
-
-export function toRecordings(keys: UzgListing) {
-  return keys.map((key) => {
-    const result = partsOf(key);
-    return {
-      day: Number(result.day),
-      month: Number(result.month),
-      year: Number(result.year),
-      weekday: result.weekday ?? "",
-      hour: Number(result.hour),
-      minute: Number(result.minute),
-      src: `/uzg/${nameOf(key)}`,
-      key,
-    };
-  });
-}
-
-// https://steveholgado.com/typescript-types-from-arrays/#getting-a-type-from-our-array
-export type Recording = ReturnType<typeof toRecordings>[number];
