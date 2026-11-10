@@ -1,30 +1,21 @@
-export type Group<K, T> = {
-  key: K;
-  head: T;
-  members: T[];
-};
-
-export function groupBy<K, T>(
-  list: T[],
-  func: (x: T) => K,
-): Array<Group<K, T>> {
-  const results: Array<Group<K, T>> = [];
-  let group: Group<K, T> | undefined;
-
-  for (const item of list) {
-    const key = func(item);
-
-    if (key !== group?.key) {
-      group = {
-        key,
-        head: item,
-        members: [],
-      };
-      results.push(group);
-    }
-
-    group.members.push(item);
+/**
+ * `Map.groupBy` with a fallback for browsers that predate ES2024. Keys keep
+ * the order they are first seen in `items`.
+ */
+export function groupBy<K, T>(items: Iterable<T>, key: (item: T) => K) {
+  if (typeof Map.groupBy === "function") {
+    return Map.groupBy(items, key);
   }
 
-  return results;
+  const groups = new Map<K, T[]>();
+  for (const item of items) {
+    const groupKey = key(item);
+    const group = groups.get(groupKey);
+    if (group) {
+      group.push(item);
+    } else {
+      groups.set(groupKey, [item]);
+    }
+  }
+  return groups;
 }

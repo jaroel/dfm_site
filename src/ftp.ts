@@ -1,73 +1,23 @@
 import { PassThrough, Readable } from "node:stream";
 import { Client, FTPError } from "basic-ftp";
 
-// dd-mm-yyyy-hh-mm.mp3 — strict, so a crafted segment can never reach
-// downloadTo() as an FTP path. Keep it non-global: it is used with exec(),
-// and a /g flag would make lastIndex stateful across calls.
-const FILENAME_PATTERN =
-  /^(?<day>\d{2})-(?<month>\d{2})-(?<year>\d{4})-(?<hour>\d{2})-(?<minute>\d{2})\.mp3$/;
-
-const zoneFormatter = new Intl.DateTimeFormat("en-US", {
-  timeZone: "Europe/Amsterdam",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  hour12: false,
-});
-
-/** Offset of Europe/Amsterdam at `timestamp`, in ms. */
-function zoneOffsetMs(timestamp: number) {
-  const parts = zoneFormatter.formatToParts(timestamp);
-  const value = (type: Intl.DateTimeFormatPartTypes) =>
-    Number(parts.find((part) => part.type === type)?.value);
-  const asUtc = Date.UTC(
-    value("year"),
-    value("month") - 1,
-    value("day"),
-    value("hour") % 24,
-    value("minute"),
-    value("second"),
-  );
-  return asUtc - timestamp;
-}
-
-/**
- * Timestamp of a wall-clock time in Europe/Amsterdam. Two passes: the first
- * guess uses the offset at the UTC instant, which is off by the DST hour for
- * times on the other side of a transition.
- */
-function amsterdamTimestamp(
-  day: string,
-  month: string,
-  year: string,
-  hour: string,
-  minute: string,
-) {
-  const wall = Date.UTC(
-    Number(year),
-    Number(month) - 1,
-    Number(day),
-    Number(hour),
-    Number(minute),
-  );
-  return wall - zoneOffsetMs(wall - zoneOffsetMs(wall));
-}
-
 // ponytail: credentials hardcoded on purpose, the container gets no env.
 const FTP_HOST = "dinxperfm.freeddns.org";
 const FTP_USER = "UZG";
 const FTP_PASSWORD = "4862KpZ2";
 
-let FTP_CACHE: { expiration_date: Date; items: FTPListing } | null = null;
+type FTPFile = { name: string; size: number };
+
+type FTPCache = { expiration_date: Date; files: FTPFile[] };
+
+let cache: FTPCache | null = null;
 
 export function resetFTPCache() {
-  FTP_CACHE = null;
+  cache = null;
 }
 
-export function getExpirationDate() {
+/** Cache window ends at the next :02 past the hour. */
+function getExpirationDate() {
   const now = Date.now();
   const end = new Date(now);
   end.setMinutes(2, 0, 0);
@@ -77,7 +27,7 @@ export function getExpirationDate() {
   return end;
 }
 
-export async function getConnection() {
+async function getConnection() {
   const client = new Client(10_000);
   try {
     await client.access({
@@ -92,31 +42,14 @@ export async function getConnection() {
   }
 }
 
-/** Invariant: `name` always matches dd-mm-yyyy-hh-mm.mp3 (enforced when parsed). */
-export type FTPRecording = { key: number; name: string };
-
-export async function getFtpListing(): Promise<FTPRecording[] | null> {
-  // Cutoff datetime exists because the current hour's recording is not written fully yet.
-  const threshold = Date.now() - 3600000;
+/** Raw entries in the FTP root, or `null` when the host is unreachable. */
+async function listFiles() {
   let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
 
   try {
     connection = await getConnection();
     const listing = await connection.list();
-    return listing
-      .flatMap((item) => {
-        const { groups } = FILENAME_PATTERN.exec(item.name) ?? {};
-        if (!groups) return [];
-        const { day, month, year, hour, minute } = groups;
-        return [
-          {
-            key: amsterdamTimestamp(day, month, year, hour, minute),
-            name: item.name,
-          },
-        ];
-      })
-      .filter((recording) => recording.key <= threshold)
-      .sort((a, b) => b.key - a.key);
+    return listing.map(({ name, size }) => ({ name, size }));
   } catch (error) {
     // Missing credentials or an unreachable host must not take the server
     // down: an unhandled rejection from the SSR preload would exit Bun.
@@ -127,48 +60,34 @@ export async function getFtpListing(): Promise<FTPRecording[] | null> {
   }
 }
 
-type FTPListing = FTPRecording[];
-
-export async function getFtpListingCached(): Promise<FTPListing> {
+export async function listFilesCached() {
   const now = new Date();
-  if (FTP_CACHE && FTP_CACHE.expiration_date > now) {
-    return FTP_CACHE.items;
+  if (cache && cache.expiration_date > now) {
+    return cache.files;
   }
-  const items = await getFtpListing();
-  if (!items) {
+  const files = await listFiles();
+  if (!files) {
     // Don't cache a failed fetch: a transient FTP error must not blank the
     // listing until the next cache window. Serve stale data when we have it.
-    return FTP_CACHE?.items ?? [];
+    return cache?.files ?? [];
   }
-  FTP_CACHE = {
-    expiration_date: getExpirationDate(),
-    items,
-  };
-  return items;
+  cache = { expiration_date: getExpirationDate(), files };
+  return files;
 }
 
-export async function getFtpStream(filename: string, startAt = 0) {
-  // Cheap reject before touching FTP; the listing below is the real allow-list.
-  if (!FILENAME_PATTERN.test(filename)) {
-    return undefined;
-  }
-  if (!Number.isSafeInteger(startAt) || startAt < 0) {
-    return undefined;
-  }
-  const listing = await getFtpListingCached();
-  // Exact filename match: the listing is the allow-list, so a crafted name
-  // never reaches downloadTo().
-  if (!listing.some((recording) => recording.name === filename)) {
-    return undefined;
-  }
+/**
+ * Open `name` for reading, from `startAt` bytes when given. `undefined` when
+ * the file vanished between the cached listing and this request (FTP 550).
+ */
+export async function download(name: string, startAt = 0) {
   const connection = await getConnection();
   try {
     let size: number;
     try {
-      size = await connection.size(filename);
+      size = await connection.size(name);
     } catch (error) {
-      // The listing is the allow-list, but the file can disappear between the
-      // cached listing and this request. Anything else is a real failure.
+      // The caller's allow-list is a cached listing, but the file can
+      // disappear since. Anything else is a real failure.
       if (error instanceof FTPError && error.code === 550) {
         connection.close();
         return undefined;
@@ -187,15 +106,18 @@ export async function getFtpStream(filename: string, startAt = 0) {
     stream.once("close", () => connection.close());
     const transfer =
       startAt > 0
-        ? connection.downloadTo(stream, filename, startAt)
-        : connection.downloadTo(stream, filename);
+        ? connection.downloadTo(stream, name, startAt)
+        : connection.downloadTo(stream, name);
     void transfer
       .catch((error: Error) => stream.destroy(error))
       .finally(() => connection.close());
 
     return {
       size,
-      stream: Readable.toWeb(stream),
+      // Node's ReadableStream is structurally distinct from the DOM one that
+      // BodyInit expects, though the runtime object is the same.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      stream: Readable.toWeb(stream) as unknown as ReadableStream<Uint8Array>,
     };
   } catch (error) {
     connection.close();
