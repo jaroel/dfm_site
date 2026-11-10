@@ -17,8 +17,9 @@ bun run dev
 |---|---|
 | `src/routes/` | File-based pages and the audio-stream API |
 | `src/components/` | Player and playback controls |
-| `src/ftp.ts` | FTP listing and stream access (server-only) |
-| `src/uzg.ts` | Server function and recording formatting |
+| `src/ftp.ts` | Raw FTP listing and download (server-only) |
+| `src/uzg.ts` | Server functions: listing and recording stream |
+| `src/recordings.ts` | Recording filename parsing, formatting, grouping (client-safe) |
 | `src/middleware.ts` | Wires the filesystem-routing API handler |
 | `server.bun.ts` | Bun production server for `dist/` |
 | `Dockerfile` | Bundles the server; runtime needs no `node_modules` |
