@@ -112,7 +112,10 @@ export async function download(name: string, startAt = 0) {
 
     return {
       size,
-      stream: Readable.toWeb(stream),
+      // Node's ReadableStream is structurally distinct from the DOM one that
+      // BodyInit expects, though the runtime object is the same.
+      // oxlint-disable-next-line typescript/no-unsafe-type-assertion
+      stream: Readable.toWeb(stream) as unknown as ReadableStream<Uint8Array>,
     };
   } catch (error) {
     connection.close();

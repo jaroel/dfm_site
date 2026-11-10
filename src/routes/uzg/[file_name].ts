@@ -56,10 +56,7 @@ export const GET: APIHandler = async ({ params, request }) => {
       }
 
       if (range.end === undefined) {
-        // See the comment above the full response; the runtime object is a
-        // DOM ReadableStream even though node's type is structurally distinct.
-        // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-        return new Response(stream as unknown as BodyInit, {
+        return new Response(stream, {
           status: 206,
           headers: {
             "content-type": "audio/mpeg",
@@ -71,10 +68,7 @@ export const GET: APIHandler = async ({ params, request }) => {
       }
     }
 
-    // node:stream's ReadableStream type is structurally distinct from the DOM
-    // one BodyInit expects, though the runtime object is the same.
-    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-    return new Response(stream as unknown as BodyInit, {
+    return new Response(stream, {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
