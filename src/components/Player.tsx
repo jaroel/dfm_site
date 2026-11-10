@@ -1,5 +1,5 @@
 import { isServer } from "@solidjs/web";
-import { createEffect, createSignal, onCleanup } from "solid-js";
+import { createEffect, createSignal, onSettled } from "solid-js";
 
 export const [source, setSource] = createSignal("");
 export const [state, setState] = createSignal<
@@ -9,13 +9,17 @@ export const [state, setState] = createSignal<
 export default function Player() {
   let audio: HTMLAudioElement | undefined;
 
-  onCleanup(() => {
-    if (isServer) return;
-    if (audio) {
-      audio.pause();
-      audio.src = "";
-    }
-    setSource("");
+  // Component lifecycle teardown, so onSettled with a returned cleanup rather
+  // than onCleanup (which is for reactive cleanups inside computations).
+  onSettled(() => {
+    return () => {
+      if (isServer) return;
+      if (audio) {
+        audio.pause();
+        audio.src = "";
+      }
+      setSource("");
+    };
   });
 
   // Playback is driven imperatively: toggling the `autoplay` attribute after
