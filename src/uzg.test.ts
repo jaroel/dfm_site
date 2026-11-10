@@ -94,7 +94,7 @@ describe("toRecordings", () => {
     });
   });
 
-  test("groups into a year → month → day tree with headings", () => {
+  test("groups into a year → month → day tree, newest first", () => {
     const tree = groupRecordings(toRecordings([at(10), at(11)]));
 
     expect(tree).toHaveLength(1);
@@ -103,8 +103,8 @@ describe("toRecordings", () => {
     expect(tree[0].months[0].days).toHaveLength(1);
     expect(tree[0].months[0].days[0].label).toBe("Maandag 15 januari");
     expect(tree[0].months[0].days[0].recordings.map((r) => r.time)).toEqual([
-      "10:00",
       "11:00",
+      "10:00",
     ]);
   });
 });

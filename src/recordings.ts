@@ -133,43 +133,29 @@ export function toRecordings(keys: UzgListing) {
 // https://steveholgado.com/typescript-types-from-arrays/#getting-a-type-from-our-array
 export type Recording = ReturnType<typeof toRecordings>[number];
 
-export type RecordingDay = {
-  day: number;
-  label: string;
-  recordings: Recording[];
-};
-
-export type RecordingMonth = {
-  month: number;
-  label: string;
-  days: RecordingDay[];
-};
-
-export type RecordingYear = {
-  year: number;
-  months: RecordingMonth[];
-};
-
 function toTitleCase(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-/** Year → month → day, preserving the order `toRecordings` returned. */
-export function groupRecordings(recordings: Recording[]): RecordingYear[] {
-  return groupBy(recordings, (recording) => recording.year).map((year) => ({
-    year: year.key,
-    months: groupBy(year.members, (recording) => recording.month).map(
-      (month) => ({
-        month: month.key,
-        label: month.head.monthLong,
-        days: groupBy(month.members, (recording) => recording.day).map(
-          (day) => ({
-            day: day.key,
-            label: `${day.head.weekdayLabel} ${day.head.day} ${day.head.monthLabel}`,
-            recordings: day.members,
-          }),
-        ),
-      }),
-    ),
-  }));
+/** Year → month → day, newest first. */
+export function groupRecordings(recordings: Recording[]) {
+  const sorted = [...recordings].sort((a, b) => b.key - a.key);
+  return [...groupBy(sorted, (recording) => recording.year)].map(
+    ([year, years]) => ({
+      year,
+      months: [...groupBy(years, (recording) => recording.month)].map(
+        ([month, group]) => ({
+          month,
+          label: group[0].monthLong,
+          days: [...groupBy(group, (recording) => recording.day)].map(
+            ([day, dayGroup]) => ({
+              day,
+              label: `${dayGroup[0].weekdayLabel} ${dayGroup[0].day} ${dayGroup[0].monthLabel}`,
+              recordings: dayGroup,
+            }),
+          ),
+        }),
+      ),
+    }),
+  );
 }

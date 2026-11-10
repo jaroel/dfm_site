@@ -1,9 +1,5 @@
 import { download, listNamesCached } from "~/ftp.ts";
-import {
-  isRecordingName,
-  parseRecordingKey,
-  type UzgListing,
-} from "~/recordings.ts";
+import { isRecordingName, parseRecordingKey } from "~/recordings.ts";
 
 /** Valid recordings, newest first. The current hour is not fully written yet. */
 async function listRecordings() {
@@ -17,7 +13,7 @@ async function listRecordings() {
     .sort((a, b) => b.key - a.key);
 }
 
-export async function fetchUzgListing(): Promise<UzgListing> {
+export async function fetchUzgListing() {
   "use server";
   return (await listRecordings()).map((recording) => recording.key);
 }

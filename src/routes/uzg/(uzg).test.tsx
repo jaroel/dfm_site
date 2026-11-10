@@ -65,7 +65,7 @@ test("renders recordings", async () => {
     expect(buttons.length).toBe(3);
 
     buttons.forEach((button, index) => {
-      const hour = 10 + index;
+      const hour = 12 - index;
       expect(button.title).toContain(`${hour}:00 uur`);
     });
   });
@@ -79,7 +79,7 @@ test("renders recordings", async () => {
       })),
     ).toEqual([
       {
-        href: "/uzg/15-01-2024-10-00.mp3",
+        href: "/uzg/15-01-2024-12-00.mp3",
         text: "download",
       },
       {
@@ -87,7 +87,7 @@ test("renders recordings", async () => {
         text: "download",
       },
       {
-        href: "/uzg/15-01-2024-12-00.mp3",
+        href: "/uzg/15-01-2024-10-00.mp3",
         text: "download",
       },
     ]);
