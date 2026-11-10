@@ -1,6 +1,6 @@
 import type { Writable } from "node:stream";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { download, listNamesCached, resetFTPCache } from "./ftp.ts";
+import { download, listFilesCached, resetFTPCache } from "./ftp.ts";
 
 const { mockList, mockSize, mockDownloadTo, mockClose, MockFTPError } =
   vi.hoisted(() => {
@@ -34,33 +34,33 @@ vi.mock("basic-ftp", () => ({
   },
 }));
 
-describe("listNamesCached", () => {
+describe("listFilesCached", () => {
   beforeEach(() => {
     resetFTPCache();
     mockList.mockClear();
   });
 
-  test("cache miss - calls FTP and returns the raw names", async () => {
-    const result = await listNamesCached();
+  test("cache miss - calls FTP and returns the raw entries", async () => {
+    const result = await listFilesCached();
 
     expect(result).toEqual([
-      "15-01-2024-10-00.mp3",
-      "15-01-2024-11-00.mp3",
+      { name: "15-01-2024-10-00.mp3", size: 1024 },
+      { name: "15-01-2024-11-00.mp3", size: 2048 },
     ]);
     expect(mockList).toHaveBeenCalledTimes(1);
   });
 
-  test("cache hit - returns cached names without calling FTP again", async () => {
-    await listNamesCached();
-    await listNamesCached();
+  test("cache hit - returns cached entries without calling FTP again", async () => {
+    await listFilesCached();
+    await listFilesCached();
 
     expect(mockList).toHaveBeenCalledTimes(1);
   });
 
   test("after resetFTPCache, cache misses and fetches again", async () => {
-    await listNamesCached();
+    await listFilesCached();
     resetFTPCache();
-    await listNamesCached();
+    await listFilesCached();
 
     expect(mockList).toHaveBeenCalledTimes(2);
   });
@@ -69,8 +69,8 @@ describe("listNamesCached", () => {
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     mockList.mockRejectedValueOnce(new Error("ftp down"));
 
-    await expect(listNamesCached()).resolves.toEqual([]);
-    await listNamesCached();
+    await expect(listFilesCached()).resolves.toEqual([]);
+    await listFilesCached();
 
     expect(mockList).toHaveBeenCalledTimes(2);
     consoleError.mockRestore();

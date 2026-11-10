@@ -58,16 +58,22 @@ function amsterdamTimestamp(
   return wall - zoneOffsetMs(wall - zoneOffsetMs(wall));
 }
 
+const HOUR_MS = 3_600_000;
+
 export function isRecordingName(name: string) {
   return FILENAME_PATTERN.test(name);
 }
 
-/** Recording key (epoch ms) from a filename, `undefined` when malformed. */
-export function parseRecordingKey(name: string) {
+/**
+ * Epoch ms for a name the site may serve: well-formed and at least an hour
+ * old, since the current hour is still being written.
+ */
+export function servableRecordingKey(name: string, now = Date.now()) {
   const { groups } = FILENAME_PATTERN.exec(name) ?? {};
   if (!groups) return undefined;
   const { day, month, year, hour, minute } = groups;
-  return amsterdamTimestamp(day, month, year, hour, minute);
+  const key = amsterdamTimestamp(day, month, year, hour, minute);
+  return key <= now - HOUR_MS ? key : undefined;
 }
 
 const formatter = new Intl.DateTimeFormat("nl-NL", {
@@ -89,7 +95,7 @@ function partsOf(key: number) {
   return result;
 }
 
-/** `dd-mm-yyyy-hh-mm.mp3`, the inverse of `parseRecordingKey`. */
+/** `dd-mm-yyyy-hh-mm.mp3`, the inverse of `servableRecordingKey`. */
 function recordingName(key: number) {
   const parts = partsOf(key);
   return `${parts.day}-${parts.month}-${parts.year}-${parts.hour}-${parts.minute}.mp3`;

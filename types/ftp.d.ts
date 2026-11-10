@@ -6,11 +6,11 @@
  * program. The server program (`tsconfig.json`) checks the real module.
  */
 
-export declare function listNamesCached(): Promise<string[]>;
+export declare function listFilesCached(): Promise<
+  Array<{ name: string; size: number }>
+>;
 
 export declare function download(
   name: string,
   startAt?: number,
-): Promise<
-  { size: number; stream: ReadableStream<Uint8Array> } | undefined
->;
+): Promise<{ size: number; stream: ReadableStream<Uint8Array> } | undefined>;

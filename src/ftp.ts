@@ -6,7 +6,9 @@ const FTP_HOST = "dinxperfm.freeddns.org";
 const FTP_USER = "UZG";
 const FTP_PASSWORD = "4862KpZ2";
 
-type FTPCache = { expiration_date: Date; names: string[] };
+type FTPFile = { name: string; size: number };
+
+type FTPCache = { expiration_date: Date; files: FTPFile[] };
 
 let cache: FTPCache | null = null;
 
@@ -40,14 +42,14 @@ async function getConnection() {
   }
 }
 
-/** Raw entry names in the FTP root, or `null` when the host is unreachable. */
-async function listNames(): Promise<string[] | null> {
+/** Raw entries in the FTP root, or `null` when the host is unreachable. */
+async function listFiles() {
   let connection: Awaited<ReturnType<typeof getConnection>> | undefined;
 
   try {
     connection = await getConnection();
     const listing = await connection.list();
-    return listing.map((item) => item.name);
+    return listing.map(({ name, size }) => ({ name, size }));
   } catch (error) {
     // Missing credentials or an unreachable host must not take the server
     // down: an unhandled rejection from the SSR preload would exit Bun.
@@ -58,19 +60,19 @@ async function listNames(): Promise<string[] | null> {
   }
 }
 
-export async function listNamesCached(): Promise<string[]> {
+export async function listFilesCached() {
   const now = new Date();
   if (cache && cache.expiration_date > now) {
-    return cache.names;
+    return cache.files;
   }
-  const names = await listNames();
-  if (!names) {
+  const files = await listFiles();
+  if (!files) {
     // Don't cache a failed fetch: a transient FTP error must not blank the
     // listing until the next cache window. Serve stale data when we have it.
-    return cache?.names ?? [];
+    return cache?.files ?? [];
   }
-  cache = { expiration_date: getExpirationDate(), names };
-  return names;
+  cache = { expiration_date: getExpirationDate(), files };
+  return files;
 }
 
 /**

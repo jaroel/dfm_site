@@ -1,5 +1,6 @@
 import type { APIHandler } from "filesystem-routing/api";
-import { openRecording } from "~/uzg.ts";
+import { download, listFilesCached } from "~/ftp.ts";
+import { isRecordingName, servableRecordingKey } from "~/recordings.ts";
 
 // A recording never changes once its hour is complete, and the listing only
 // serves completed hours, so the bytes behind a name are immutable.
@@ -21,71 +22,100 @@ function parseRange(value: string | null) {
   return { start, end };
 }
 
+function notFound() {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+function notSatisfiable(size: number) {
+  return new Response(null, {
+    status: 416,
+    headers: {
+      "content-range": `bytes */${size}`,
+      "accept-ranges": "bytes",
+    },
+  });
+}
+
 export const GET: APIHandler = async ({ params, request }) => {
   const filename = (params?.file_name ?? "").trim();
+  // Cheap reject before any listing: a crafted path never becomes an FTP path
+  // and never costs a listing round trip.
+  if (!isRecordingName(filename)) {
+    return notFound();
+  }
+
+  // Allow-list and size come from the cached listing, so an impossible range
+  // is answered without opening an FTP connection.
+  const file = (await listFilesCached()).find(
+    (entry) => entry.name === filename,
+  );
+  if (!file || servableRecordingKey(filename) === undefined) {
+    return notFound();
+  }
+
   const range = parseRange(request.headers.get("range"));
+  if (range && range.start >= file.size) {
+    return notSatisfiable(file.size);
+  }
+
   // Only open-ended ranges stream from the offset. A bounded range (other
   // than Safari's probe, below) falls back to a full 200: serving it from the
   // start would over-serve a 206.
   const startAt = range?.end === undefined ? (range?.start ?? 0) : 0;
-  const recording = await openRecording(filename, startAt);
-
-  if (recording) {
-    const { size, stream } = recording;
-
-    if (range) {
-      if (range.start >= size) {
-        void stream.cancel().catch(() => {});
-        return new Response(null, {
-          status: 416,
-          headers: {
-            "content-range": `bytes */${size}`,
-            "accept-ranges": "bytes",
-          },
-        });
-      }
-
-      if (range.start === 0 && range.end === 1) {
-        // Safari probes with a 2-byte range; don't leave the data transfer
-        // running for a response that ignores it.
-        void stream.cancel().catch(() => {});
-        return new Response("ID", {
-          status: 206,
-          headers: {
-            "content-type": "audio/mpeg",
-            "cache-control": CACHE_CONTROL,
-            "content-range": `bytes 0-1/${size}`,
-            "content-length": "2",
-          },
-        });
-      }
-
-      if (range.end === undefined) {
-        return new Response(stream, {
-          status: 206,
-          headers: {
-            "content-type": "audio/mpeg",
-            "accept-ranges": "bytes",
-            "cache-control": CACHE_CONTROL,
-            "content-range": `bytes ${range.start}-${size - 1}/${size}`,
-            "content-length": String(size - range.start),
-          },
-        });
-      }
-    }
-
-    return new Response(stream, {
-      headers: {
-        "content-type": "audio/mpeg",
-        "accept-ranges": "bytes",
-        "cache-control": CACHE_CONTROL,
-        "content-length": String(size),
-      },
-    });
+  const recording = await download(filename, startAt);
+  if (!recording) {
+    // Vanished from the host between the cached listing and the request.
+    return notFound();
   }
 
-  return new Response(null, {
-    status: 404,
-    statusText: "Not found",
+  const { size, stream } = recording;
+
+  // The pre-check used the cached size; the download reports the authoritative
+  // one, so re-check before building a range response from it.
+  if (range && range.start >= size) {
+    void stream.cancel().catch(() => {});
+    return notSatisfiable(size);
+  }
+
+  if (range) {
+    if (range.start === 0 && range.end === 1) {
+      // Safari probes with a 2-byte range; don't leave the data transfer
+      // running for a response that ignores it.
+      void stream.cancel().catch(() => {});
+      return new Response("ID", {
+        status: 206,
+        headers: {
+          "content-type": "audio/mpeg",
+          "cache-control": CACHE_CONTROL,
+          "content-range": `bytes 0-1/${size}`,
+          "content-length": "2",
+        },
+      });
+    }
+
+    if (range.end === undefined) {
+      return new Response(stream, {
+        status: 206,
+        headers: {
+          "content-type": "audio/mpeg",
+          "accept-ranges": "bytes",
+          "cache-control": CACHE_CONTROL,
+          "content-range": `bytes ${range.start}-${size - 1}/${size}`,
+          "content-length": String(size - range.start),
+        },
+      });
+    }
+  }
+
+  return new Response(stream, {
+    headers: {
+      "content-type": "audio/mpeg",
+      "accept-ranges": "bytes",
+      "cache-control": CACHE_CONTROL,
+      "content-length": String(size),
+    },
   });
 };
