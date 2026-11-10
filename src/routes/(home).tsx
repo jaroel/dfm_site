@@ -1,8 +1,8 @@
 import type { ImageData } from "@responsive-image/core";
 import { ResponsiveImage } from "@responsive-image/solid";
+import { For } from "solid-js";
 import logo from "~/assets/logodinxperfm.png?w=384;768&format=avif;webp;png&responsive";
 import programmering from "~/assets/programmering.jpg?w=1084&format=avif;webp;jpeg&lqip=color&responsive";
-import tibatek_logo_web from "~/assets/sponsors/tibatek_logo_web.png?w=242&format=avif;webp;png&lqip=inline&responsive";
 import Controls from "~/components/Controls.tsx";
 import Player from "~/components/Player.tsx";
 
@@ -11,6 +11,45 @@ const sponsors = import.meta.glob<ImageData>("~/assets/sponsors/*", {
   import: "default",
   query: "w=500&format=avif;webp;png&lqip=inline&responsive",
 });
+
+const SPONSORS = [
+  {
+    href: "https://www.facebook.com/markt.dinxperlo/",
+    alt: "Logo van de markt van Dinxperlo",
+    image: sponsors["/src/assets/sponsors/makt.jpg"],
+  },
+  {
+    href: "https://podesta.nl/",
+    alt: "Logo van Podesta",
+    image: sponsors["/src/assets/sponsors/logo15.jpg"],
+  },
+  {
+    href: "https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/",
+    alt: "Logo van Adviesbureau Roenhorst",
+    image: sponsors["/src/assets/sponsors/logo16.jpg"],
+  },
+  {
+    href: "http://www.vvnf.nl/home",
+    alt: "Logo van VVNF",
+    image: sponsors["/src/assets/sponsors/logo23.jpg"],
+  },
+  {
+    href: "https://harmtakke.nl",
+    alt: "Logo van Harm Takke",
+    image: sponsors["/src/assets/sponsors/logo-harmtakke.jpg"],
+  },
+  {
+    href: "https://tibatek.de",
+    alt: "Logo van Tibatek",
+    image: sponsors["/src/assets/sponsors/tibatek_logo_web.png"],
+    class: "bg-white p-2",
+  },
+  {
+    href: "https://www.facebook.com/CafetariadeDriesprongDinxperlo/?locale=nl_NL",
+    alt: "Logo van Cafetaria de Driesprong",
+    image: sponsors["/src/assets/sponsors/dedriesprong.jpg"],
+  },
+];
 
 export default function Home() {
   return (
@@ -75,99 +114,25 @@ export default function Home() {
           class="flex flex-row flex-wrap justify-evenly"
           data-testid="sponsors"
         >
-          <div class="mb-2 p-1">
-            <a
-              href="https://www.facebook.com/markt.dinxperlo/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/makt.jpg"]}
-                alt="Logo van de markt van Dinxperlo"
-                loading="eager"
-                width={250}
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="https://podesta.nl/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/logo15.jpg"]}
-                alt="Logo van Podesta"
-                width={250}
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/logo16.jpg"]}
-                alt="Logo van Adviesbureau Roenhorst"
-                width={250}
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="http://www.vvnf.nl/home"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/logo23.jpg"]}
-                alt="Logo van VVNF"
-                width={250}
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="https://harmtakke.nl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/logo-harmtakke.jpg"]}
-                alt="Logo van Harm Takke"
-                width={250}
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="https://tibatek.de"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={tibatek_logo_web}
-                alt="Logo van Tibatek"
-                width={250}
-                class="bg-white p-2"
-              />
-            </a>
-          </div>
-          <div class="mb-2 p-1">
-            <a
-              href="https://www.facebook.com/CafetariadeDriesprongDinxperlo/?locale=nl_NL"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ResponsiveImage
-                src={sponsors["/src/assets/sponsors/dedriesprong.jpg"]}
-                alt="Logo van Cafetaria de Driesprong"
-                width={250}
-              />
-            </a>
-          </div>
+          <For each={SPONSORS}>
+            {(sponsor) => (
+              <div class="mb-2 p-1">
+                <a
+                  href={sponsor.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ResponsiveImage
+                    src={sponsor.image}
+                    alt={sponsor.alt}
+                    loading="lazy"
+                    width={250}
+                    class={sponsor.class}
+                  />
+                </a>
+              </div>
+            )}
+          </For>
         </div>
       </div>
     </>
