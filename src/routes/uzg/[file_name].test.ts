@@ -40,6 +40,9 @@ test("streams from the requested offset for an open-ended range", async () => {
   const response = await get("bytes=500-");
 
   expect(response.status).toBe(206);
+  expect(response.headers.get("cache-control")).toBe(
+    "public, max-age=31536000, immutable",
+  );
   expect(response.headers.get("content-range")).toBe(`bytes 500-${SIZE - 1}/${SIZE}`);
   expect(response.headers.get("content-length")).toBe(String(SIZE - 500));
   expect(mockOpenRecording).toHaveBeenCalledWith(FILENAME, 500);
@@ -57,6 +60,9 @@ test("falls back to a full 200 for a bounded range", async () => {
   const response = await get("bytes=100-200");
 
   expect(response.status).toBe(200);
+  expect(response.headers.get("cache-control")).toBe(
+    "public, max-age=31536000, immutable",
+  );
   expect(mockOpenRecording).toHaveBeenCalledWith(FILENAME, 0);
   await response.body?.cancel();
 });

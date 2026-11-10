@@ -1,6 +1,10 @@
 import type { APIHandler } from "filesystem-routing/api";
 import { openRecording } from "~/uzg.ts";
 
+// A recording never changes once its hour is complete, and the listing only
+// serves completed hours, so the bytes behind a name are immutable.
+const CACHE_CONTROL = "public, max-age=31536000, immutable";
+
 /**
  * Parse a single `bytes=start-` / `bytes=start-end` range. Multi-range and
  * other units are ignored (the request then falls back to a full response).
@@ -49,6 +53,7 @@ export const GET: APIHandler = async ({ params, request }) => {
           status: 206,
           headers: {
             "content-type": "audio/mpeg",
+            "cache-control": CACHE_CONTROL,
             "content-range": `bytes 0-1/${size}`,
             "content-length": "2",
           },
@@ -61,6 +66,7 @@ export const GET: APIHandler = async ({ params, request }) => {
           headers: {
             "content-type": "audio/mpeg",
             "accept-ranges": "bytes",
+            "cache-control": CACHE_CONTROL,
             "content-range": `bytes ${range.start}-${size - 1}/${size}`,
             "content-length": String(size - range.start),
           },
@@ -72,6 +78,7 @@ export const GET: APIHandler = async ({ params, request }) => {
       headers: {
         "content-type": "audio/mpeg",
         "accept-ranges": "bytes",
+        "cache-control": CACHE_CONTROL,
         "content-length": String(size),
       },
     });
