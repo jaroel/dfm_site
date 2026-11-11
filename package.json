@@ -26,7 +26,7 @@
     "@solidjs/vite-plugin": "3.0.0-next.52",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/jest-dom": "^6.10.0",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.9",
     "@types/bun": "^1.4.4",
     "eslint-plugin-solid": "^0.18.1",
     "jsdom": "^27.4.0",
