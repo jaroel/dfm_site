@@ -66,7 +66,9 @@ describe("listFilesCached", () => {
   });
 
   test("does not cache a failed listing", async () => {
-    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     mockList.mockRejectedValueOnce(new Error("ftp down"));
 
     await expect(listFilesCached()).resolves.toEqual([]);

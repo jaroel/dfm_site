@@ -53,7 +53,9 @@ test("streams from the requested offset for an open-ended range", async () => {
   expect(response.headers.get("cache-control")).toBe(
     "public, max-age=31536000, immutable",
   );
-  expect(response.headers.get("content-range")).toBe(`bytes 500-${SIZE - 1}/${SIZE}`);
+  expect(response.headers.get("content-range")).toBe(
+    `bytes 500-${SIZE - 1}/${SIZE}`,
+  );
   expect(response.headers.get("content-length")).toBe(String(SIZE - 500));
   expect(mockDownload).toHaveBeenCalledWith(FILENAME, 500);
   await response.body?.cancel();

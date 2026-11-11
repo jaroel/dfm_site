@@ -6,11 +6,7 @@ import logo from "~/assets/logodinxperfm.png?w=128;256&format=avif;webp;png&resp
 import Controls from "~/components/Controls.tsx";
 import Player from "~/components/Player.tsx";
 import { fetchUzgListing } from "~/uzg.ts";
-import {
-  groupRecordings,
-  toRecordings,
-  type Recording,
-} from "~/recordings.ts";
+import { groupRecordings, toRecordings, type Recording } from "~/recordings.ts";
 
 const getUzgListing = query(fetchUzgListing, "uzglisting");
 

@@ -68,9 +68,7 @@ describe("servableRecordingKey", () => {
 
     expect(servableRecordingKey("15-01-2024-10-00.mp3", now)).toBe(at(10));
     expect(servableRecordingKey("15-01-2024-11-00.mp3", now)).toBe(at(11));
-    expect(
-      servableRecordingKey("15-01-2024-12-00.mp3", now),
-    ).toBeUndefined();
+    expect(servableRecordingKey("15-01-2024-12-00.mp3", now)).toBeUndefined();
   });
 
   test("rejects malformed names and future recordings", () => {
