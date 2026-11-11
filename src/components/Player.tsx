@@ -16,7 +16,8 @@ export default function Player() {
       if (isServer) return;
       if (audio) {
         audio.pause();
-        audio.src = "";
+        // An empty `src` resolves to the document URL; remove it instead.
+        audio.removeAttribute("src");
       }
       setSource("");
     };
@@ -39,7 +40,7 @@ export default function Player() {
   return (
     <audio
       ref={(el) => (audio = el)}
-      src={source()}
+      src={source() || undefined}
       onPlaying={() => setState("playing")}
       onPause={() => setState("stopped")}
       onError={({ currentTarget }) =>
