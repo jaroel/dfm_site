@@ -12,33 +12,51 @@ const SECURITY_HEADERS = {
   "referrer-policy": "strict-origin-when-cross-origin",
 };
 
+// Read once: the client build is immutable for the life of the process.
+// `undefined` (no prerender) falls through to the SSR handler.
+const indexHtml = await Bun.file(`${clientRoot}/index.html`)
+  .text()
+  .catch(() => undefined);
+const robots = await Bun.file(`${clientRoot}/robots.txt`)
+  .text()
+  .catch(() => undefined);
+
 Bun.serve({
   port,
   async fetch(req) {
-    const url = new URL(req.url);
+    const { pathname } = new URL(req.url);
 
-    // Static client assets first. `Bun.file` is a lazy, file-backed Response
-    // body; `.type` is inferred from the file extension.
-    if (!url.pathname.includes("..")) {
-      const file = Bun.file(
-        clientRoot + (url.pathname === "/" ? "/index.html" : url.pathname),
-      );
+    if (indexHtml !== undefined && pathname === "/") {
+      // Prerendered HTML changes on every deploy.
+      return new Response(indexHtml, {
+        headers: {
+          ...SECURITY_HEADERS,
+          "cache-control": "no-cache",
+          "content-type": "text/html;charset=utf-8",
+        },
+      });
+    }
+
+    if (robots !== undefined && pathname === "/robots.txt") {
+      return new Response(robots, { headers: SECURITY_HEADERS });
+    }
+
+    // Hashed build assets never change under the same name. `Bun.file` is a
+    // lazy, file-backed Response body; `.type` is inferred from the extension.
+    if (pathname.startsWith("/assets/") && !pathname.includes("..")) {
+      const file = Bun.file(clientRoot + pathname);
       if (await file.exists()) {
-        // Hashed build assets never change under the same name.
-        const immutable = url.pathname.startsWith("/assets/");
         return new Response(file, {
-          headers: immutable
-            ? {
-                ...SECURITY_HEADERS,
-                "cache-control": "max-age=31536000, immutable",
-              }
-            : {
-                ...SECURITY_HEADERS,
-                // Prerendered HTML changes on every deploy.
-                "cache-control": "no-cache",
-              },
+          headers: {
+            ...SECURITY_HEADERS,
+            "cache-control": "max-age=31536000, immutable",
+          },
         });
       }
+      return new Response("Not Found", {
+        status: 404,
+        headers: SECURITY_HEADERS,
+      });
     }
 
     try {
