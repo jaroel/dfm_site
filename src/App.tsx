@@ -2,6 +2,7 @@ import cabinWoff2 from "@fontsource/cabin/files/cabin-latin-400-normal.woff2?url
 import { Link, Meta, Title } from "@solidjs/meta";
 import { Errored, Loading } from "solid-js";
 import bgImage from "~/assets/dfm_studio-blurred.jpg?w=800&format=webp&url";
+import favicon from "~/assets/favicon.ico?url";
 import { Router } from "~/router";
 import "./app.css";
 
@@ -17,6 +18,7 @@ export default function App() {
             href={cabinWoff2}
             crossorigin="anonymous"
           />
+          <Link rel="icon" href={favicon} />
           <Title>Dinxper FM - Het swingende geluid van Dinxperlo</Title>
           <Meta
             name="description"
