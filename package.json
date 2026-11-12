@@ -5,13 +5,13 @@
   "packageManager": "bun@1.4.4",
   "scripts": {
     "dev": "bun node_modules/vite/bin/vite.js",
-    "build": "vite build",
+    "build": "vite build && bun prerender.ts",
     "start": "bun server.bun.ts",
     "preview": "bun node_modules/vite/bin/vite.js preview",
     "test": "vitest",
-    "lint": "oxlint src types server.bun.ts vite.config.ts vitest.config.ts",
-    "format": "oxfmt src types server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
-    "format:check": "oxfmt --check src types server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
+    "lint": "oxlint src types prerender.ts server.bun.ts vite.config.ts vitest.config.ts",
+    "format": "oxfmt src types prerender.ts server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
+    "format:check": "oxfmt --check src types prerender.ts server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
     "typecheck": "bun check --no-script && bun check -p tsconfig.client.json --no-script"
   },
   "engines": {

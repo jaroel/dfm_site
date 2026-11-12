@@ -19,8 +19,10 @@ Bun.serve({
 
     // Static client assets first. `Bun.file` is a lazy, file-backed Response
     // body; `.type` is inferred from the file extension.
-    if (url.pathname !== "/" && !url.pathname.includes("..")) {
-      const file = Bun.file(clientRoot + url.pathname);
+    if (!url.pathname.includes("..")) {
+      const file = Bun.file(
+        clientRoot + (url.pathname === "/" ? "/index.html" : url.pathname),
+      );
       if (await file.exists()) {
         // Hashed build assets never change under the same name.
         const immutable = url.pathname.startsWith("/assets/");
@@ -30,7 +32,11 @@ Bun.serve({
                 ...SECURITY_HEADERS,
                 "cache-control": "max-age=31536000, immutable",
               }
-            : SECURITY_HEADERS,
+            : {
+                ...SECURITY_HEADERS,
+                // Prerendered HTML changes on every deploy.
+                "cache-control": "no-cache",
+              },
         });
       }
     }
