@@ -75,9 +75,9 @@ export default function Controls(props: {
       onClick={() => {
         setSource(
           {
-            error: "",
-            playing: "",
-            loading: "",
+            error: undefined,
+            playing: undefined,
+            loading: undefined,
             stopped: props.src,
           }[state()],
         );

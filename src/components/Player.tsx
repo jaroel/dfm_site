@@ -1,7 +1,7 @@
 import { isServer } from "@solidjs/web";
 import { createEffect, createSignal, onSettled } from "solid-js";
 
-export const [source, setSource] = createSignal("");
+export const [source, setSource] = createSignal<string>();
 export const [state, setState] = createSignal<
   "error" | "playing" | "loading" | "stopped"
 >("stopped");
@@ -14,12 +14,11 @@ export default function Player() {
   onSettled(() => {
     return () => {
       if (isServer) return;
-      if (audio) {
+      if (audio && !audio.paused) {
+        // jsdom has no media stack; pausing a paused element is a no-op anyway.
         audio.pause();
-        // An empty `src` resolves to the document URL; remove it instead.
-        audio.removeAttribute("src");
       }
-      setSource("");
+      setSource(undefined);
     };
   });
 
@@ -31,7 +30,7 @@ export default function Player() {
       if (isServer || !audio) return;
       if (src) {
         audio.play().catch(() => setState("error"));
-      } else {
+      } else if (!audio.paused) {
         audio.pause();
       }
     },
@@ -40,7 +39,7 @@ export default function Player() {
   return (
     <audio
       ref={(el) => (audio = el)}
-      src={source() || undefined}
+      src={source()}
       onPlaying={() => setState("playing")}
       onPause={() => setState("stopped")}
       onError={({ currentTarget }) =>
