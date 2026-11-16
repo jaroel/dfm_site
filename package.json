@@ -29,7 +29,7 @@
     "@testing-library/user-event": "^14.6.9",
     "@types/bun": "^1.4.4",
     "eslint-plugin-solid": "^0.18.1",
-    "jsdom": "^27.4.0",
+    "happy-dom": "^21.0.4",
     "oxfmt": "^0.77.0",
     "oxlint": "^1.93.0",
     "tailwindcss": "^4.3.5",

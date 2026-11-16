@@ -20,7 +20,7 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "jsdom",
+    environment: "happy-dom",
     setupFiles: ["./vitest-setup.ts"],
     env: {
       FTP_HOST: "ftp.test",
