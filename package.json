@@ -23,26 +23,26 @@
     "@responsive-image/solid": "^2.1.0",
     "@responsive-image/vite-plugin": "^3.0.1",
     "@solidjs/testing-library": "1.0.0-rc.2",
-    "@solidjs/vite-plugin": "3.0.0-next.52",
+    "@solidjs/vite-plugin": "3.0.0",
     "@tailwindcss/vite": "^4.3.5",
-    "@testing-library/jest-dom": "^6.10.0",
-    "@testing-library/user-event": "^14.6.9",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/user-event": "^14.6.12",
     "@types/bun": "^1.4.4",
-    "eslint-plugin-solid": "^0.18.1",
+    "eslint-plugin-solid": "0.19.0",
     "happy-dom": "^21.0.4",
-    "oxfmt": "^0.77.0",
-    "oxlint": "^1.93.0",
+    "oxfmt": "0.79.0",
+    "oxlint": "^1.94.0",
     "tailwindcss": "^4.3.5",
-    "tsrs": "^0.23.0-ts7.1.0-beta",
+    "tsrs": "0.25.0-ts7.1.0-beta",
     "vite": "8",
-    "vitest": "^4.1.12"
+    "vitest": "5.1.0"
   },
   "dependencies": {
-    "@solidjs/meta": "1.0.0-next.2",
-    "@solidjs/router": "2.0.0-next.43",
-    "@solidjs/web": "2.0.0-rc.19",
+    "@solidjs/meta": "2.0.0",
+    "@solidjs/router": "2.0.0",
+    "@solidjs/web": "2.0.0",
     "basic-ftp": "^6.2.6",
-    "filesystem-routing": "0.4.2",
-    "solid-js": "2.0.0-rc.19"
+    "filesystem-routing": "0.5.0",
+    "solid-js": "2.0.0"
   }
 }

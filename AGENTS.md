@@ -74,5 +74,6 @@ src/ftp.ts            raw FTP listing + download, server-only
   `FTP_*` variables in `.env` are not read.
 - `isServer` comes from `@solidjs/web` in Solid 2, not `solid-js`.
 - Do not debug behavior from hashed bundles in `dist/`; use `dev` or `preview`.
-- Package versions are prerelease/RC. `package.json` and `bun.lock` are the
+- Solid stack is on stable 2.0.0 (`solid-js`, `@solidjs/web`, `@solidjs/router`,
+  `@solidjs/meta`, `@solidjs/vite-plugin`). `package.json` and `bun.lock` are the
   source of truth when docs or templates disagree.
