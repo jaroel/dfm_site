@@ -3,10 +3,10 @@
   "version": "0.1",
   "type": "module",
   "scripts": {
-    "dev": "bun node_modules/vite/bin/vite.js",
+    "dev": "vite",
     "build": "vite build && bun prerender.ts",
     "start": "bun server.bun.ts",
-    "preview": "bun node_modules/vite/bin/vite.js preview",
+    "preview": "vite preview",
     "test": "vitest",
     "lint": "oxlint src types prerender.ts server.bun.ts vite.config.ts vitest.config.ts",
     "format": "oxfmt src types prerender.ts server.bun.ts vite.config.ts vitest.config.ts vitest-setup.ts",
