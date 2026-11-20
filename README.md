@@ -1,6 +1,7 @@
 # Dinxper FM site
 
-Solid 2 app in start mode (`@solidjs/vite-plugin`), streaming SSR, bun server.
+Solid 2 app in start mode (`@solidjs/vite-plugin`), streaming SSR, prerendered
+home page, Bun server.
 
 Bun only. Do not use npm or pnpm. For the agent-facing map, see `AGENTS.md`.
 
@@ -15,31 +16,49 @@ bun run dev
 
 | Path | Purpose |
 |---|---|
+| `src/App.tsx` | Root layout, metadata, font preload, background and nav |
+| `src/router.ts` | Router wired to the generated file routes |
 | `src/routes/` | File-based pages and the audio-stream API |
-| `src/components/` | Player and playback controls |
+| `src/components/` | Shared Player element and playback Controls |
 | `src/ftp.ts` | Raw FTP listing and download (server-only) |
-| `src/uzg.ts` | Server function: recording listing |
+| `src/uzg.ts` | Server function: cached recording listing |
 | `src/recordings.ts` | Recording filename parsing, formatting, grouping (client-safe) |
+| `src/groupby.ts` | `Map.groupBy` helper with a fallback for older browsers |
 | `src/middleware.ts` | Wires the filesystem-routing API handler |
+| `src/assets/` | Images, sponsor logos, favicon |
+| `prerender.ts` | Renders `/` to `dist/client/index.html` after the build |
 | `server.bun.ts` | Bun production server for `dist/` |
 | `Dockerfile` | Bundles the server; runtime needs no `node_modules` |
+| `build.sh`, `push.sh`, `deploy.sh` | Build, load, and restart the container |
 
-| URL | File |
-|---|---|
-| `/` | `src/routes/(home).tsx` |
-| `/uzg/` | `src/routes/uzg/(uzg).tsx` |
-| `/uzg/:file_name` | `src/routes/uzg/[file_name].ts` |
-| `/*404` | `src/routes/[...404].tsx` |
+Tests live next to the code as `*.test.ts` / `*.test.tsx`.
+
+| URL | File | Notes |
+|---|---|---|
+| `/` | `src/routes/(home).tsx` | Prerendered to static HTML |
+| `/uzg/` | `src/routes/uzg/(uzg).tsx` | Recording listing, streamed SSR |
+| `/uzg/:file_name` | `src/routes/uzg/[file_name].ts` | Audio stream, supports range requests |
+| `/*404` | `src/routes/[...404].tsx` | Not found |
 
 `file-routes.d.ts` is generated; do not edit it. Data flow, build/runtime
-contract, image pipeline, and gotchas are in `AGENTS.md`.
+contract, image pipeline, testing, and gotchas are in `AGENTS.md`.
 
 ## Building
 
 ```bash
-bun run build   # dist/client + dist/server
-bun run start   # bun server.bun.ts
-bun run preview # vite preview
+bun run build   # vite build + prerender -> dist/client + dist/server
+bun run start   # bun server.bun.ts (uses the built dist/)
+bun run preview # vite preview of the build
+```
+
+`bun run build` writes `dist/client/index.html` for `/`; the server serves that
+file directly and sends every other request to the SSR handler.
+
+## Formatting
+
+```bash
+bun run format       # oxfmt
+bun run format:check # fail if files need formatting
 ```
 
 ## Environment
