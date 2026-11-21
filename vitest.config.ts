@@ -21,6 +21,9 @@ export default defineConfig({
   },
   test: {
     environment: "happy-dom",
+    // ponytail: forks pool dies on Bun before tests start (oven-sh/bun#33593);
+    // drop once channel.unref ships in Bun.
+    pool: "threads",
     setupFiles: ["./vitest-setup.ts"],
     env: {
       FTP_HOST: "ftp.test",

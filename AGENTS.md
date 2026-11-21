@@ -114,6 +114,9 @@ the same layer as `src/routes/uzg/` (pages/API).
   back to a full `200`. The range pre-check uses the cached size; the download
   then reports the authoritative FTP `SIZE` and is checked again. A `550` means
   the file vanished and yields `404`.
+- Vitest's default `forks` pool crashes under Bun with
+  `child.channel?.unref is not a function` (oven-sh/bun#33593). Keep
+  `pool: "threads"` in `vitest.config.ts` until Bun ships `channel.unref`.
 - `isServer` comes from `@solidjs/web` in Solid 2, not `solid-js`.
 - Do not debug behavior from hashed bundles in `dist/`; use `dev` or `preview`.
 - Solid stack is on stable releases: `solid-js`, `@solidjs/web`,
