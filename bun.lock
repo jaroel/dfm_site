@@ -15,7 +15,7 @@
       "devDependencies": {
         "@fontsource/cabin": "^5.3.0",
         "@responsive-image/core": "^2.1.1",
-        "@responsive-image/solid": "^2.1.0",
+        "@responsive-image/solid": "^2.1.1",
         "@responsive-image/vite-plugin": "^3.0.1",
         "@solidjs/testing-library": "1.0.0-rc.2",
         "@solidjs/vite-plugin": "3.0.1",
@@ -43,7 +43,7 @@
 
     "@babel/helper-validator-identifier": ["@babel/helper-validator-identifier@7.29.7", "", {}, "sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg=="],
 
-    "@babel/runtime": ["@babel/runtime@7.29.14", "", {}, "sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw=="],
+    "@babel/runtime": ["@babel/runtime@7.29.15", "", {}, "sha512-304gsbbGVmQc+cNGHzwHBlqepYdWLKj3VXCQBGt/EGcV7PUPfKI7kAUNW1FZEOCwlQiLvQjg1JEaAlRQ616h+Q=="],
 
     "@emnapi/core": ["@emnapi/core@1.11.3", "", { "dependencies": { "@emnapi/wasi-threads": "1.2.3", "tslib": "^2.4.0" } }, "sha512-zLpS5asjEb7lq8jYLq37N6XKaE41DIexlY1rF/z4/tIl3wo13Sqm28fRyfIsKZD+NZ8mM5RoKkpW/rBcuoSZSg=="],
 
@@ -247,7 +247,7 @@
 
     "@responsive-image/core": ["@responsive-image/core@2.1.1", "", { "dependencies": { "base64-arraybuffer": "^1.0.2" }, "peerDependencies": { "blurhash": "^2.0.0", "thumbhash": "^0.1.1" }, "optionalPeers": ["blurhash", "thumbhash"] }, "sha512-TuQo/MWAkVm5yOmSWpx4cKQMQ8xoz6m8whAocbMf6sns2ldb47ET5uDLv0iftgRCer2s3s8QeDMgp8z2fx3MJQ=="],
 
-    "@responsive-image/solid": ["@responsive-image/solid@2.1.0", "", { "dependencies": { "@responsive-image/core": "^2.1.1" }, "peerDependencies": { "solid-js": "^1.6.0 || ^2.0.0-rc.0" } }, "sha512-LZ1zmvddsxS1gxhTrh8HaT51qqek2+z2izXtemAG4p31vmKj3mdbSlTTvqItlC0y+P/g4Gzhm8OJeo5+K3PyrA=="],
+    "@responsive-image/solid": ["@responsive-image/solid@2.1.1", "", { "dependencies": { "@responsive-image/core": "^2.1.1" }, "peerDependencies": { "solid-js": "^1.6.0 || ^2.0.0-rc.0" } }, "sha512-KdWz3FY7Y6D3zUm4UP29zkN9nj3XmWrt1ZLQiIiFIXhMj4knuWbpmwZXxkbDQafDvBFwpn92xBwskjNPA6vVvQ=="],
 
     "@responsive-image/vite-plugin": ["@responsive-image/vite-plugin@3.0.1", "", { "dependencies": { "@responsive-image/build-utils": "^3.0.1", "@responsive-image/core": "^2.1.0", "blurhash": "^2.0.4", "imagetools-core": "^9.0.0", "sharp": "^0.35.0", "thumbhash": "^0.1.1" }, "peerDependencies": { "vite": "^6.0.0 || ^7.0.0 || ^8.0.0" } }, "sha512-lPROKmKwXDaQbQbIs4cJRyOatPfv/B7i4tGbOoyhnAP5tv28gEC34LI7XKaFhOBBszWzyvgKpVkuO/y4p46zJA=="],
 

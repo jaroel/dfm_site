@@ -24,7 +24,7 @@
   "devDependencies": {
     "@fontsource/cabin": "^5.3.0",
     "@responsive-image/core": "^2.1.1",
-    "@responsive-image/solid": "^2.1.0",
+    "@responsive-image/solid": "^2.1.1",
     "@responsive-image/vite-plugin": "^3.0.1",
     "@solidjs/testing-library": "1.0.0-rc.2",
     "@solidjs/vite-plugin": "3.0.1",
