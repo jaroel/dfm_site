@@ -1,125 +1,161 @@
-<picture>
-    <source srcset="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_Solid_White.svg" media="(prefers-color-scheme: dark)">
-    <img src="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_RGB.svg" alt="Leptos Logo">
-</picture>
+# Dinxper FM site
 
-# Leptos Axum Starter Template
+Server-rendered [Leptos](https://leptos.rs) 0.9 site for Dinxper FM, using
+[cargo-leptos](https://github.com/leptos-rs/cargo-leptos) and [Axum](https://github.com/tokio-rs/axum).
+Server functions talk to the station's FTP server to list and stream old broadcasts.
 
-This is a template for use with the [Leptos](https://github.com/leptos-rs/leptos) web framework and the [cargo-leptos](https://github.com/leptos-rs/cargo-leptos) tool using [Axum](https://github.com/tokio-rs/axum).
+## Requirements
 
-## Creating your template repo
+- Rust nightly (`rust-toolchain.toml` pins it) with the `wasm32-unknown-unknown` target:
+  ```bash
+  rustup toolchain install nightly --allow-downgrade
+  rustup target add wasm32-unknown-unknown
+  ```
+- `cargo-leptos` 0.3.x: `cargo install cargo-leptos --locked`
+- Tailwind and JS minification are handled by cargo-leptos; no Node toolchain is needed for
+  building the site. `bun` is only used for the Playwright tests.
 
-If you don't have `cargo-leptos` installed you can install it with
-
-```bash
-cargo install cargo-leptos --locked
-```
-
-Then run
-```bash
-cargo leptos new --git https://github.com/leptos-rs/start-axum-workspace/
-```
-
-to generate a new project template.
-
-```bash
-cd {projectname}
-```
-
-to go to your newly created project.  
-Feel free to explore the project structure, but the best place to start with your application code is in `src/app.rs`.  
-Additionally, Cargo.toml may need updating as new versions of the dependencies are released, especially if things are not working after a `cargo update`.
-
-### Islands support
-
-Note that for islands to work correctly, you need to have a `use app;` in your frontend `lib.rs` otherwise rustc / wasm_bindgen gets confused.
-To prevent clippy from complaining, at the top of the `frontend/lib.rs` file place:
-```rust
-#[allow(clippy::single_component_path_imports)]
-#[allow(unused_imports)]
-use app;
-```
-
-## Running your project
+## Development
 
 ```bash
 cargo leptos watch
 ```
 
-## Installing Additional Tools
+## Building for production
 
-By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If you run into any trouble, you may need to install one or more of these tools.
-
-1. `rustup toolchain install nightly --allow-downgrade` - make sure you have Rust nightly
-2. `rustup default nightly` - setup nightly as default, or you can use rust-toolchain file later on
-3. `rustup target add wasm32-unknown-unknown` - add the ability to compile Rust to WebAssembly
-4. `cargo install cargo-generate` - install `cargo-generate` binary (should be installed automatically in future)
-5. `npm install -g sass` - install `dart-sass` (should be optional in future
-
-## Compiling for Release
 ```bash
 cargo build-split
 ```
 
-Will generate your server binary in target/server/release and your site package in target/site.
-Splits `#[lazy]` code into separate wasm chunks so the home page does not download the
-`/uzg` view, and writes precompressed `.br`/`.gz` siblings for static assets (served by
-`leptos_axum`'s file handler). SSR HTML is compressed at runtime by `CompressionLayer`.
+`build-split` is a cargo alias for:
+
+```bash
+cargo leptos build --release --split --precompress
+```
+
+Use it rather than a plain `cargo leptos build --release`: `--split` is not sticky, and without
+it the base wasm still imports placeholder split symbols and fails at runtime.
+
+What the build produces:
+
+| Output | Contents |
+| --- | --- |
+| `target/release/server` | the server binary (release, with hash-files support) |
+| `target/release/hash.txt` | filename → hash map the binary reads at runtime |
+| `target/site/` | `pkg/` (wasm, js, css, lazy chunks), `assets/` (generated images), `favicon.ico` |
+| `target/site/**/*.br` / `*.gz` | precompressed siblings written by `--precompress` |
+
+The wasm is split at `#[lazy]` boundaries, so the home page never downloads the `/uzg` view
+(`~484 kB` base, `~162 kB` brotli over the wire). Static assets are served precompressed by
+`leptos_axum`; SSR HTML and server-function payloads are compressed at runtime by
+`CompressionLayer`.
+
+`app/build.rs` also runs as part of this build: it regenerates the resized hashed WebP variants
+under `public/assets/img/` (gitignored) before cargo-leptos copies `public/` into `target/site/`.
+
+## Deploying
+
+There is no toolchain on the target machine — ship three things, keeping the binary and
+`hash.txt` side by side:
+
+```bash
+mkdir -p /srv/dfm
+cp target/release/server      /srv/dfm/
+cp target/release/hash.txt    /srv/dfm/
+cp -R target/site             /srv/dfm/site
+```
+
+Directory layout:
+
+```text
+/srv/dfm/
+├── server
+├── hash.txt
+└── site/
+    ├── assets/
+    ├── favicon.ico(+.br/.gz)
+    └── pkg/
+```
+
+Environment variables (`get_configuration` reads these at startup; anything unset falls back to
+the values baked in from `Cargo.toml`):
+
+| Variable | Value | Why |
+| --- | --- | --- |
+| `LEPTOS_SITE_ROOT` | `site` | build default points at `target/site` |
+| `LEPTOS_SITE_PKG_DIR` | `pkg` | |
+| `LEPTOS_SITE_ADDR` | `0.0.0.0:3000` (or `127.0.0.1:3000` behind a proxy) | |
+| `LEPTOS_HASH_FILES` | `true` | **required**; without it the HTML points at unhashed `pkg` names and every asset 404s |
+| `LEPTOS_HASH_FILE_NAME` | `hash.txt` | only needed if you rename the file |
+
+Example systemd unit:
+
+```ini
+[Unit]
+Description=Dinxper FM site
+After=network.target
+
+[Service]
+WorkingDirectory=/srv/dfm
+Environment=LEPTOS_SITE_ROOT=site
+Environment=LEPTOS_SITE_PKG_DIR=pkg
+Environment=LEPTOS_SITE_ADDR=127.0.0.1:3000
+Environment=LEPTOS_HASH_FILES=true
+ExecStart=/srv/dfm/server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+The server shuts down gracefully on `SIGINT`/`SIGTERM`.
+
+### Verifying a deploy
+
+```bash
+# page renders
+curl -sI http://127.0.0.1:3000/ | head -1
+
+# every asset the HTML references actually exists (hashed names, not bare ones)
+curl -s http://127.0.0.1:3000/ \
+  | grep -o '/pkg/[^"]*' | sort -u \
+  | while read -r u; do printf '%s ' "$u"; curl -s -o /dev/null -w '%{http_code}\n' "http://127.0.0.1:3000$u"; done
+```
+
+If those URLs come back without the hash suffix, `LEPTOS_HASH_FILES` is not set (or `hash.txt`
+is missing from the binary's directory). `cargo leptos serve` sets it for you; a bare binary
+launch does not. If they 404 with a hash suffix, `site/` and `hash.txt` are from different
+builds — redeploy both.
+
+Behind nginx/Caddy, pass `Accept-Encoding` through untouched so the precompressed `.br`/`.gz`
+files are used, and do not add a second compression layer for `application/wasm`.
+
+Hashed `pkg` and `assets/img` responses are sent with
+`Cache-Control: public, max-age=31536000, immutable`; `/assets/*` (non-generated) and
+`favicon.ico` get one day. Dynamic responses (HTML, server functions) carry no `Cache-Control`.
 
 ## Images
 
-Sources live in `assets/` (not served). `app/build.rs` resizes each one to the widths
-that are actually rendered, content-hashes the filename and writes WebP into
-`public/assets/img/`, plus a manifest the app `include!`s as `crate::images`. The generated
-directory is gitignored and rebuilt on demand, so a fresh clone only needs a normal
-`cargo leptos build`.
+Sources live in `assets/` (not served). `app/build.rs` resizes each one to the widths that are
+actually rendered, content-hashes the filename and writes WebP into `public/assets/img/`, plus a
+manifest the app `include!`s as `crate::images`. The generated directory is gitignored and
+rebuilt on demand, so a fresh clone only needs a normal `cargo build-split`.
 
 To add an image, drop the source in `assets/` and add a `Source` entry with its widths in
-`app/build.rs`, then reference `crate::images::YOUR_CONST` through
-`images::responsive_img(...)` / `hero_img(...)`.
+`app/build.rs`, then reference `crate::images::YOUR_CONST` through `images::responsive_img(...)`
+or `hero_img(...)`.
 
-## Testing Your Project
+## Testing
 
-Cargo-leptos uses (https://playwright.dev)[Playwright] as the end-to-end test tool. 
+End-to-end tests use Playwright from `end2end/`:
 
-Prior to the first run of the end-to-end tests run Playwright must be installed. 
-In the project's `end2end` directory run `npm install -D playwright @playwright/test` to install playwright and browser specific APIs.
-
-To run the tests during development in the project root run:
 ```bash
-cargo leptos end-to-end
+cd end2end && bun install
+cd .. && cargo leptos end-to-end      # or: cargo leptos end-to-end --release
 ```
 
-To run tests for release in the project root run:
-```bash
-cargo leptos end-to-end --release
-```
-There are some examples tests are located in `end2end/tests` directory that pass tests with the sample Leptos app.
-
-A web-based report on tests is available by running `npx playwright show-report` in the `end2end` directory.
-
-
-## Executing a Server on a Remote Machine Without the Toolchain
-After running a `cargo leptos build --release` the minimum files needed are:
-
-1. The server binary located in `target/server/release`
-2. The `site` directory and all files within located in `target/site`
-
-Copy these files to your remote server. The directory structure should be:
-```text
-start-axum-workspace
-site/
-```
-Set the following environment variables (updating for your project as needed):
-```text
-LEPTOS_OUTPUT_NAME="start-axum-workspace"
-LEPTOS_SITE_ROOT="site"
-LEPTOS_SITE_PKG_DIR="pkg"
-LEPTOS_SITE_ADDR="127.0.0.1:3000"
-LEPTOS_RELOAD_PORT="3001"
-```
-Finally, run the server binary.
+`npx playwright show-report` inside `end2end/` opens the HTML report.
 
 ## Licensing
 
-This template itself is released under the Unlicense. You should replace the LICENSE for your own application with an appropriate license if you plan to release it publicly.
+Released under the Unlicense; see `LICENSE`.
