@@ -18,8 +18,19 @@ Server functions talk to the station's FTP server to list and stream old broadca
 ## Development
 
 ```bash
-cargo leptos watch
+cargo leptos watch            # dev server, hot reload
+cargo watch-split             # dev server against the release wasm build
 ```
+
+To run the production build locally (release wasm, split chunks, precompressed assets,
+`LEPTOS_HASH_FILES` set for you by cargo-leptos):
+
+```bash
+cargo serve-prd               # http://127.0.0.1:3000
+```
+
+That is the same artifact set the deploy uses; to exercise the bare binary instead, see
+[Deploying](#deploying).
 
 ## Building for production
 

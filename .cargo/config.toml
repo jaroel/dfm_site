@@ -5,3 +5,4 @@
 [alias]
 build-split = "leptos build --release --split --precompress"
 watch-split = "leptos watch --release --split"
+serve-prd = "leptos serve --release --split --precompress"
