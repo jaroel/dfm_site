@@ -114,8 +114,10 @@ impl Recording {
 }
 
 #[cfg(feature = "ssr")]
-static CACHE: std::sync::LazyLock<std::sync::RwLock<Option<(std::time::Instant, Vec<Recording>)>>> =
-    std::sync::LazyLock::new(|| std::sync::RwLock::new(None));
+type Cache = std::sync::LazyLock<std::sync::RwLock<Option<(std::time::Instant, Vec<Recording>)>>>;
+
+#[cfg(feature = "ssr")]
+static CACHE: Cache = std::sync::LazyLock::new(|| std::sync::RwLock::new(None));
 
 #[cfg(feature = "ssr")]
 use jiff::{tz::TimeZone, ToSpan, Unit, ZonedDateTimeRound};
