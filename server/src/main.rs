@@ -50,6 +50,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/uzg_data/{filename}", get(stream_ftp_file))
+        .route("/assets/img/{filename}", get(serve_image))
         .leptos_routes(&leptos_options, routes, {
             let leptos_options = leptos_options.clone();
             move || shell(leptos_options.clone())
@@ -110,6 +111,18 @@ async fn shutdown_signal() {
     tokio::select! {
         _ = ctrl_c => {},
         _ = terminate => {},
+    }
+}
+
+/// Serves the build-time generated image variants, embedded in this binary.
+async fn serve_image(Path(filename): Path<String>) -> Response {
+    match app::images::FILES.iter().find(|(name, _)| *name == filename) {
+        Some((_, bytes)) => (
+            [(CONTENT_TYPE, HeaderValue::from_static("image/webp"))],
+            *bytes,
+        )
+            .into_response(),
+        None => StatusCode::NOT_FOUND.into_response(),
     }
 }
 

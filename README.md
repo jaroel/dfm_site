@@ -42,7 +42,7 @@ What the build produces:
 | --- | --- |
 | `target/release/server` | the server binary (release, with hash-files support) |
 | `target/release/hash.txt` | filename → hash map the binary reads at runtime |
-| `target/site/` | `pkg/` (wasm, js, css, lazy chunks), `assets/` (generated images), `favicon.ico` |
+| `target/site/` | `pkg/` (wasm, js, css, lazy chunks) and `favicon.ico` |
 | `target/site/**/*.br` / `*.gz` | precompressed siblings written by `--precompress` |
 
 The wasm is split at `#[lazy]` boundaries, so the home page never downloads the `/uzg` view
@@ -50,8 +50,8 @@ The wasm is split at `#[lazy]` boundaries, so the home page never downloads the 
 `leptos_axum`; SSR HTML and server-function payloads are compressed at runtime by
 `CompressionLayer`.
 
-`app/build.rs` also runs as part of this build: it regenerates the resized hashed WebP variants
-under `public/assets/img/` (gitignored) before cargo-leptos copies `public/` into `target/site/`.
+`app/build.rs` runs as part of this build too: it resizes and hashes the image variants and embeds
+them in the server binary (see [Images](#images)), so a single build produces everything needed.
 
 ## Deploying
 
@@ -72,10 +72,12 @@ Directory layout:
 ├── server
 ├── hash.txt
 └── site/
-    ├── assets/
     ├── favicon.ico(+.br/.gz)
     └── pkg/
 ```
+
+Images need no files on disk: the resized variants are embedded in the server binary and served
+from `/assets/img/{hashed-name}.webp`.
 
 Environment variables (`get_configuration` reads these at startup; anything unset falls back to
 the values baked in from `Cargo.toml`):
@@ -136,10 +138,18 @@ Hashed `pkg` and `assets/img` responses are sent with
 
 ## Images
 
-Sources live in `assets/` (not served). `app/build.rs` resizes each one to the widths that are
-actually rendered, content-hashes the filename and writes WebP into `public/assets/img/`, plus a
-manifest the app `include!`s as `crate::images`. The generated directory is gitignored and
-rebuilt on demand, so a fresh clone only needs a normal `cargo build-split`.
+Sources live in `assets/`. `app/build.rs` resizes each one to the widths that are actually
+rendered, content-hashes the filename, encodes WebP and writes it to `assets/generated/`
+(gitignored), then emits a manifest the app `include!`s as `crate::images` plus an
+`include_bytes!` table of every variant. The bytes are compiled into the server binary and served
+by a `/assets/img/{file}` route with an immutable cache header, so:
+
+- nothing image-related has to be deployed besides the binary;
+- build order relative to cargo-leptos' asset copying cannot break the deploy;
+- the binary is ~420 kB larger; the generated directory can be deleted at any time.
+
+Changing a source image rehashes its filename (so caches bust) and regenerates only the variants
+that are missing. A fresh clone needs nothing beyond `cargo build-split`.
 
 To add an image, drop the source in `assets/` and add a `Source` entry with its widths in
 `app/build.rs`, then reference `crate::images::YOUR_CONST` through `images::responsive_img(...)`

@@ -13,4 +13,4 @@ end2end/playwright-report/
 playwright/.cache/
 
 # generated responsive image variants (app/build.rs)
-public/assets/img/
+assets/generated/

@@ -75,7 +75,7 @@ const SOURCES: &[Source] = &[
     },
 ];
 
-const OUT_DIR: &str = "public/assets/img";
+const OUT_DIR: &str = "assets/generated";
 const URL_DIR: &str = "/assets/img";
 
 fn main() {
@@ -93,6 +93,7 @@ fn main() {
          \x20   pub height: u32,\n\
          }\n\n",
     );
+    let mut files = String::new();
 
     for source in SOURCES {
         println!("cargo:rerun-if-changed={}", source.file);
@@ -142,6 +143,13 @@ fn main() {
             .map(|(w, url)| format!("{url} {w}w"))
             .collect::<Vec<_>>()
             .join(", ");
+        for (_, url) in &variants {
+            let file = url.rsplit('/').next().unwrap();
+            files.push_str(&format!(
+                "    (\"{file}\", include_bytes!(r\"{}\")),\n",
+                root.join(OUT_DIR).join(file).display()
+            ));
+        }
         let src = &variants.last().unwrap().1;
         let scale = |w: u32| (height as f64 * w as f64 / width as f64).round() as u32;
 
@@ -152,6 +160,11 @@ fn main() {
             scale(variants.last().unwrap().0),
         ));
     }
+
+    manifest.push_str("/// every variant, embedded in the binary and served by the server\n");
+    manifest.push_str("pub static FILES: &[(&str, &[u8])] = &[\n");
+    manifest.push_str(&files);
+    manifest.push_str("];\n");
 
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("images.rs");
     if fs::read_to_string(&out).ok().as_deref() != Some(manifest.as_str()) {
