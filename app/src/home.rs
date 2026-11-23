@@ -1,9 +1,11 @@
 use leptos::prelude::*;
+use leptos::task::spawn_local;
 use leptos_router::components::A;
 
 use crate::{
     controls::Controls,
     player::{Player, PlayerState},
+    uzg::fetch_uzg_entries,
 };
 
 /// Renders the home page of your application.
@@ -11,6 +13,8 @@ use crate::{
 pub fn HomePage() -> impl IntoView {
     let src = RwSignal::new("".into());
     let player_state = RwSignal::new(PlayerState::Stopped);
+    // ponytail: hover warms the server-side recording cache; click then hits cache
+    let mut warmed = false;
 
     view! {
         <Player audio_src=src player_state=player_state />
@@ -38,6 +42,14 @@ pub fn HomePage() -> impl IntoView {
                     {..}
                     class="inline-block py-3 px-4 text-blue-700 no-underline"
                     title="Uitzending gemist? Luister ze terug!"
+                    on:mouseenter=move |_| {
+                        if !warmed {
+                            warmed = true;
+                            spawn_local(async {
+                                _ = fetch_uzg_entries().await;
+                            });
+                        }
+                    }
                     >
                         "Uitzending gemist?"
                     </A>
