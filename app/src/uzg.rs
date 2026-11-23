@@ -27,7 +27,7 @@ impl From<&String> for Recording {
         let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
 
         let key = dt
-            .to_zoned(jiff::tz::TimeZone::UTC)
+            .to_zoned_datetime(jiff::tz::TimeZone::UTC)
             .unwrap()
             .timestamp()
             .as_second();
@@ -118,7 +118,7 @@ static CACHE: std::sync::LazyLock<std::sync::RwLock<Option<(std::time::Instant, 
     std::sync::LazyLock::new(|| std::sync::RwLock::new(None));
 
 #[cfg(feature = "ssr")]
-use jiff::{tz::TimeZone, ToSpan, Unit, ZonedRound};
+use jiff::{tz::TimeZone, ToSpan, Unit, ZonedDateTimeRound};
 
 #[server(input = Postcard, output = Postcard)]
 #[lazy]
@@ -145,8 +145,8 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
     #[cfg(feature = "ssr")]
     let now_key = {
         let tz = TimeZone::get("Europe/Amsterdam").unwrap();
-        let zdt = jiff::Timestamp::now().to_zoned(tz);
-        let hour = zdt.round(ZonedRound::new().smallest(Unit::Hour)).unwrap();
+        let zdt = jiff::Timestamp::now().to_zoned_datetime(tz);
+        let hour = zdt.round(ZonedDateTimeRound::new().smallest(Unit::Hour)).unwrap();
         hour.checked_add(1.hours()).unwrap().timestamp().as_second()
     };
 

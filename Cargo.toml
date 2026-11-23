@@ -27,7 +27,7 @@ console_log = "1"
 http = "1"
 log = "0"
 simple_logger = "5"
-suppaftp = { version = "12", features = ["tokio"] }
+suppaftp = { version = "13", features = ["tokio"] }
 thiserror = "2"
 tokio = { version = "1", features = ["full"] }
 tower = { version = "0.5", features = ["full"] }
