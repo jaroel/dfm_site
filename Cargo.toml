@@ -15,10 +15,10 @@ opt-level = "z"
 strip = true
 
 [workspace.dependencies]
-leptos = { version = "0.8", features = ["nightly"] }
-leptos_meta = { version = "0.8" }
-leptos_router = { version = "0.8", features = ["nightly"] }
-leptos_axum = { version = "0.8" }
+leptos = { version = "0.9.0-rc1", features = ["nightly", "lazy"] }
+leptos_meta = { version = "0.9.0-rc1" }
+leptos_router = { version = "0.9.0-rc1", features = ["nightly"] }
+leptos_axum = { version = "0.9.0-rc1" }
 
 axum = "0.8"
 cfg-if = "1"
