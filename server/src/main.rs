@@ -7,6 +7,7 @@ use leptos_axum::{generate_route_list, LeptosRoutes};
 use leptos::logging::log;
 use suppaftp::{types::FileType, tokio::AsyncFtpStream};
 use tokio::io::AsyncReadExt;
+use tower_http::compression::CompressionLayer;
 
 pub enum AppError {
     FtpError(suppaftp::FtpError)
@@ -38,6 +39,7 @@ async fn main() {
             move || shell(leptos_options.clone())
         })
         .fallback(leptos_axum::file_and_error_handler(shell))
+        .layer(CompressionLayer::new())
         .with_state(leptos_options);
 
     // run our app with hyper

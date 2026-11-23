@@ -58,10 +58,13 @@ By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If
 
 ## Compiling for Release
 ```bash
-cargo leptos build --release
+cargo build-split
 ```
 
-Will generate your server binary in target/server/release and your site package in target/site
+Will generate your server binary in target/server/release and your site package in target/site.
+Splits `#[lazy]` code into separate wasm chunks so the home page does not download the
+`/uzg` view, and writes precompressed `.br`/`.gz` siblings for static assets (served by
+`leptos_axum`'s file handler). SSR HTML is compressed at runtime by `CompressionLayer`.
 
 ## Testing Your Project
 
