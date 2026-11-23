@@ -1,7 +1,7 @@
 use crate::player::PlayerState;
 use leptos::prelude::*;
 
-#[derive(PartialEq, Debug)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 enum ControlsState {
     Stopped,
     Loading,
@@ -18,7 +18,7 @@ pub fn Controls(
     player_state: RwSignal<PlayerState>,
 ) -> impl IntoView {
     let local_src = RwSignal::new(stream_src);
-    let controls_state = move || match player_state.get() {
+    let controls_state = Memo::new(move |_| match player_state.get() {
         PlayerState::Stopped => ControlsState::Stopped,
         PlayerState::Loading(url) | PlayerState::Playing(url) | PlayerState::Error(url) => {
             if *url != local_src.get() {
@@ -31,14 +31,14 @@ pub fn Controls(
                 PlayerState::Stopped => ControlsState::Stopped,
             }
         }
-    };
+    });
 
     view! {
         <button
             type="button"
             title=title
             on:click=move |_| {
-                match controls_state() {
+                match controls_state.get() {
                     ControlsState::Loading | ControlsState::Playing | ControlsState::Error => {
                         audio_src.set("".to_string())
                     }
@@ -47,7 +47,7 @@ pub fn Controls(
             }
 
             class=move || {
-                let specifics = match controls_state() {
+                let specifics = match controls_state.get() {
                     ControlsState::Error => "bg-red-100 text-red-800 border-red-800",
                     ControlsState::Playing => "bg-green-100 text-green-800 border-green-800",
                     ControlsState::Loading => "bg-blue-100 text-blue-800 border-blue-800",
@@ -70,7 +70,7 @@ pub fn Controls(
                 class="inline bi bi-play"
                 viewBox="0 0 16 16"
             >
-                {move || match controls_state() {
+                {move || match controls_state.get() {
                     ControlsState::Stopped => {
                         view! {
                             <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"></path>

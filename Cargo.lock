@@ -63,6 +63,7 @@ dependencies = [
  "serde",
  "suppaftp",
  "thiserror",
+ "tokio",
 ]
 
 [[package]]

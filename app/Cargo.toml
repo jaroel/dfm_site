@@ -17,6 +17,7 @@ thiserror.workspace = true
 serde = { version = "1", features = ["derive"] }
 suppaftp = { workspace = true, optional = true }
 jiff = { version = "1", optional = true }
+tokio = { workspace = true, optional = true }
 
 [features]
 default = []
@@ -27,6 +28,5 @@ ssr = [
     "leptos_router/ssr",
     "dep:suppaftp",
     "dep:jiff",
+    "dep:tokio",
 ]
-async-stream = []
-leptos_image = []

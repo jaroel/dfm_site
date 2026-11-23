@@ -1,15 +1,20 @@
 import { test, expect } from "@playwright/test";
 
-test("homepage has title and links to intro page", async ({ page }) => {
-  await page.goto("http://localhost:3000/");
+test("homepage shows the live player and the uzg link", async ({ page }) => {
+  await page.goto("/");
 
-  await expect(page).toHaveTitle("Welcome to Leptos");
+  await expect(page).toHaveTitle(/Dinxper FM/);
+  await expect(page.getByRole("button", { name: /Luister live/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Uitzending gemist/ })).toHaveAttribute(
+    "href",
+    "/uzg",
+  );
+});
 
-  await expect(page.locator("h1")).toHaveText("Welcome to Leptos!");
+test("uzg page renders its heading", async ({ page }) => {
+  // data comes from the ftp server, so only the static part is asserted here
+  await page.goto("/uzg");
 
-  await expect(page.getByRole('button')).toHaveText("Click Me: 0");
-
-  await page.click('button');
-
-  await expect(page.getByRole('button')).toHaveText("Click Me: 1");
+  await expect(page.getByRole("heading", { name: "Uitzending gemist" })).toBeVisible();
+  await expect(page).toHaveTitle(/gemiste geluid/);
 });

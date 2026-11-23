@@ -17,7 +17,7 @@ use leptos_router::{
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
-        <html lang="en">
+        <html lang="nl">
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,7 +46,7 @@ pub fn App() -> impl IntoView {
         <Meta property="og:description" content="Dinxper FM - Het swingende geluid van Dinxperlo" />
 
         <div
-            class="h-screen bg-fixed bg-gray-600 bg-center bg-cover text-slate-50 font-[Cabin]"
+            class="h-screen bg-fixed bg-gray-600 bg-center bg-cover text-slate-50"
             style:background-image="url(/assets/dfm_studio-blurred.jpg)"
         >
             <div class="overflow-auto h-full bg-black/75">
@@ -55,7 +55,7 @@ pub fn App() -> impl IntoView {
                         <Routes fallback=|| "Page not found.".into_view()>
                             <Route path=StaticSegment("") view=HomePage />
                             <Route
-                                path=StaticSegment("/uzg")
+                                path=StaticSegment("uzg")
                                 view={Lazy::<UitzendingGemist>::new()}
                                 ssr=leptos_router::SsrMode::InOrder
                             />

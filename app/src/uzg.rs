@@ -1,4 +1,4 @@
-use crate::server_fn::codec::Postcard;
+use leptos::server_fn::codec::Postcard;
 use crate::{
     controls::Controls,
     player::{Player, PlayerState},
@@ -9,38 +9,49 @@ use leptos_router::{components::A, lazy_route, LazyRoute};
 use serde::{Deserialize, Serialize};
 
 #[cfg(feature = "ssr")]
-fn parse_recording(file_name: &str) -> jiff::civil::DateTime {
-    let stem = file_name.trim_end_matches(".mp3");
+fn parse_recording(file_name: &str) -> Option<jiff::civil::DateTime> {
+    let (stem, ext) = file_name.rsplit_once('.')?;
+    if !ext.eq_ignore_ascii_case("mp3") {
+        return None;
+    }
     let parts: Vec<&str> = stem.split('-').collect();
-    let day: i8 = parts[0].parse().unwrap();
-    let month: i8 = parts[1].parse().unwrap();
-    let year: i16 = parts[2].parse().unwrap();
-    let hour: i8 = parts[3].parse().unwrap();
-    jiff::civil::date(year, month, day).at(hour, 0, 0, 0)
+    let (day, month, year, hour) = match parts.as_slice() {
+        [day, month, year, hour, ..] => (
+            day.parse::<i8>().ok()?,
+            month.parse::<i8>().ok()?,
+            year.parse::<i16>().ok()?,
+            hour.parse::<i8>().ok()?,
+        ),
+        _ => return None,
+    };
+    if !(1..=31).contains(&day) || !(1..=12).contains(&month) || !(0..=23).contains(&hour) {
+        return None;
+    }
+    Some(jiff::civil::date(year, month, day).at(hour, 0, 0, 0))
 }
 
 #[cfg(feature = "ssr")]
-impl From<&String> for Recording {
-    fn from(file_name: &String) -> Self {
-        let dt = parse_recording(file_name);
+impl Recording {
+    /// Returns `None` for a filename that does not encode a valid recording date.
+    fn from_filename(file_name: &str) -> Option<Self> {
+        let dt = parse_recording(file_name)?;
         let weekday = dt.weekday().to_monday_one_offset();
-        let public_url = std::env::var("PUBLIC_URL").unwrap_or("http://localhost:3000".to_string());
 
         let key = dt
             .to_zoned_datetime(jiff::tz::TimeZone::UTC)
-            .unwrap()
+            .ok()?
             .timestamp()
             .as_second();
 
-        Recording {
+        Some(Recording {
             day: dt.day() as u8,
             month: dt.month() as u8,
             year: dt.year() as i32,
             weekday: weekday as u8,
             hour: dt.hour() as u8,
-            src: format!("{}/uzg_data/{}", public_url, file_name),
+            src: format!("/uzg_data/{}", file_name),
             key,
-        }
+        })
     }
 }
 
@@ -114,10 +125,12 @@ impl Recording {
 }
 
 #[cfg(feature = "ssr")]
-type Cache = std::sync::LazyLock<std::sync::RwLock<Option<(std::time::Instant, Vec<Recording>)>>>;
+type Cache = std::sync::LazyLock<
+    tokio::sync::Mutex<Option<(std::time::Instant, std::sync::Arc<Vec<Recording>>)>>,
+>;
 
 #[cfg(feature = "ssr")]
-static CACHE: Cache = std::sync::LazyLock::new(|| std::sync::RwLock::new(None));
+static CACHE: Cache = std::sync::LazyLock::new(|| tokio::sync::Mutex::new(None));
 
 #[cfg(feature = "ssr")]
 use jiff::{tz::TimeZone, ToSpan, Unit, ZonedDateTimeRound};
@@ -127,14 +140,12 @@ use jiff::{tz::TimeZone, ToSpan, Unit, ZonedDateTimeRound};
 pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
     const CACHE_TTL_SECS: u64 = 3600;
 
-    let cached = {
-        let cache_read = CACHE.read().unwrap();
-        cache_read.clone()
-    };
-
-    if let Some((instant, data)) = cached {
+    // ponytail: one lock covers read + refresh, so a cold cache does one FTP
+    // round trip no matter how many requests arrive together.
+    let mut cache = CACHE.lock().await;
+    if let Some((instant, data)) = cache.as_ref() {
         if instant.elapsed().as_secs() < CACHE_TTL_SECS {
-            return Ok(data);
+            return Ok((**data).clone());
         }
     }
 
@@ -144,7 +155,6 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
     let items = ftp_stream.nlst(None).await?;
     let _ = ftp_stream.quit().await;
 
-    #[cfg(feature = "ssr")]
     let now_key = {
         let tz = TimeZone::get("Europe/Amsterdam").unwrap();
         let zdt = jiff::Timestamp::now().to_zoned_datetime(tz);
@@ -152,22 +162,16 @@ pub async fn fetch_uzg_entries() -> Result<Vec<Recording>, ServerFnError> {
         hour.checked_add(1.hours()).unwrap().timestamp().as_second()
     };
 
-    #[cfg(not(feature = "ssr"))]
-    let now_key = i64::MAX;
-
     let mut names: Vec<Recording> = items
         .iter()
-        .filter(|filename| filename.ends_with(".mp3"))
-        .map(Recording::from)
+        .filter(|filename| filename.to_lowercase().ends_with(".mp3"))
+        .filter_map(|filename| Recording::from_filename(filename))
         .filter(|recording| recording.key <= now_key)
         .collect();
     names.sort_by_key(|k| k.key);
     names.reverse();
 
-    {
-        let mut cache_write = CACHE.write().unwrap();
-        *cache_write = Some((std::time::Instant::now(), names.clone()));
-    }
+    *cache = Some((std::time::Instant::now(), std::sync::Arc::new(names.clone())));
 
     Ok(names)
 }
