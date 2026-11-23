@@ -26,6 +26,7 @@ test("homepage renders the sponsor wall", async ({ page }) => {
       return {
         href: el.getAttribute("href"),
         src: img?.getAttribute("src") ?? "",
+        srcset: img?.getAttribute("srcset") ?? "",
         alt: img?.getAttribute("alt") ?? "",
         lazy: img?.getAttribute("loading") ?? "",
       };
@@ -34,7 +35,8 @@ test("homepage renders the sponsor wall", async ({ page }) => {
 
   for (const card of cards) {
     expect(card.href).toBeTruthy();
-    expect(card.src).toMatch(/^\/assets\/sponsors\//);
+    expect(card.src).toMatch(/^\/assets\/img\//);
+    expect(card.srcset).toMatch(/\/assets\/img\//);
     expect(card.alt).toBeTruthy();
     expect(card.lazy).toBe("lazy");
   }

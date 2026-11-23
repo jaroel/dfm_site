@@ -4,6 +4,7 @@ use leptos_router::components::A;
 
 use crate::{
     controls::Controls,
+    images::{hero_img, responsive_img, Image, LOGO, PROGRAMMERING},
     player::{Player, PlayerState},
     uzg::fetch_uzg_entries,
 };
@@ -11,7 +12,7 @@ use crate::{
 struct Sponsor {
     href: &'static str,
     alt: &'static str,
-    image: &'static str,
+    image: &'static Image,
     class: &'static str,
 }
 
@@ -20,43 +21,43 @@ const SPONSORS: [Sponsor; 7] = [
     Sponsor {
         href: "https://www.facebook.com/markt.dinxperlo/",
         alt: "Logo van de markt van Dinxperlo",
-        image: "/assets/sponsors/makt.jpg",
+        image: &crate::images::SPONSOR_MAKT,
         class: "",
     },
     Sponsor {
         href: "https://podesta.nl/",
         alt: "Logo van Podesta",
-        image: "/assets/sponsors/logo15.jpg",
+        image: &crate::images::SPONSOR_LOGO15,
         class: "",
     },
     Sponsor {
         href: "https://www.facebook.com/Adviesbureau-Roenhorst-Dinxperlo-234893600009274/",
         alt: "Logo van Adviesbureau Roenhorst",
-        image: "/assets/sponsors/logo16.jpg",
+        image: &crate::images::SPONSOR_LOGO16,
         class: "",
     },
     Sponsor {
         href: "http://www.vvnf.nl/home",
         alt: "Logo van VVNF",
-        image: "/assets/sponsors/logo23.jpg",
+        image: &crate::images::SPONSOR_LOGO23,
         class: "",
     },
     Sponsor {
         href: "https://harmtakke.nl",
         alt: "Logo van Harm Takke",
-        image: "/assets/sponsors/logo-harmtakke.jpg",
+        image: &crate::images::SPONSOR_LOGO_HARMTAKKE,
         class: "",
     },
     Sponsor {
         href: "https://tibatek.de",
         alt: "Logo van Tibatek",
-        image: "/assets/sponsors/tibatek_logo_web.png",
+        image: &crate::images::SPONSOR_TIBATEK_LOGO_WEB,
         class: "bg-white p-2",
     },
     Sponsor {
         href: "https://www.facebook.com/CafetariadeDriesprongDinxperlo/?locale=nl_NL",
         alt: "Logo van Cafetaria de Driesprong",
-        image: "/assets/sponsors/dedriesprong.jpg",
+        image: &crate::images::SPONSOR_DEDRIESPRONG,
         class: "",
     },
 ];
@@ -73,12 +74,12 @@ pub fn HomePage() -> impl IntoView {
         <Player audio_src=src player_state=player_state />
         <div class="flex justify-evenly mt-10 mb-10">
             <div class="max-w-xs md:max-w-sm">
-                <img
-                    src="/assets/logodinxperfm.png"
-                    alt="Dinxper FM - Het swingende geluid van Dinxperlo!"
-                    width=384
-                    class="mx-auto"
-                />
+                {hero_img(
+                    &LOGO,
+                    "Dinxper FM - Het swingende geluid van Dinxperlo!",
+                    384,
+                    "mx-auto",
+                )}
                 <p class="mt-4 text-center">Het swingende geluid van Dinxperlo!</p>
             </div>
         </div>
@@ -115,19 +116,19 @@ pub fn HomePage() -> impl IntoView {
             </ul>
         </nav>
         <div class="flex justify-center mt-10">
-            <img
-                src="/assets/programmering.jpg"
-                alt="Programmering van Dinxperlo FM"
-                width=1084
-                class="max-w-full h-auto"
-            />
+            {hero_img(
+                &PROGRAMMERING,
+                "Programmering van Dinxperlo FM",
+                1084,
+                "max-w-full h-auto",
+            )}
         </div>
         <div class="text-center">
             <a
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-blue-400"
-                href="/assets/programmering.jpg"
+                href=PROGRAMMERING.src
                 title="Bekijk het programma in een nieuw scherm"
             >
                 "In nieuwe pagina openen"
@@ -149,13 +150,13 @@ pub fn HomePage() -> impl IntoView {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <img
-                                        src=sponsor.image
-                                        alt=sponsor.alt
-                                        loading="lazy"
-                                        width=250
-                                        class=sponsor.class
-                                    />
+                                    {responsive_img(
+                                        sponsor.image,
+                                        sponsor.alt,
+                                        250,
+                                        sponsor.class,
+                                        "lazy",
+                                    )}
                                 </a>
                             </div>
                         }

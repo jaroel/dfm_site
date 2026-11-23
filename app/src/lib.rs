@@ -1,5 +1,6 @@
 pub mod controls;
 pub mod home;
+pub mod images;
 pub mod player;
 pub mod uzg;
 
@@ -47,7 +48,7 @@ pub fn App() -> impl IntoView {
 
         <div
             class="h-screen bg-fixed bg-gray-600 bg-center bg-cover text-slate-50"
-            style:background-image="url(/assets/dfm_studio-blurred.jpg)"
+            style:background-image=format!("url({})", images::BACKGROUND.src)
         >
             <div class="overflow-auto h-full bg-black/75">
                 <div class="mx-auto max-w-6xl">

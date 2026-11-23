@@ -81,7 +81,7 @@ async fn set_cache_control(
     next: middleware::Next,
 ) -> Response {
     let path = req.uri().path().to_string();
-    let cache = if path.starts_with("/pkg/") {
+    let cache = if path.starts_with("/pkg/") || path.starts_with("/assets/img/") {
         Some(HeaderValue::from_static("public, max-age=31536000, immutable"))
     } else if path.starts_with("/assets/") || path == "/favicon.ico" {
         Some(HeaderValue::from_static("public, max-age=86400"))

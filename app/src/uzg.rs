@@ -207,16 +207,13 @@ pub(crate) fn UitzendingGemistView(
             <div class="flex flex-auto items-center">
                 <div class="my-8 mx-12">
                     <A href="/">
-                        <img
-                            src="/assets/logodinxperfm.png"
-                            alt="DinxperFM logo"
-                            width=128
-                            height=128
-                            // quality=100
-                            // lazy=false
-                            // priority=true
-                            class="mx-auto"
-                        />
+                        {crate::images::responsive_img(
+                            &crate::images::LOGO,
+                            "DinxperFM logo",
+                            128,
+                            "mx-auto",
+                            "eager",
+                        )}
                     </A>
                     <p class="mt-4 text-center">"Het swingende geluid van Dinxperlo!"</p>
                 </div>

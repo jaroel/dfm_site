@@ -66,6 +66,18 @@ Splits `#[lazy]` code into separate wasm chunks so the home page does not downlo
 `/uzg` view, and writes precompressed `.br`/`.gz` siblings for static assets (served by
 `leptos_axum`'s file handler). SSR HTML is compressed at runtime by `CompressionLayer`.
 
+## Images
+
+Sources live in `assets/` (not served). `app/build.rs` resizes each one to the widths
+that are actually rendered, content-hashes the filename and writes WebP into
+`public/assets/img/`, plus a manifest the app `include!`s as `crate::images`. The generated
+directory is gitignored and rebuilt on demand, so a fresh clone only needs a normal
+`cargo leptos build`.
+
+To add an image, drop the source in `assets/` and add a `Source` entry with its widths in
+`app/build.rs`, then reference `crate::images::YOUR_CONST` through
+`images::responsive_img(...)` / `hero_img(...)`.
+
 ## Testing Your Project
 
 Cargo-leptos uses (https://playwright.dev)[Playwright] as the end-to-end test tool. 
