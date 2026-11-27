@@ -79,7 +79,12 @@ the same layer as `src/routes/uzg/` (pages/API).
   `referrer-policy: strict-origin-when-cross-origin` to responses, and falls
   through to SSR when `index.html` or `robots.txt` was not prerendered.
 - Docker runs `bun build server.bun.ts` and ships `server.bundle.js` + `dist`.
-  The runtime image has no `node_modules`.
+  The runtime image has no `node_modules`. The builder stage runs on
+  `$BUILDPLATFORM` (native) and only the Bun binary comes from the target
+  platform: Vite 8's import-analysis wasm needs WASM SIMD, which Bun/JSC does
+  not enable under emulated `linux/amd64`, so a target-platform builder fails
+  `vite build` with `wasm-simd is not enabled`. Build output is arch
+  independent.
 
 ## Testing
 
